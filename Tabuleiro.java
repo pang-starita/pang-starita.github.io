@@ -26,6 +26,7 @@ public class Tabuleiro {
             }
         }
     }
+    
     public boolean recebeTiro(Ponto2D pt) {
         if (tabu[pt.posX][pt.posY].validaTiro()) { // acertou o tiro
             for (Barco ba: barcos) {      // para todos os barcos
@@ -35,6 +36,13 @@ public class Tabuleiro {
             }
         }
         return false;  // agua
+    }
+    
+    public boolean terminaJogo() {
+        for (Barco bc: barcos) { // para cada barco
+            if (! bc.afundou()) return false; // este nao afundou
+        }
+        return true;  // todos os barcos afundaram
     }
     
     @Override
@@ -60,6 +68,6 @@ public class Tabuleiro {
         System.out.println("Novo tabuleiro:\n" + tab);
         tab.recebeTiro(new Ponto2D(1, 1));
         System.out.println("Novo tabuleiro:\n" + tab);
-        if (barcos[0] instanceof Destroyer) System.out.println("destroyer");;
+        
     }
 }
