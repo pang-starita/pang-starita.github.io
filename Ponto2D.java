@@ -17,10 +17,12 @@ public class Ponto2D {
     }
     @Override
     public boolean equals(Object o) {
-        if (o == null) return false;
+        if (o == null) return false; // null eh o objeto vazio == ausencia de objeto
+        if (! (o instanceof Ponto2D)) return false; // o nao eh Ponto2D
         Ponto2D p = (Ponto2D) o;
-        return p.posX == posX && p.posY == posY;
+        return p.posX == posX && p.posY == posY; / eh igual se tem mesmas coord
     }
+    
     @Override
     public String toString() {
         return "Ponto(" + posX + "," + posY + ")";
