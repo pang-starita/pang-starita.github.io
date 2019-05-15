@@ -5,6 +5,8 @@
  */
 package batalhaNaval;
 
+import java.util.Scanner;
+
 /**
  *
  * @author labb
@@ -48,8 +50,8 @@ public class Tabuleiro {
     @Override
     public String toString() {
         String res = "";
-        for (int x=0; x < tamanho; x++) {
-            for (int y=0; y < tamanho; y++) {
+        for (int y=0; y < tamanho; y++) {     // linha
+            for (int x=0; x < tamanho; x++) { // coluna
                 res += " " + tabu[x][y] + " ";
             }
             res += "\n";
@@ -68,6 +70,17 @@ public class Tabuleiro {
         System.out.println("Novo tabuleiro:\n" + tab);
         tab.recebeTiro(new Ponto2D(1, 1));
         System.out.println("Novo tabuleiro:\n" + tab);
-        
+        Scanner sc = new Scanner(System.in);
+        while (! tab.terminaJogo()) {   // pede ao usuario as posicoes dos tiros
+            System.out.print("Fornessa a posicao do tiro, p.ex.: 5 5: ");
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+            if ((x < 0) || (x >= tab.tamanho) || (y < 0) || (y >= tab.tamanho)) {
+                System.out.println("Coordenadas fora dos limites. Tente de novo.");
+                break;
+            }
+            tab.recebeTiro(new Ponto2D(x, y));
+            System.out.println("Tabuleiro depois do tiro: (" + x + ", " + y + ")\n" + tab);
+        }
     }
 }
