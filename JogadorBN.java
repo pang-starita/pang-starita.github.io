@@ -47,6 +47,7 @@ public class JogadorBN {
                 pos.posY = rd.nextInt(tb.tamanho);
             }
             tiros[i] = pos;
+            tirosDados.add(pos);
         }
         return tiros;
     }
