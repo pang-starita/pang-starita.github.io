@@ -29,4 +29,7 @@ public abstract class Barco {
         }
         return true;    // todas as posições foram atingidas
     }
+    // move o barco para uma dada posicao
+    // returna falso se nao pode mover para esta posicao
+    abstract public boolean move(Ponto2D pos, char d, Tabuleiro tb);
 }

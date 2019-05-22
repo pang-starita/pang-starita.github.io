@@ -35,6 +35,39 @@ public class Submarino extends Barco {
                 System.out.println("Direção invalida");
         }
     }
+
+    @Override
+    public boolean move(Ponto2D pt, char d, Tabuleiro tb) {
+        // verifica se pode fazer o movimento proposto e posiciona
+        switch (d) {
+            case 'c':
+                if (pt.posY+1 >= tb.tamanho) return false;
+                localizacao[0] = new Ponto2D(pt.posX, pt.posY);
+                localizacao[1] = new Ponto2D(pt.posX, pt.posY+1);
+                break;
+            case 'd':
+                if (pt.posX+1 >= tb.tamanho) return false;
+                localizacao[0] = new Ponto2D(pt.posX, pt.posY);
+                localizacao[1] = new Ponto2D(pt.posX+1, pt.posY);
+                break;
+            case 'b':
+                if (pt.posY-1 < 0) return false;
+                localizacao[0] = new Ponto2D(pt.posX, pt.posY);
+                localizacao[1] = new Ponto2D(pt.posX, pt.posY-1);
+                break;
+            case 'e':
+                if (pt.posX-1 < 0) return false;
+                localizacao[0] = new Ponto2D(pt.posX, pt.posY);
+                localizacao[1] = new Ponto2D(pt.posX-1, pt.posY);
+                break;
+            default:
+                System.err.println("Direção inexistente");
+                System.exit(1);
+        }
+        pos = pt;
+        dir = d;
+        return true;
+    }
     
     @Override
     public String toString() {
