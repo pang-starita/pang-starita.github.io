@@ -26,11 +26,13 @@ public class JogadorBN {
             System.out.println("posicionando barco em: " + pos);
             char[] direcoes = {'c','d','b','e'};
             char d = direcoes[rd.nextInt(direcoes.length)];
-            while (! b.move(pos, d, tb)) {  // tenta outra posicao, nao muda dir
+            // falta verificar se vai para alguma posicao ja ocupada
+            while (! tb.tentaInserirBarco(b, pos, d)) {  // tenta outra posicao, nao muda dir
                 pos.posX = rd.nextInt(max);
                 pos.posY = rd.nextInt(max);
             }
         }
+        tb.barcos = bs;
     }
     /**
      * Gera 3 tiros em posicoes novas

@@ -28,6 +28,23 @@ public class Tabuleiro {
             }
         }
     }
+    public Tabuleiro() {
+        barcos = null;  // inicialmente o tabuleiro nao tem barcos
+        for (int x = 0; x < tamanho; x++) {   // colocando as casas no tabuleiro
+            for (int y = 0; y < tamanho; y++) {
+                tabu[x][y] = new Casa(new Ponto2D(x, y));
+            }
+        }   // todas as casas foram inicializadas como desocupadas
+    }
+    
+    public boolean tentaInserirBarco(Barco bc, Ponto2D pos, char d) {
+        if (posOcupada(pos)) return false;
+        return bc.move(pos, d, this);
+    }
+    
+    public boolean posOcupada(Ponto2D pos) {
+        return tabu[pos.posX][pos.posY].ocupada;
+    }
     
     public boolean recebeTiro(Ponto2D pt) {
         if (tabu[pt.posX][pt.posY].validaTiro()) { // acertou o tiro

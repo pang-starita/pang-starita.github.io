@@ -36,29 +36,48 @@ public class Submarino extends Barco {
         }
     }
 
+    public Submarino() {
+        localizacao = new Ponto2D[2];
+        atingido = new boolean[2];
+        for (int i = 0; i < atingido.length; i++)
+            atingido[i] = false;
+    }
+    
     @Override
     public boolean move(Ponto2D pt, char d, Tabuleiro tb) {
         // verifica se pode fazer o movimento proposto e posiciona
+        if (tb.posOcupada(pos)) return false;
+        // devia testar para cada posicao para verificar ser pode colocar o novo
+        // barco nela ou não
         switch (d) {
             case 'c':
-                if (pt.posY+1 >= tb.tamanho) return false;
+                if (pt.posY+2 >= tb.tamanho) return false;
                 localizacao[0] = new Ponto2D(pt.posX, pt.posY);
                 localizacao[1] = new Ponto2D(pt.posX, pt.posY+1);
+                // marcar as posicoes como ocupadas
+                tb.tabu[pt.posX][pt.posY].ocupada = true;
+                tb.tabu[pt.posX][pt.posY+1].ocupada = true;
                 break;
             case 'd':
-                if (pt.posX+1 >= tb.tamanho) return false;
+                if (pt.posX+2 >= tb.tamanho) return false;
                 localizacao[0] = new Ponto2D(pt.posX, pt.posY);
                 localizacao[1] = new Ponto2D(pt.posX+1, pt.posY);
+                tb.tabu[pt.posX][pt.posY].ocupada = true;
+                tb.tabu[pt.posX+1][pt.posY].ocupada = true;
                 break;
             case 'b':
-                if (pt.posY-1 < 0) return false;
+                if (pt.posY-2 < 0) return false;
                 localizacao[0] = new Ponto2D(pt.posX, pt.posY);
                 localizacao[1] = new Ponto2D(pt.posX, pt.posY-1);
+                tb.tabu[pt.posX][pt.posY].ocupada = true;
+                tb.tabu[pt.posX][pt.posY-1].ocupada = true;
                 break;
             case 'e':
-                if (pt.posX-1 < 0) return false;
+                if (pt.posX-2 < 0) return false;
                 localizacao[0] = new Ponto2D(pt.posX, pt.posY);
                 localizacao[1] = new Ponto2D(pt.posX-1, pt.posY);
+                tb.tabu[pt.posX][pt.posY].ocupada = true;
+                tb.tabu[pt.posX-1][pt.posY].ocupada = true;
                 break;
             default:
                 System.err.println("Direção inexistente");
