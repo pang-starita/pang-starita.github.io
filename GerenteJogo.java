@@ -38,6 +38,7 @@ public class GerenteJogo {
         while (!tabAuto.terminaJogo() && !tabUser.terminaJogo()) {
             // pede para o usuario dar os tiros e usa o recebeTiros()
             System.out.println("Fornessa a posicao dos 3 tiros:");
+            if (sc.hasNext()) sc.next();    // para limpar excessos anteriores
             for (int i = 0; i < 3; i++) {
                 System.out.print("Tiro " + (i+1) + ": ");
                 int x = sc.nextInt();
