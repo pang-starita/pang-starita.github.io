@@ -52,7 +52,7 @@ public class Destroyer extends Barco {
     @Override
     public boolean move(Ponto2D pt, char d, Tabuleiro tb) {
         // verifica se pode fazer o movimento proposto e posiciona
-        if (tb.posOcupada(pos)) return false;
+        if (tb.posOcupada(pt)) return false;
         // devia testar para cada posicao para verificar ser pode colocar o novo
         // barco nela ou não
         switch (d) {

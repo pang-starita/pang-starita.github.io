@@ -34,7 +34,7 @@ public class Tabuleiro {
             for (int y = 0; y < tamanho; y++) {
                 tabu[x][y] = new Casa(new Ponto2D(x, y));
             }
-        }   // todas as casas foram inicializadas como desocupadas
+        }   // todas as casas foram inicializadas como desocupadas e nao atingidas
     }
     
     public boolean tentaInserirBarco(Barco bc, Ponto2D pos, char d) {
@@ -43,6 +43,7 @@ public class Tabuleiro {
     }
     
     public boolean posOcupada(Ponto2D pos) {
+//        System.out.println("Pos testada: " + pos);
         return tabu[pos.posX][pos.posY].ocupada;
     }
     
