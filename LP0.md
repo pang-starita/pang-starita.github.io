@@ -116,8 +116,29 @@ um código numa linguagem intermediária e o código da linguagem intermediária
 é que é interpretado. Isto acontece com o Java que é compilado em *Java Byte Code*
 e o código em Java Byte Code é interpretado por uma *JVM*, *Java Virtual Machine*.
 Algumas linguagens que eram interpretadas antes, agora são compiladas em
-código intermediário dinamicamente \(não existe a geração de arquivo compilado
-  em Byte Code\) e o código intermediário é interpretado. Isto ocorre, por
+código intermediário dinamicamente, não existe a geração de arquivo compilado
+em algum tipo de código intermediário, o código compilado fica na memória
+principal e é interpretado a partir de lá. Isto ocorre, por
 exemplo com o Lisp e o Perl.
 
-## fluxogramas
+## Fluxogramas
+
+Este é um recurso gráfico antigo usado para modelar programas/algoritmos.
+Este recurso, por muito tempo, foi relegado a um segundo plano devido ao uso de
+pseudo-linguagens estruturadas para representar algoritmos. Agora, os
+fluxogramas têm um renascimento devido ao uso da modelagem gráfica para o
+projeto de sistemas de software com o *UML* - *Unified Modeling Languagem*.
+Os fluxogramas são bastante usados para modelar/documentar *software* de
+microcontroladores e sistemas de automação. Especialmente se o *SW* for escrito
+em *Assembly*.
+
+Algoritmos são sempre descritos com um `início`, sequência de passos para
+resolver um problema, `fim`. Os blocos básicos de um fluxograma são
+representados abaixo:
+
+![Blocos básico de fluxograma.](blocos_fluxograma.png)
+
+A *elipse* é usada para representar o início e o fim do algoritmo/programa.
+Um *retângulo* índica uma ação \(um passo\) que deve ser executado.
+Um *losango* indica um teste que pode ter 2 \(ou 3\) resultados diferentes,
+dependendo do resultado, o fluxo de passos muda.
