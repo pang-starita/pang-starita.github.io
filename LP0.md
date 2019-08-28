@@ -136,7 +136,7 @@ Algoritmos são sempre descritos com um `início`, sequência de passos para
 resolver um problema, `fim`. Os blocos básicos de um fluxograma são
 representados abaixo:
 
-![Blocos básico de fluxograma.](blocos_fluxograma.png)
+![Blocos básico de fluxograma.](images/blocos_fluxograma.png)
 
 A *elipse* é usada para representar o início e o fim do algoritmo/programa.
 Um *retângulo* índica uma ação \(um passo\) que deve ser executado.
