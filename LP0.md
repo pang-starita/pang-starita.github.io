@@ -103,42 +103,31 @@ de código corresponde a uma função ou um bloco de dados. Uma tabela liga os
 nomes com os endereços. Esta tabela é chamada de tabela de símbolos. Os
 compiladores trabalham com tabelas de símbolos mais complexas, mas uma das
 funções da tabela de símbolos é estabelecer este tipo de relacionamento entre
-identificadores e endereços.
+identificadores e endereços. Programas em Assembly são convertidos para
+linguagens de máquina por um *assembler*, chamado em português de *montador*.
+
+O *montador* usa uma tabela de símbolos fornecida no programa Assembly pelo
+programador para converter os *rótulos* em endereços. Se for necessários,
+o *montador* calcula o endereço a partir de outros endereços, somando os
+deslocamentos necessários de acordo com o número de bytes necessários
+para as instruções e os dados.
 
 ## Compilação x Interpretação
 
 Existem linguagens de programação cujos programas fontes não são compilados
-para códigos de máquina. Nestes casos, o programa fonte pode ser interpretado
+para códigos de máquina do computador onde eles são executados.
+Nestes casos, o programa fonte pode ser interpretado
 por um *interpretador*, isto é, o *interpretador* serve de intermediário e
-dinamicamente, converte o código fonte em instruções de máquina. Um esquema
+dinamicamente, converte o código fonte em instruções de máquina durante a
+execução do programa. Diferente do compilador que converte o programa antes
+da sua execução. Um esquema
 intermediário bastante usado atualmente é a compilação do código fonte para
 um código numa linguagem intermediária e o código da linguagem intermediária
-é que é interpretado. Isto acontece com o Java que é compilado em *Java Byte Code*
-e o código em Java Byte Code é interpretado por uma *JVM*, *Java Virtual Machine*.
-Algumas linguagens que eram interpretadas antes, agora são compiladas em
-código intermediário dinamicamente, não existe a geração de arquivo compilado
-em algum tipo de código intermediário, o código compilado fica na memória
-principal e é interpretado a partir de lá. Isto ocorre, por
+é que é interpretado. Isto acontece com o Java que é compilado em *Java Byte
+Code* e o código em Java Byte Code é interpretado por uma *JVM*, *Java Virtual
+Machine*.
+Algumas linguagens que eram interpretadas antes, agora também são compiladas em
+código intermediário dinamicamente. Entretanto, não existe a geração de arquivo
+compilado em algum tipo de código intermediário, o código compilado fica na
+memória principal e é interpretado a partir de lá. Isto ocorre, por
 exemplo com o Lisp e o Perl.
-
-## Fluxogramas
-
-Este é um recurso gráfico antigo usado para modelar programas/algoritmos.
-Este recurso, por muito tempo, foi relegado a um segundo plano devido ao uso de
-pseudo-linguagens estruturadas para representar algoritmos. Agora, os
-fluxogramas têm um renascimento devido ao uso da modelagem gráfica para o
-projeto de sistemas de software com o *UML* - *Unified Modeling Languagem*.
-Os fluxogramas são bastante usados para modelar/documentar *software* de
-microcontroladores e sistemas de automação. Especialmente se o *SW* for escrito
-em *Assembly*.
-
-Algoritmos são sempre descritos com um `início`, sequência de passos para
-resolver um problema, `fim`. Os blocos básicos de um fluxograma são
-representados abaixo:
-
-![Blocos básico de fluxograma.](images/blocos_fluxograma.png)
-
-A *elipse* é usada para representar o início e o fim do algoritmo/programa.
-Um *retângulo* índica uma ação \(um passo\) que deve ser executado.
-Um *losango* indica um teste que pode ter 2 \(ou 3\) resultados diferentes,
-dependendo do resultado, o fluxo de passos muda.
