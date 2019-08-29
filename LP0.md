@@ -40,7 +40,7 @@
 
 2.	SANTOS, Marcela Gonçalves dos, Algoritmos e programação, SAGAH, 2018.
 
-3.	SEBESTA, Robert W., Conceitos de Linguagens de Programação, 9ªEd., Bookman, 2011.
+3.	SEBESTA, Robert W., Conceitos de Linguagens de Programação, 9ª Ed., Bookman, 2011.
 
 4.	MONK, Simon, Programação com Arduino: começando com o sketches, SAGAH, 2017.
 
