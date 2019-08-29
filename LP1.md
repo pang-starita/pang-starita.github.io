@@ -1,4 +1,6 @@
-# Aula Lógica de Programação: 20/08/2019
+% Aula 2 de Lógica de Programação
+% Paulino Ng
+% 2019-08-20
 
 Nesta aula veremos alguns conceitos básicos de computação para podermos
 entender melhor os conceitos de programação que serão vistos posteriormente.
@@ -56,17 +58,44 @@ e em cada linha temos um *byte* \(8 bits\).
 
 ### Processador
 
-falar do ciclo de busca e execução
-do cjto de instruções
-do cálculo da próxima instrução
-da sequencialidade das instruções na arquitetura de von Neumann
-da interação com os barramentos
+- ciclo de busca e execução
+- cjto de instruções
+- cálculo da próxima instrução
+- sequencialidade das instruções na arquitetura de von Neumann
+- interação com os barramentos
 
 ### Barramento
 
+Sistema de comunicação que interliga os outros componentes permitindo a
+transferência de dados/instruções.
+
 ### Entradas e Saídas
 
+Componentes que permitem adquirir dados de e enviar dados para fora do
+computador. Geralmente, são compostos por duas partes: um controlador
+de dispositivo e um periférico.
+
 ## Linguagens de Programação
+
+Programar diretamente na linguagem do computador é muito complicado para
+seres humanos. A linguagem mais próxima da linguagem de máquina é a linguagem
+*Assembly* que usa mnemônicos para as instruções. Os mnemônicos são palavras, ou
+siglas/abreviações, que em inglês lembram o que a instrução faz. Exemplos de
+mnemônicos são: MOV, CPY, CMP, JMP, JZ, JC, ADD, SUB, MUL, DIV, ...
+Algumas instruções de máquina precisam dos endereços de memórias de dados ou de
+instruções, para não ficar usando números sem significados, o *Assembly* permite
+o uso de *rótulos* para os endereços e o programador pode definir o valor destes
+*rótulos* ou deixar o *Assembler* calcular o endereço a ser usado. O *Assembler*
+é o programa que converte o texto *Assembly* \(programa *Assembly*\) em
+linguagem de máquina. Em português, chamamos o *Assembler* de *montador*.
+
+Alguns pequenos programas \(subprogramas\) são escritos em *Assembly* por
+precisarem acessar detalhes de *hardware* que não são acessíveis com linguagens
+de alto nível, como partes de um *driver* de *SO* ou por necessitarem de
+um desempenho melhor do que o compilador pode oferecer. Observe que compiladores
+modernos são capazes de otimizar o código muito melhor do que a maioria dos
+programadores. A programação de microcontroladores muitas vezes é realizada em
+*Assembly*.
 
 ### Conceitos de + alto nível
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Paulino Ng" />
+  <meta name="dcterms.date" content="2019-08-27" />
+  <title>Aula 3 de Lógica de Programação</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Aula 3 de Lógica de Programação</h1>
+<p class="author">Paulino Ng</p>
+<p class="date">2019-08-27</p>
+</header>
+<h2 id="fluxogramas">Fluxogramas</h2>
+<p>Este é um recurso gráfico antigo usado para modelar programas/algoritmos. Este recurso, por muito tempo, foi relegado a um segundo plano devido ao uso de pseudo-linguagens estruturadas para representar algoritmos. Agora, os fluxogramas têm um renascimento devido ao uso da modelagem gráfica para o projeto de sistemas de software com o <em>UML</em> - <em>Unified Modeling Languagem</em>. Os fluxogramas são bastante usados para modelar/documentar <em>software</em> de microcontroladores e sistemas de automação. Eles também são muito usados quando o <em>SW</em> é escrito em <em>Assembly</em>.</p>
+<p>Algoritmos são sempre descritos com um <code>início</code>, sequência de passos para resolver um problema, <code>fim</code>. Os blocos básicos de um fluxograma são representados abaixo:</p>
+<figure>
+<img src="images/blocos_fluxograma.png" alt="" /><figcaption>Blocos básico de fluxograma.</figcaption>
+</figure>
+<p>Fonte: <a href="https://en.wikipedia.org/wiki/Flowchart">Página da Wikipedia sobre Flowchart</a></p>
+<p>A <em>elipse</em> é usada para representar o início e o fim do algoritmo/programa. Um <em>retângulo</em> índica uma ação (um passo, um processo) que deve ser executado. Um <em>losango</em> indica um teste que pode ter 2 (ou 3) resultados diferentes, dependendo do resultado, o fluxo de passos muda. O <em>paralelogramo</em> indica entrada ou saída de dados. Os 2 últimos símbolos, os conectores, servem para indicar <em>continuações</em> do fluxo de instruções/ações quando a página do desenho/gráfico acaba. A <em>bolinha</em> indica que a continuação está na mesma página. O <em>pentagono</em> com a ponta para baixo indica que a continuação está em outra página. O <em>retângulo com barras</em> indica a ativação/chamada de um sub-proceso/subprograma.</p>
+<p>Usaremos fluxogramas para entender inicialmente as estruturas de programação para a repetição de blocos de instruções e instruções condicionais. Em geral, não usaremos os fluxogramas no dia-a-dia.</p>
+<h2 id="estruturas-de-repetição">Estruturas de Repetição</h2>
+<h3 id="repeat-...-until-condição-ou-do-...-while-condição"><code>repeat ... until condição</code> ou <code>do { ... } while (condição)</code></h3>
+<h3 id="while-condição-..."><code>while (condição) ...</code></h3>
+<h3 id="for-...-...-...-..."><code>for (...; ...; ...) { ... }</code></h3>
+<h2 id="exercícios">Exercícios</h2>
+<ol type="1">
+<li><p>Calcular o fatorial de um N dado usando o for</p></li>
+<li><p>Calcular o n-ésimo elemento da sequência de Fibonacci (para casa)</p></li>
+<li><p>Dado um texto, numa variável str, calcule o texto reverso. Suponha disponíveis <code>length(str)</code>, função que retorna o número de caracteres de <code>str</code>, <code>[i]</code> operador de índice que permite acessar o i-ésimo caracter da string e <code>str.anexa(c)</code> que anexa, coloca no final, o caracter <code>c</code> na string <code>str</code>.</p></li>
+</ol>
+<h3 id="teste-das-soluções-com-teste-de-mesa">Teste das soluções com <em>teste de mesa</em></h3>
+</body>
+</html>

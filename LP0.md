@@ -1,4 +1,6 @@
-# Introdução a LP
+% Introdução à Lógica de Programação
+% Paulino Ng
+% 2019-08-13
 
 ## Ementa
 

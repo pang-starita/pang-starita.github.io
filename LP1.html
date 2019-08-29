@@ -4,7 +4,9 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Lógica de Programação: Aula 2</title>
+  <meta name="author" content="Paulino Ng" />
+  <meta name="dcterms.date" content="2019-08-20" />
+  <title>Aula 2 de Lógica de Programação</title>
   <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -16,7 +18,11 @@
   <![endif]-->
 </head>
 <body>
-<h1 id="aula-lógica-de-programação-20082019">Aula Lógica de Programação: 20/08/2019</h1>
+<header id="title-block-header">
+<h1 class="title">Aula 2 de Lógica de Programação</h1>
+<p class="author">Paulino Ng</p>
+<p class="date">2019-08-20</p>
+</header>
 <p>Nesta aula veremos alguns conceitos básicos de computação para podermos entender melhor os conceitos de programação que serão vistos posteriormente. Vamos começar pela arquitetura de <em>von Neumann</em> que descreve conceitualmente a estrutura física dos computadores modernos. Veremos como isto afeta a programação dos computadores e como as linguagens de programação procuram fornecer uma abstração de alto nível para que não tenhamos de programar num nível conceitual próximo ao da máquina computacional.</p>
 <p>Lembro que nesta disciplina só nos interessa o computador digital. No computador digital a unidade de informação é um <em>bit</em>. Um <em>bit</em> é algo que pode ter apenas 2 valores (estados), <strong>0</strong> ou <strong>1</strong>. Fisicamente o bit pode ser um sinal elétrico do tipo tensão (tensão baixa, quase zero, é <strong>0</strong>, alta, 2 a 5V, ou mais, é <strong>1</strong>, presença de corrente é <strong>1</strong>, corrente nula é <strong>0</strong>, frequência baixa é <strong>1</strong>, alta é <strong>0</strong>, enfim, escolha-se uma convenção para um tipo de implementação e defina-se o significado do bit e seus valores), pode ser diversas outras <em>convenções</em>.</p>
 <h2 id="arquitetura-de-von-neumann">Arquitetura de <em>von Neumann</em></h2>
@@ -34,10 +40,20 @@
 <h3 id="memória-principal-do-computador">Memória principal do computador</h3>
 <p>Ela é formada pelos módulos de memória DDR nos PCs que os alunos usam. A memória pode ser entendida como uma tabela onde são guardados os dados e as instruções do computador. Na tecnologia atual, a tabela tem uma única coluna e em cada linha temos um <em>byte</em> (8 bits).</p>
 <h3 id="processador">Processador</h3>
-<p>falar do ciclo de busca e execução do cjto de instruções do cálculo da próxima instrução da sequencialidade das instruções na arquitetura de von Neumann da interação com os barramentos</p>
+<ul>
+<li>ciclo de busca e execução</li>
+<li>cjto de instruções</li>
+<li>cálculo da próxima instrução</li>
+<li>sequencialidade das instruções na arquitetura de von Neumann</li>
+<li>interação com os barramentos</li>
+</ul>
 <h3 id="barramento">Barramento</h3>
+<p>Sistema de comunicação que interliga os outros componentes permitindo a transferência de dados/instruções.</p>
 <h3 id="entradas-e-saídas">Entradas e Saídas</h3>
+<p>Componentes que permitem adquirir dados de e enviar dados para fora do computador. Geralmente, são compostos por duas partes: um controlador de dispositivo e um periférico.</p>
 <h2 id="linguagens-de-programação">Linguagens de Programação</h2>
+<p>Programar diretamente na linguagem do computador é muito complicado para seres humanos. A linguagem mais próxima da linguagem de máquina é a linguagem <em>Assembly</em> que usa mnemônicos para as instruções. Os mnemônicos são palavras, ou siglas/abreviações, que em inglês lembram o que a instrução faz. Exemplos de mnemônicos são: MOV, CPY, CMP, JMP, JZ, JC, ADD, SUB, MUL, DIV, … Algumas instruções de máquina precisam dos endereços de memórias de dados ou de instruções, para não ficar usando números sem significados, o <em>Assembly</em> permite o uso de <em>rótulos</em> para os endereços e o programador pode definir o valor destes <em>rótulos</em> ou deixar o <em>Assembler</em> calcular o endereço a ser usado. O <em>Assembler</em> é o programa que converte o texto <em>Assembly</em> (programa <em>Assembly</em>) em linguagem de máquina. Em português, chamamos o <em>Assembler</em> de <em>montador</em>.</p>
+<p>Alguns pequenos programas (subprogramas) são escritos em <em>Assembly</em> por precisarem acessar detalhes de <em>hardware</em> que não são acessíveis com linguagens de alto nível, como partes de um <em>driver</em> de <em>SO</em> ou por necessitarem de um desempenho melhor do que o compilador pode oferecer. Observe que compiladores modernos são capazes de otimizar o código muito melhor do que a maioria dos programadores. A programação de microcontroladores muitas vezes é realizada em <em>Assembly</em>.</p>
 <h3 id="conceitos-de-alto-nível">Conceitos de + alto nível</h3>
 <h4 id="tipos-de-dados">tipos de dados</h4>
 <h4 id="estruturas-de-controle-de-fluxo-de-instrução">estruturas de controle de fluxo de instrução</h4>

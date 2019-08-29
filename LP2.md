@@ -1,4 +1,6 @@
-# Aula Lógica de Programação: 27/08/2019
+% Aula 3 de Lógica de Programação
+% Paulino Ng
+% 2019-08-27
 
 ## Fluxogramas
 
