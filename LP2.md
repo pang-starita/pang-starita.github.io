@@ -31,7 +31,7 @@ fluxo de instruções/ações quando a página do desenho/gráfico acaba. A *bol
 indica que a continuação está na mesma página. O *pentagono* com a ponta para
 baixo indica que a continuação está em outra página.
 O *retângulo com barras* indica a ativação/chamada de um
-sub-proceso/subprograma.
+sub-processo/subprograma.
 
 Usaremos fluxogramas para entender inicialmente as estruturas de programação
 para a repetição de blocos de instruções e instruções condicionais.
