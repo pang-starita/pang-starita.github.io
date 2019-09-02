@@ -39,11 +39,52 @@ Em geral, não usaremos os fluxogramas no dia-a-dia.
 
 ## Estruturas de Repetição
 
+É muito comum precisarmos repetir um bloco de instruções \(passos\) nos
+programas, as estruturas de programação que permitem estas repetições são:
+
+- `repita <bloco de instrução> até <condição de parada>`, ou o equivalente `faça <bloco de instruções> enquanto <condição de continuidade>`
+- `enquanto <condição de continuidade> faça <bloco de instruções>`
+- `para <inicialização>; <condição de continuidade>; <incremento> faça <bloco>`
+
+Observe que a primeira destas estruturas é a única que obrigatoriamente executa
+o bloco de instruções pelo menos uma vez, as outras podem não executar o
+bloco de instruções se a condição de continuidade for falsa desde o início.
+
+É óbvio que se desejamos que a repetição se encerre em algum momento, o bloco de
+instruções deve resultar em continuidade falsa ou parada verdadeira em algum
+momento. Se não teremos um *loop infinito*, i.e., uma malha de repetição que
+continua a executar seu bloco de instruções até que o computador seja desligado
+ou o processo de execução terminado externamente.
+
+A seguir, as mas 3 malhas de repetição são ilustradas com os fluxogramas
+equivalentes, para melhor fixar o funcionamento das estruturas.
+
 ### `repeat ... until condição` ou `do { ... } while (condição)`
+
+![Fluxograma do repeat ... until condição](images/repeat.png)
 
 ### `while (condição) ...`
 
+![Fluxograma do while (condição) ... ](images/while.png)
+
 ### `for (...; ...; ...) { ... }`
+
+![Fluxograma do for (...; ...; ...) { ... }](images/for.png)
+
+Equivalência entre o for e o while do C/C++/Java.
+
+```
+inicialização;
+while ( teste ) {
+  { instruções a repetir; }
+  incremento;
+}
+```
+
+Observe que o `for` de linguagens como Pascal, Pyhton, ... difere desta
+estrutura popularizada pelo C. Nestas outras linguagens, o `for` é uma estrutura
+de repetição de contagem e executa a repetição um número exato de vezes que pode
+ser determinado na entrada da malha de repetição.
 
 ## Exercícios
 
