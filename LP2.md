@@ -56,28 +56,66 @@ momento. Se não teremos um *loop infinito*, i.e., uma malha de repetição que
 continua a executar seu bloco de instruções até que o computador seja desligado
 ou o processo de execução terminado externamente.
 
-A seguir, as mas 3 malhas de repetição são ilustradas com os fluxogramas
+A seguir, as 3 malhas de repetição são ilustradas com os fluxogramas
 equivalentes, para melhor fixar o funcionamento das estruturas.
 
-### `repeat ... until condição` ou `do { ... } while (condição)`
+### `repeat ... until condição` ou <br> `do { ... } while (condição)`
 
-![Fluxograma do repeat ... until condição](images/repeat.png)
+![Fluxograma de `repeat ... until condição`](images/repeat.png)
+
+As instruções `...` são repetidas até a `condição` ser verdadeira, na primeira
+forma e até a `condição` ser falsa na forma com  `do ... while`. Algum cuidado
+deve ser tomado aqui, frequentemente os programadores trocam as condições ao
+trocar de linguagem. Observe que nesta estrutura, as instruções são executadas
+pelo menos uma vez.
 
 ### `while (condição) ...`
 
-![Fluxograma do while (condição) ... ](images/while.png)
+![Fluxograma de `while (condição) ...` ](images/while.png)
+
+Enquanto a `condição` for verdadeira a instrução \(ou o bloco de instruções\)
+é executada. Lembre-se de que a instrução deve alterar o valor da `condição` de
+verdadeira para falsa em algum momento.
 
 ### `for (...; ...; ...) { ... }`
 
-![Fluxograma do for (...; ...; ...) { ... }](images/for.png)
+![Fluxograma de `for (...; ...; ...) { ... }`](images/for.png)
 
-Equivalência entre o for e o while do C/C++/Java.
+Este é o formato do `for` em C/C++/Java. O primeiro `...` faz a *inicialização*
+do `for`, geralmente, com uma ou mais atribuições, cada atribuição separada da
+outra por `,` \(vírgula\). O segundo tem a `condição` de continuidade, se ela
+for verdadeira, as instruções entre chaves, `{ ... }`, são executadas, se não,
+o `for` termina. O terceiro elemento `...` dentro dos parenteses é executado
+no final, depois das instruções a serem repetidas, e é chamado de *incremento*.
+O *incremento*, geralmente, aumenta ou diminui uma variável de controle
+inicializada na *inicialização* e testada na `condição`. Assim como na
+*inicialização*, no *incremento* mais de uma variável pode ser modificada. Cada
+modificação é separada da outra por `,` .
+
+Em C/C++, é valido não colocar nada em qualquer um dos elementos dentro do `for`.
+Assim, em C/C++, é possível escrever: `for ( ;; ) ;`
+
+Esta instrução é um *loop infinito* que não faz nada. Programas de *driver* mal
+escritos executavam este tipo de *loop* para esperar uma *interrupção* para
+continuar.
+
+#### Equivalência entre o for e o while do C/C++/Java.
+
+O `for` pode ser escrito com um `while`:
 
 ```
 inicialização;
 while ( teste ) {
   { instruções a repetir; }
   incremento;
+}
+```
+
+Ou um `while` pode ser substituído por um `for`:
+
+```
+for ( ; condição ; ) {
+  ...
 }
 ```
 
@@ -88,9 +126,9 @@ ser determinado na entrada da malha de repetição.
 
 ## Exercícios
 
-1. Calcular o fatorial de um N dado usando o for
+1. Calcular o fatorial de um N dado usando o `for`.
 
-2. Calcular o n-ésimo elemento da sequência de Fibonacci (para casa)
+2. Calcular o n-ésimo elemento da sequência de Fibonacci (para casa).
 
 3. Dado um texto, numa variável str, calcule o texto reverso. Suponha
 disponíveis `length(str)`, função que retorna o número de caracteres de `str`,
@@ -98,3 +136,35 @@ disponíveis `length(str)`, função que retorna o número de caracteres de `str
 `str.anexa(c)` que anexa, coloca no final, o caracter `c` na string `str`.
 
 ### Teste das soluções com *teste de mesa*
+
+Suponha a seguinte solução para o exercício 1:
+
+> 1. supondo que N é um inteiro declarado e inicializado, declaramos as variáveis i e res inteiras
+> 2. res &larr; 1
+> 3. for (i &larr; 2; i <= N; i++) res &larr; res * i <br>
+> O resultado está em res
+
+Para testar este programa, vamos *rodá-lo na mão* de modo sistemático.
+Constrói-se uma tabela com uma coluna para cada variável e expressão cujo valor
+tenhamos interesse, cada linha da tabela mostra os valores das variáveis para
+cada iteração do `for` \(ou da estrutura de repetição que estamos analisando\).
+Suponha que desejemos saber se o algoritmo/programa calcula o fatorial de 5
+corretamente, teremos o seguinte teste de mesa:
+
++---+---+--------+-----+---------+
+| i | N | i <= N | res | res * i |
++===+===+========+=====+=========+
+| 2 | 5 | true   | 1   | 1 * 2   |
++---+---+--------+-----+---------+
+| 3 | 5 | true   | 2   | 2 * 3   |
++---+---+--------+-----+---------+
+| 4 | 5 | true   | 6   | 6 * 4   |
++---+---+--------+-----+---------+
+| 5 | 5 | true   | 24  | 24 * 5  |
++---+---+--------+-----+---------+
+| 6 | 5 | false  | 120 |   |
++---+---+--------+-----+---------+
+
+#### Exercício
+
+Teste sua solução para o exercício 2, da sequência de Fibonacci para N = 6.

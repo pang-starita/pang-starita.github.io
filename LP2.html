@@ -30,18 +30,117 @@
 <img src="images/blocos_fluxograma.png" alt="" /><figcaption>Blocos básico de fluxograma.</figcaption>
 </figure>
 <p>Fonte: <a href="https://en.wikipedia.org/wiki/Flowchart">Página da Wikipedia sobre Flowchart</a></p>
-<p>A <em>elipse</em> é usada para representar o início e o fim do algoritmo/programa. Um <em>retângulo</em> índica uma ação (um passo, um processo) que deve ser executado. Um <em>losango</em> indica um teste que pode ter 2 (ou 3) resultados diferentes, dependendo do resultado, o fluxo de passos muda. O <em>paralelogramo</em> indica entrada ou saída de dados. Os 2 últimos símbolos, os conectores, servem para indicar <em>continuações</em> do fluxo de instruções/ações quando a página do desenho/gráfico acaba. A <em>bolinha</em> indica que a continuação está na mesma página. O <em>pentagono</em> com a ponta para baixo indica que a continuação está em outra página. O <em>retângulo com barras</em> indica a ativação/chamada de um sub-proceso/subprograma.</p>
+<p>A <em>elipse</em> é usada para representar o início e o fim do algoritmo/programa. Um <em>retângulo</em> índica uma ação (um passo, um processo) que deve ser executado. Um <em>losango</em> indica um teste que pode ter 2 (ou 3) resultados diferentes, dependendo do resultado, o fluxo de passos muda. O <em>paralelogramo</em> indica entrada ou saída de dados. Os 2 últimos símbolos, os conectores, servem para indicar <em>continuações</em> do fluxo de instruções/ações quando a página do desenho/gráfico acaba. A <em>bolinha</em> indica que a continuação está na mesma página. O <em>pentagono</em> com a ponta para baixo indica que a continuação está em outra página. O <em>retângulo com barras</em> indica a ativação/chamada de um sub-processo/subprograma.</p>
 <p>Usaremos fluxogramas para entender inicialmente as estruturas de programação para a repetição de blocos de instruções e instruções condicionais. Em geral, não usaremos os fluxogramas no dia-a-dia.</p>
 <h2 id="estruturas-de-repetição">Estruturas de Repetição</h2>
-<h3 id="repeat-...-until-condição-ou-do-...-while-condição"><code>repeat ... until condição</code> ou <code>do { ... } while (condição)</code></h3>
+<p>É muito comum precisarmos repetir um bloco de instruções (passos) nos programas, as estruturas de programação que permitem estas repetições são:</p>
+<ul>
+<li><code>repita &lt;bloco de instrução&gt; até &lt;condição de parada&gt;</code>, ou o equivalente <code>faça &lt;bloco de instruções&gt; enquanto &lt;condição de continuidade&gt;</code></li>
+<li><code>enquanto &lt;condição de continuidade&gt; faça &lt;bloco de instruções&gt;</code></li>
+<li><code>para &lt;inicialização&gt;; &lt;condição de continuidade&gt;; &lt;incremento&gt; faça &lt;bloco&gt;</code></li>
+</ul>
+<p>Observe que a primeira destas estruturas é a única que obrigatoriamente executa o bloco de instruções pelo menos uma vez, as outras podem não executar o bloco de instruções se a condição de continuidade for falsa desde o início.</p>
+<p>É óbvio que se desejamos que a repetição se encerre em algum momento, o bloco de instruções deve resultar em continuidade falsa ou parada verdadeira em algum momento. Se não teremos um <em>loop infinito</em>, i.e., uma malha de repetição que continua a executar seu bloco de instruções até que o computador seja desligado ou o processo de execução terminado externamente.</p>
+<p>A seguir, as 3 malhas de repetição são ilustradas com os fluxogramas equivalentes, para melhor fixar o funcionamento das estruturas.</p>
+<h3 id="repeat-...-until-condição-ou-do-...-while-condição"><code>repeat ... until condição</code> ou <br> <code>do { ... } while (condição)</code></h3>
+<figure>
+<img src="images/repeat.png" alt="" /><figcaption>Fluxograma de <code>repeat ... until condição</code></figcaption>
+</figure>
+<p>As instruções <code>...</code> são repetidas até a <code>condição</code> ser verdadeira, na primeira forma e até a <code>condição</code> ser falsa na forma com <code>do ... while</code>. Algum cuidado deve ser tomado aqui, frequentemente os programadores trocam as condições ao trocar de linguagem. Observe que nesta estrutura, as instruções são executadas pelo menos uma vez.</p>
 <h3 id="while-condição-..."><code>while (condição) ...</code></h3>
+<figure>
+<img src="images/while.png" alt="" /><figcaption>Fluxograma de <code>while (condição) ...</code></figcaption>
+</figure>
+<p>Enquanto a <code>condição</code> for verdadeira a instrução (ou o bloco de instruções) é executada. Lembre-se de que a instrução deve alterar o valor da <code>condição</code> de verdadeira para falsa em algum momento.</p>
 <h3 id="for-...-...-...-..."><code>for (...; ...; ...) { ... }</code></h3>
+<figure>
+<img src="images/for.png" alt="" /><figcaption>Fluxograma de <code>for (...; ...; ...) { ... }</code></figcaption>
+</figure>
+<p>Este é o formato do <code>for</code> em C/C++/Java. O primeiro <code>...</code> faz a <em>inicialização</em> do <code>for</code>, geralmente, com uma ou mais atribuições, cada atribuição separada da outra por <code>,</code> (vírgula). O segundo tem a <code>condição</code> de continuidade, se ela for verdadeira, as instruções entre chaves, <code>{ ... }</code>, são executadas, se não, o <code>for</code> termina. O terceiro elemento <code>...</code> dentro dos parenteses é executado no final, depois das instruções a serem repetidas, e é chamado de <em>incremento</em>. O <em>incremento</em>, geralmente, aumenta ou diminui uma variável de controle inicializada na <em>inicialização</em> e testada na <code>condição</code>. Assim como na <em>inicialização</em>, no <em>incremento</em> mais de uma variável pode ser modificada. Cada modificação é separada da outra por <code>,</code> .</p>
+<p>Em C/C++, é valido não colocar nada em qualquer um dos elementos dentro do <code>for</code>. Assim, em C/C++, é possível escrever: <code>for ( ;; ) ;</code></p>
+<p>Esta instrução é um <em>loop infinito</em> que não faz nada. Programas de <em>driver</em> mal escritos executavam este tipo de <em>loop</em> para esperar uma <em>interrupção</em> para continuar.</p>
+<h4 id="equivalência-entre-o-for-e-o-while-do-ccjava.">Equivalência entre o for e o while do C/C++/Java.</h4>
+<p>O <code>for</code> pode ser escrito com um <code>while</code>:</p>
+<pre><code>inicialização;
+while ( teste ) {
+  { instruções a repetir; }
+  incremento;
+}</code></pre>
+<p>Ou um <code>while</code> pode ser substituído por um <code>for</code>:</p>
+<pre><code>for ( ; condição ; ) {
+  ...
+}</code></pre>
+<p>Observe que o <code>for</code> de linguagens como Pascal, Pyhton, … difere desta estrutura popularizada pelo C. Nestas outras linguagens, o <code>for</code> é uma estrutura de repetição de contagem e executa a repetição um número exato de vezes que pode ser determinado na entrada da malha de repetição.</p>
 <h2 id="exercícios">Exercícios</h2>
 <ol type="1">
-<li><p>Calcular o fatorial de um N dado usando o for</p></li>
-<li><p>Calcular o n-ésimo elemento da sequência de Fibonacci (para casa)</p></li>
+<li><p>Calcular o fatorial de um N dado usando o <code>for</code>.</p></li>
+<li><p>Calcular o n-ésimo elemento da sequência de Fibonacci (para casa).</p></li>
 <li><p>Dado um texto, numa variável str, calcule o texto reverso. Suponha disponíveis <code>length(str)</code>, função que retorna o número de caracteres de <code>str</code>, <code>[i]</code> operador de índice que permite acessar o i-ésimo caracter da string e <code>str.anexa(c)</code> que anexa, coloca no final, o caracter <code>c</code> na string <code>str</code>.</p></li>
 </ol>
 <h3 id="teste-das-soluções-com-teste-de-mesa">Teste das soluções com <em>teste de mesa</em></h3>
+<p>Suponha a seguinte solução para o exercício 1:</p>
+<blockquote>
+<ol type="1">
+<li>supondo que N é um inteiro declarado e inicializado, declaramos as variáveis i e res inteiras</li>
+<li>res ← 1</li>
+<li>for (i ← 2; i &lt;= N; i++) res ← res * i <br> O resultado está em res</li>
+</ol>
+</blockquote>
+<p>Para testar este programa, vamos <em>rodá-lo na mão</em> de modo sistemático. Constrói-se uma tabela com uma coluna para cada variável e expressão cujo valor tenhamos interesse, cada linha da tabela mostra os valores das variáveis para cada iteração do <code>for</code> (ou da estrutura de repetição que estamos analisando). Suponha que desejemos saber se o algoritmo/programa calcula o fatorial de 5 corretamente, teremos o seguinte teste de mesa:</p>
+<table style="width:46%;">
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 12%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>i</th>
+<th>N</th>
+<th>i &lt;= N</th>
+<th>res</th>
+<th>res * i</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>5</td>
+<td>true</td>
+<td>1</td>
+<td>1 * 2</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>5</td>
+<td>true</td>
+<td>2</td>
+<td>2 * 3</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>5</td>
+<td>true</td>
+<td>6</td>
+<td>6 * 4</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>5</td>
+<td>true</td>
+<td>24</td>
+<td>24 * 5</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>5</td>
+<td>false</td>
+<td>120</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </body>
 </html>
