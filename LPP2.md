@@ -1,4 +1,6 @@
-Aula de Linguagem de Programação Procedural: 2019-08-30
+% Aula de Linguagem de Programação Procedural 2
+% Paulino Ng
+% 2019-08-30
 
 ## Nomenclatura
 
@@ -110,6 +112,35 @@ O arquivo `stdio.h` é um arquivo do sistema que contém diversas declarações
 de C, entre elas o protótipo da função `printf()`. Antes de chamar uma função,
 precisamos declarar o protótipo da função para o compilador.
 
+O primeiro `#include` serve para fornecer o protótipo do `printf()` e o segundo
+serve para fornecer a constante, \(macro\), `EXIT_SUCCESS`, cujo valor é `0`.
+
+Um programa C sempre tem uma função `main()` que é a função que o carregador
+de programas do *SO* chama para executar o programa depois de trazer o
+programa para a memória principal. Na aula passada foi explicado que a
+`main()` do C tem 3 protótipos:
+
+```C
+int main();
+int main(int argc, char **argv);
+int main(int argc, char **argc, char **env);
+```
+
+No caso do programa acima, o NetBeans automaticamente usou o segundo protótipo
+que permite recuperar o nome do programa na variável `argv[0]` e os outros
+argumentos passados ao executar o programa. Veremos como passar argumentos e
+processá-los numa próxima aula.
+
+A função `main()` retorna um inteiro, geralmente `0` quando o programa não
+termina com algum erro. Como números não carregam seu significado com eles,
+uma `macro` foi definida no arquivo `stdlib.h` com o nome `EXIT_SUCCESS` com
+o valor `0`. Assim, fica claro que o `main()` retorna o valor de término com
+sucesso. Antes de terminar o programa na instrução `return`, a instrução
+`printf("Alo, Mamae!\n")` imprime na saída \(aba de saída no quadro abaixo da
+tela de edição\) a mensagem `Alo, Mamae!`. Salta uma linha e mostra quanto
+tempo durou a execução do programa \(isto é feito pelo NetBeans\).
+![Aba de Saída do NetBeans após execução do programa alo.c](images/nb_saida_alo.png)
+
 ### Programa com Subprogramas
 
 Vamos usar arquivos cabeçalho e arquivo de código sem `main()` para dividir
@@ -141,3 +172,39 @@ int main(int argc, char** argv) {
   return (EXIT_SUCCESS);
 }
 ```
+
+### Uso do depurador
+
+1. Insira um *breakpoint* \(ponto de parada\) antes da chamada de `alo()` e
+outro depois. Para inserir um *breakpoint* clique no número da linha do programa
+onde você deseja inserí-lo. Para cancelar o *breakpoint*, basta clicar de novo
+nele.
+
+2. Execute no modo de depuração, o *play* com uma imagem de um breakpoint.
+Veja que o programa para de executar no primeiro *breakpoint*.
+Mas o indicador de que o programa ainda está rodando
+mostra que o programa não terminou. No quadro inferior, existe uma aba com o
+título de variáveis. Nela estão as variáveis do ponto de parada e seus valores.
+Como o programa `alo` não tem nenhuma variável por enquanto, só veremos os
+parâmetros da `main()`, `argc` e `argv`. `argc` tem o valor 1, o que significa
+que o vetor de sequências de caracteres `argv` tem um elemento. O valor de
+`argv` é o endereço de memória onde está o vetor de argumentos da chamada do
+programa. Ao clicar no `+` do argv, você verá o *path* do arquivo do programa.
+
+3. Vá para o próximo *breakpoint* clicando no *play* com botão circular.
+
+4. Termine o programa clicando mais uma vez no *play* circular.
+
+### Exercícios
+
+1. Altere a mensagem a ser impressa para "Alo,\nMamae!\n" execute e observe o resultado. Para o que você acha que serve o `\n`? No lugar de `\n`, experimente usar um `\t` e um `\t\t`.
+2. Experimente aumentar o número de instruções de impressão:
+```
+    printf("linha 1\n");
+    printf("linha 2\n");
+```
+E veja o que ocorre se você retirar o `\n` do primeiro `printf()`.
+3. Declare uma variável inteira no `main()`, inicialize com um valor, por
+exemplo 42, e mude o valor para outro qualquer. Coloque um *breakpoint* antes
+da mudança e outro depois. Rode o depurador e veja o que acontece com o valor
+da variável no depurador nos 2 pontos de parada.
