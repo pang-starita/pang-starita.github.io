@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Paulino Ng" />
+  <meta name="dcterms.date" content="2019-09-04" />
+  <title>O Que É o REST?</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">O Que É o REST?</h1>
+<p class="author">Paulino Ng</p>
+<p class="date">2019-09-04</p>
+</header>
+<h2 id="aprenda-sobre-como-projetar-serviços-da-web-usando-o-paradigma-rest">Aprenda sobre como projetar serviços da Web usando o paradigma REST</h2>
+<p><strong>REST</strong> ou <em>REpresentational State Transfer</em>, é um estilo de arquitetura para fornecer padrões entre sistemas de computador na Web, facilitando a comunicação entre os sistemas. Os sistemas compatíveis com <strong>REST</strong>, geralmente chamados de sistemas <em>RESTful</em>, são caracterizados pela forma como são <em>sem estado</em> e separam as preocupações do cliente e do servidor. Entraremos no que esses termos significam e por que eles são características benéficas para serviços na Web.</p>
+<h2 id="separação-do-cliente-e-do-servidor">SEPARAÇÃO DO CLIENTE E DO SERVIDOR</h2>
+<p>No estilo arquitetural <strong>REST</strong>, a implementação do cliente e a implementação do servidor podem ser feitas independentemente, sem que cada um tenha conhecimento do outro. Isso significa que o código no lado do cliente pode ser alterado a qualquer momento sem afetar a operação do servidor e o código no lado do servidor pode ser alterado sem afetar a operação do cliente.</p>
+<p>Desde que cada lado saiba qual formato de mensagens enviar para o outro, eles podem ser mantidos modulares e separados. Separando as preocupações da interface do usuário das preocupações com armazenamento de dados, melhoramos a flexibilidade da interface entre as plataformas e aprimoramos a escalabilidade, simplificando os componentes do servidor. Além disso, a separação permite que cada componente evolua independentemente.</p>
+<p>Ao usar uma interface <strong>REST</strong>, diferentes clientes chegam nos mesmos pontos extremos <strong>REST</strong>, executam as mesmas ações e recebem as mesmas respostas.</p>
+<h2 id="ausência-de-estado">Ausência de Estado</h2>
+<p>Sistemas que seguem o paradigma <strong>REST</strong> são sem estado, o que significa que o servidor não precisa saber nada sobre o estado do cliente e vice-versa. Dessa forma, tanto o servidor quanto o cliente podem entender qualquer mensagem recebida, mesmo sem ver as mensagens anteriores. Esta restrição de ausência de estado é imposta através do uso de recursos, em vez de comandos. Recursos são os substantivos da Web - eles descrevem qualquer objeto, documento ou coisa que você pode precisar armazenar ou enviar para outros serviços.</p>
+<p>Como os sistemas <strong>REST</strong> interagem através de operações padrões nos recursos, eles não dependem da implementação de interfaces.</p>
+<p>Essas restrições ajudam os aplicativos <strong>RESTful</strong> a obterem confiabilidade, desempenho rápido e escalabilidade, como componentes que podem ser gerenciados, atualizados e reutilizados sem afetar o sistema como um todo, mesmo durante a operação do sistema.</p>
+<p>Agora, vamos explorar como a comunicação entre o cliente e o servidor realmente acontece quando estamos implementando uma interface <strong>RESTful</strong>.</p>
+<h2 id="comunicação-entre-o-cliente-e-o-servidor">COMUNICAÇÃO ENTRE O CLIENTE E O SERVIDOR</h2>
+<p>Na arquitetura <strong>REST</strong>, os clientes enviam solicitações para obter ou modificar recursos e os servidores enviam respostas a essas solicitações. Vamos dar uma olhada nas formas padrões de fazer solicitações e enviar respostas.</p>
+<h3 id="envio-de-requisições">Envio de Requisições</h3>
+<p>O <strong>REST</strong> exige que um cliente faça uma solicitação ao servidor para recuperar ou modificar dados no servidor. Uma solicitação geralmente consiste em:</p>
+<ul>
+<li>um verbo HTTP, que define que tipo de operação realizar</li>
+<li>um cabeçalho, que permite ao cliente passar informações sobre a solicitação</li>
+<li>um caminho para um recurso</li>
+<li>um corpo de mensagem opcional contendo dados</li>
+</ul>
+<h4 id="verbos-do-http">Verbos do HTTP</h4>
+<p>Existem 4 verbos básicos de HTTP que usamos em pedidos para interagir com recursos em um sistema <strong>REST</strong>:</p>
+<ul>
+<li><strong>GET</strong> - recuperar um recurso específico (por id) ou uma coleção de recursos</li>
+<li><strong>POST</strong> - criar um novo recurso</li>
+<li><strong>PUT</strong> - atualizar um recurso específico (por id)</li>
+<li><strong>DELETE</strong> - remover um recurso específico (por id)</li>
+</ul>
+<h4 id="parâmetros-no-header-e-no-accept">Parâmetros no Header e no Accept</h4>
+<p>No cabeçalho da solicitação, o cliente envia o tipo de conteúdo que pode receber do servidor. Isso é chamado de campo de <code>Accept</code> e garante que o servidor não envie dados que não possam ser compreendidos ou processados ​​pelo cliente. As opções para tipos de conteúdo são <em>MIME Types</em> (<em>Multipurpose Internet Mail Extensions</em>), sobre as quais você pode ler mais no <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types">MDN Web Docs</a>. Os <em>MIME Types</em>, usados ​​para especificar os tipos de conteúdo no campo <code>Accept</code>, consistem em um tipo e um subtipo. Eles são separados por uma barra inclinada (/).</p>
+<p>Por exemplo, um arquivo de texto contendo HTML seria especificado com o tipo <code>text/html</code>. Se esse arquivo de texto contivesse <em>CSS</em>, ele seria especificado como <code>text/css</code>. Um arquivo de texto genérico seria denotado como <code>text/plain</code>. Este valor padrão, <code>text/plain</code>, não é um faz-tudo, no entanto. Se um cliente está esperando <code>text/css</code> e recebe <code>text/plain</code>, ele não será capaz de reconhecer o conteúdo.</p>
+<p>Outros tipos e os subtipos comumente usados são:</p>
+<ul>
+<li><strong>imagem</strong> — <code>image/png</code>, <code>image/jpeg</code>, <code>image/gif</code></li>
+<li><strong>áudio</strong> — <code>audio/wav</code>, <code>image/mpeg</code></li>
+<li><strong>vídeo</strong> — <code>video/mp4</code>, <code>video/ogg</code></li>
+<li><strong>aplicação</strong> — <code>application/json</code>, <code>application/pdf</code>, <code>application/xml</code>, <code>application/octet-stream</code></li>
+</ul>
+<p>Por exemplo, um cliente acessando um recurso com id 23 em um recurso <code>articles</code> em um servidor pode enviar um pedido <strong>GET</strong> assim:</p>
+<pre><code>GET /articles/23
+Accept: text/html, application/xhtml</code></pre>
+<p>O campo de cabeçalho <code>Accept</code> neste caso está dizendo que o cliente aceitará o conteúdo em <code>text/html</code> ou <code>application/xhtml</code>.</p>
+<h4 id="paths">PATHs</h4>
+<p>As solicitações devem conter um caminho (<em>path</em>) para um recurso no qual a operação deve ser executada. Nas APIs <strong>RESTful</strong>, os caminhos devem ser projetados para ajudar o cliente a saber o que está acontecendo.</p>
+<p>Convencionalmente, a primeira parte do caminho deve ser a forma plural do recurso. Isso mantém os caminhos aninhados simples de ler e fáceis de entender.</p>
+<p>Um caminho como <code>fashionboutique.com/customers/223/orders/12</code> é claro no que ele aponta, mesmo que você nunca tenha visto esse caminho específico antes, porque é hierárquico e descritivo. Podemos ver que estamos acessando o pedido com id 12 para o cliente com id 223. Os caminhos devem conter as informações necessárias para localizar um recurso com o grau de especificidade necessário. Ao se referir a uma lista ou coleção de recursos, não é necessário adicionar um ID a uma solicitação <code>POST</code> para um <code>fashionboutique.com/customers</code> caminho que não precisaria de um identificador extra, pois o servidor gerará um id para o novo objeto.</p>
+<p>Se estamos tentando acessar um único recurso, precisaríamos acrescentar um ID ao caminho. Por exemplo: <code>GET fashionboutique.com/customers/:id</code> - recupera o item no recurso <code>customers</code> com o ID especificado. <code>DELETE fashionboutique.com/customers/:id</code> - exclui o item no recurso <code>customers</code> com o ID especificado.</p>
+<h3 id="envio-de-respostas">Envio de Respostas</h3>
+<h4 id="tipos-de-conteúdo">Tipos de Conteúdo</h4>
+<p>Nos casos em que o servidor está enviando uma carga de dados para o cliente, o servidor deve incluir um <code>content-type</code> no cabeçalho da resposta. Esse campo de cabeçalho <code>content-type</code> alerta o cliente para o tipo de dados que está enviando no corpo da resposta. Esses tipos de conteúdo são tipos de MIME, assim como estão no campo <code>accept</code> do cabeçalho da solicitação. O <code>content-type</code> que o servidor envia de volta na resposta deve ser de uma das opções que o cliente especificou no campo <code>accept</code> da solicitação.</p>
+<p>Por exemplo, quando um cliente está acessando um recurso com o id 23 em um recurso <code>articles</code> com essa requisição <code>GET</code>:</p>
+<pre><code>GET /articles/23 HTTP/1.1
+Accept: text/html, application/xhtml</code></pre>
+<p>O servidor pode enviar de volta o conteúdo com o cabeçalho de resposta :</p>
+<pre><code>HTTP/1.1 200 (OK)
+Content-Type: text/html</code></pre>
+<p>Isso significa que o conteúdo solicitado está retornando no corpo da resposta com um <code>Content-type</code> de <code>text/html</code>, que o cliente disse que aceitaria.</p>
+<h4 id="códigos-de-resposta">Códigos de Resposta</h4>
+<p>As respostas do servidor contêm códigos de <em>status</em> para alertar o cliente com informações sobre o sucesso da operação. Como desenvolvedor, você não precisa conhecer todos os códigos de status (há muitos deles), mas você deve conhecer os mais comuns e como eles são usados:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Código de Status</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>200 (OK)</code></td>
+<td>Esta é a resposta padrão para requisições de HTTP bem-sucedidas.</td>
+</tr>
+<tr class="even">
+<td><code>201 (CREATED)</code></td>
+<td>Esta é a resposta padrão para uma requisição de HTTP que resultou em um item sendo criado com sucesso.</td>
+</tr>
+<tr class="odd">
+<td><code>204 (NO CONTENT)</code></td>
+<td>Esta é a resposta padrão para requisições de HTTP bem-sucedidas, em que nada está sendo retornado no corpo da resposta.</td>
+</tr>
+<tr class="even">
+<td><code>400 (BAD REQUEST)</code></td>
+<td>A requisição não pode ser processada devido à sintaxe de requisição incorreta, tamanho excessivo ou outro erro do cliente.</td>
+</tr>
+<tr class="odd">
+<td><code>403 (FORBIDDEN)</code></td>
+<td>O cliente não tem permissão para acessar este recurso.</td>
+</tr>
+<tr class="even">
+<td><code>404 (NOT FOUND)</code></td>
+<td>O recurso não pôde ser encontrado neste momento. É possível que tenha sido apagado ou não exista.</td>
+</tr>
+<tr class="odd">
+<td><code>500 (INTERNAL SERVER ERROR)</code></td>
+<td>A resposta genérica para uma falha inesperada se não houver mais informações específicas disponíveis.</td>
+</tr>
+</tbody>
+</table>
+<p>Para cada verbo HTTP, há códigos de <em>status</em> esperados que um servidor deve retornar após o sucesso:</p>
+<ul>
+<li><strong>GET</strong> - retornar <code>200 (OK)</code></li>
+<li><strong>POST</strong> - retornar <code>201 (CREATED)</code></li>
+<li><strong>PUT</strong> - retornar <code>200 (OK)</code></li>
+<li><strong>DELETE</strong> - retornar <code>204 (NO CONTENT)</code> Se a operação falhar, retorne o código de status mais específico possível correspondente ao problema encontrado.</li>
+</ul>
+<h4 id="exemplos-de-requisições-e-respostas">Exemplos de Requisições e Respostas</h4>
+<p>Digamos que temos um aplicativo que permite visualizar, criar, editar e excluir clientes e pedidos de uma pequena loja de roupas hospedada no <code>fashionboutique.com</code>. Poderíamos criar uma API HTTP que permitisse a um cliente executar estas funções:</p>
+<p>Se quiséssemos visualizar todos os clientes (<em>customers</em>), a requisição ficaria assim:</p>
+<pre><code>GET http://fashionboutique.com/customers
+Accept: application/json</code></pre>
+<p>Um cabeçalho de resposta possível seria parecido com:</p>
+<pre><code>Status Code: 200 (OK)
+Content-type: application/json</code></pre>
+<p>seguido dos dados requisitados dos clientes no formato <code>application/json</code>.</p>
+<p>Crie um novo cliente postando os dados:</p>
+<pre><code>POST http://fashionboutique.com/customers
+Body:
+{
+  &quot;customer&quot;: {
+    &quot;name&quot; = &quot;Walter Carvalho&quot;
+    &quot;email&quot; = &quot;walter.carvalho@loucademia.org&quot;
+  }
+}</code></pre>
+<p>O servidor, em seguida, gera um ID para esse objeto e retorna-o de volta para o cliente, com um cabeçalho do tipo:</p>
+<pre><code>201 (CREATED)
+Content-type: application/json</code></pre>
+<p>Para visualizar um único cliente usamos o <code>GET</code> especificando o id do cliente:</p>
+<pre><code>GET http://fashionboutique.com/customers/123
+Accept: application/json</code></pre>
+<p>Um cabeçalho de resposta possível seria semelhante a:</p>
+<pre><code>Status Code: 200 (OK)
+Content-type: application/json</code></pre>
+<p>seguido pelos dados para o recurso do <code>customer</code> com id 23 no formato <code>application/json</code>.</p>
+</body>
+</html>
