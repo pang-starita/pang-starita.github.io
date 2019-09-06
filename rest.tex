@@ -1,0 +1,434 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[12pt, a4paper
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{indentfirst}
+\usepackage[a4paper, margin=2cm]{geometry}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={O Que É o REST?},
+  pdfauthor={Paulino Ng},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{O Que É o REST?}
+\author{Paulino Ng}
+\date{2019-09-04}
+
+\begin{document}
+\maketitle
+
+\hypertarget{aprenda-sobre-como-projetar-serviuxe7os-da-web-usando-o-paradigma-rest}{%
+\subsection{Aprenda sobre como projetar serviços da Web usando o
+paradigma
+REST}\label{aprenda-sobre-como-projetar-serviuxe7os-da-web-usando-o-paradigma-rest}}
+
+\textbf{REST}, ou \emph{REpresentational State Transfer}, é um estilo de
+arquitetura para fornecer padrões entre sistemas de computador na Web,
+facilitando a comunicação entre os sistemas. Os sistemas compatíveis com
+\textbf{REST}, geralmente chamados de sistemas \emph{RESTful}, são
+caracterizados pela forma como são \emph{sem estado} e isolam as
+preocupações do cliente e do servidor. Explicaremos o que esses termos
+significam e por que eles são características benéficas para serviços na
+Web.
+
+\hypertarget{separauxe7uxe3o-do-cliente-e-do-servidor}{%
+\subsection{Separação do Cliente e do Servidor}\label{separauxe7uxe3o-do-cliente-e-do-servidor}}
+
+No estilo arquitetural \textbf{REST}, a implementação do cliente e a
+implementação do servidor podem ser feitas independentemente, sem que
+cada um tenha conhecimento do outro. Isso significa que o código no lado
+do cliente pode ser alterado a qualquer momento sem afetar a operação do
+servidor e o código no lado do servidor pode ser alterado sem afetar a
+operação do cliente.
+
+Desde que cada lado saiba qual formato de mensagens enviar para o outro,
+eles podem ser mantidos modulares e separados. Separando as preocupações
+da interface do usuário das preocupações com armazenamento de dados,
+melhoramos a flexibilidade da interface entre as plataformas e
+aprimoramos a escalabilidade, simplificando os componentes do servidor.
+Além disso, a separação permite que cada componente evolua
+independentemente.
+
+Ao usar uma interface \textbf{REST}, diferentes clientes chegam nos
+mesmos pontos extremos \textbf{REST}, executam as mesmas ações e recebem
+as mesmas respostas.
+
+\hypertarget{ausuxeancia-de-estado}{%
+\subsection{Ausência de Estado}\label{ausuxeancia-de-estado}}
+
+Sistemas que seguem o paradigma \textbf{REST} são sem estado, o que
+significa que o servidor não precisa saber nada sobre o estado do
+cliente e vice-versa. Dessa forma, tanto o servidor quanto o cliente
+podem entender qualquer mensagem recebida, mesmo sem ver as mensagens
+anteriores. Esta restrição de ausência de estado é imposta através do
+uso de recursos, em vez de comandos. Recursos são os substantivos da Web
+- eles descrevem qualquer objeto, documento ou coisa que você pode
+precisar armazenar ou enviar para outros serviços.
+
+Como os sistemas \textbf{REST} interagem através de operações padrões
+nos recursos, eles não dependem da implementação de interfaces.
+
+Essas restrições ajudam os aplicativos \textbf{RESTful} a obterem
+confiabilidade, desempenho rápido e escalabilidade, como componentes que
+podem ser gerenciados, atualizados e reutilizados sem afetar o sistema
+como um todo, mesmo durante a operação do sistema.
+
+Agora, vamos explorar como a comunicação entre o cliente e o servidor
+realmente acontece quando estamos implementando uma interface
+\textbf{RESTful}.
+
+\hypertarget{comunicauxe7uxe3o-entre-o-cliente-e-o-servidor}{%
+\subsection{Comunicação entre o Cliente e o Servidor}\label{comunicauxe7uxe3o-entre-o-cliente-e-o-servidor}}
+
+Na arquitetura \textbf{REST}, os clientes enviam solicitações para obter
+ou modificar recursos e os servidores enviam respostas a essas
+solicitações. Vamos dar uma olhada nas formas padrões de fazer
+solicitações e enviar respostas.
+
+\hypertarget{envio-de-requisiuxe7uxf5es}{%
+\subsubsection{Envio de Requisições}\label{envio-de-requisiuxe7uxf5es}}
+
+O \textbf{REST} exige que um cliente faça uma solicitação ao servidor
+para recuperar ou modificar dados no servidor. Uma solicitação
+geralmente consiste em:
+
+\begin{itemize}
+\tightlist
+\item
+  um verbo HTTP, que define que tipo de operação realizar
+\item
+  um cabeçalho, que permite ao cliente passar informações sobre a
+  solicitação
+\item
+  um caminho para um recurso
+\item
+  um corpo de mensagem opcional contendo dados
+\end{itemize}
+
+\hypertarget{verbos-do-http}{%
+\subsubsection{Verbos do HTTP}\label{verbos-do-http}}
+
+Existem 4 verbos básicos de HTTP que usamos em pedidos para interagir
+com recursos em um sistema \textbf{REST}:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{GET} - recuperar um recurso específico (por id) ou uma coleção
+  de recursos
+\item
+  \textbf{POST} - criar um novo recurso
+\item
+  \textbf{PUT} - atualizar um recurso específico (por id)
+\item
+  \textbf{DELETE} - remover um recurso específico (por id)
+\end{itemize}
+
+\hypertarget{paruxe2metros-no-header-e-no-accept}{%
+\subsubsection{Parâmetros no Header e no
+Accept}\label{paruxe2metros-no-header-e-no-accept}}
+
+No cabeçalho da solicitação, o cliente envia o tipo de conteúdo que pode
+receber do servidor. Isso é chamado de campo de \texttt{Accept} e
+garante que o servidor não envie dados que não possam ser compreendidos
+ou processados pelo cliente. As opções para \texttt{content-type} são
+\emph{MIME Types} (\emph{Multipurpose Internet Mail Extensions}), sobre
+as quais você pode se aprofundar em
+\href{https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types}{MDN
+Web Docs}. Os \emph{MIME Types}, usados para especificar os tipos de
+conteúdo no campo \texttt{Accept}, consistem em um tipo e um subtipo.
+Eles são separados por uma barra inclinada (/).
+
+Por exemplo, um arquivo de texto contendo HTML seria especificado com o
+tipo \texttt{text/html}. Se esse arquivo de texto contivesse \emph{CSS},
+ele seria especificado como \texttt{text/css}. Um arquivo de texto
+genérico seria denotado como \texttt{text/plain}. Este valor padrão,
+\texttt{text/plain}, não é um faz-tudo, substituto para qualquer coisa. Se um cliente está
+esperando \texttt{text/css} e recebe \texttt{text/plain}, ele não será
+capaz de reconhecer o conteúdo e renderizar adequadamente uma página HTML.
+
+Outros tipos e subtipos comumente usados são:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{imagem} --- \texttt{image/png}, \texttt{image/jpeg},
+  \texttt{image/gif}
+\item
+  \textbf{áudio} --- \texttt{audio/wav}, \texttt{image/mpeg}
+\item
+  \textbf{vídeo} --- \texttt{video/mp4}, \texttt{video/ogg}
+\item
+  \textbf{aplicação} --- \texttt{application/json},
+  \texttt{application/pdf}, \texttt{application/xml},\\
+  \texttt{application/octet-stream}
+\end{itemize}
+
+Por exemplo, um cliente acessando um recurso com id 23 em um recurso
+\texttt{articles} em um servidor pode enviar um pedido \textbf{GET}
+assim:
+
+\begin{verbatim}
+GET /articles/23
+Accept: text/html, application/xhtml
+\end{verbatim}
+
+O campo de cabeçalho \texttt{Accept} neste caso está dizendo que o
+cliente aceitará o conteúdo em \texttt{text/html} ou
+\texttt{application/xhtml}.
+
+\hypertarget{paths}{%
+\subsubsection{PATHs}\label{paths}}
+
+As solicitações devem conter um caminho (\emph{path}) para um recurso no
+qual a operação deve ser executada. Nas APIs \textbf{RESTful}, os
+caminhos devem ser projetados para ajudar o cliente a saber o que está
+acontecendo.
+
+Convencionalmente, a primeira parte do caminho deve ser a forma plural
+do recurso. Isso mantém os caminhos aninhados simples de ler e fáceis de
+entender.
+
+Um caminho como \texttt{fashionboutique.com/customers/223/orders/12} é
+claro no que ele indica, mesmo que você nunca tenha visto esse caminho
+específico antes, porque é hierárquico e descritivo. Podemos ver que
+estamos acessando o pedido com id 12 para o cliente com id 223. Os
+caminhos devem conter as informações necessárias para localizar um
+recurso com o grau de especificidade necessário. Ao se referir a uma
+lista ou coleção de recursos, não é necessário adicionar um ID a uma
+solicitação \texttt{POST}. Por exemplo, para um caminho \texttt{fashionboutique.com/customers}
+não precisa de um identificador extra, pois o servidor
+gerará um id para o novo objeto.
+
+Se estamos tentando acessar um único recurso, precisaríamos acrescentar
+um ID ao caminho. Por exemplo:
+\texttt{GET\ fashionboutique.com/customers/:id} - recupera o item no
+recurso \texttt{customers} com o id especificado.
+\texttt{DELETE\ fashionboutique.com/customers/:id} - exclui o item no
+recurso \texttt{customers} com o id especificado.
+
+\hypertarget{envio-de-respostas}{%
+\subsubsection{Envio de Respostas}\label{envio-de-respostas}}
+
+\hypertarget{tipos-de-conteuxfado}{%
+\subsubsection{Tipos de Conteúdo}\label{tipos-de-conteuxfado}}
+
+Nos casos em que o servidor está enviando dados para o
+cliente, o servidor deve incluir um \texttt{Content-Type} no cabeçalho
+da resposta. Esse campo de cabeçalho \texttt{Content-Type} alerta o
+cliente para o tipo de dados que está enviando no corpo da resposta.
+Esses tipos de conteúdo são tipos de MIME, assim como estão no campo
+\texttt{Accept} do cabeçalho da solicitação. O \texttt{Content-Type} que
+o servidor envia de volta na resposta deve ser de uma das opções que o
+cliente especificou no campo \texttt{Accept} da solicitação.
+
+Por exemplo, quando um cliente está acessando um recurso com o id 23 em
+um recurso \texttt{articles} com essa requisição \texttt{GET}:
+
+\begin{verbatim}
+GET /articles/23 HTTP/1.1
+Accept: text/html, application/xhtml
+\end{verbatim}
+
+O servidor pode enviar de volta o conteúdo com o cabeçalho de resposta :
+
+\begin{verbatim}
+HTTP/1.1 200 (OK)
+Content-Type: text/html
+\end{verbatim}
+
+Isso significa que o conteúdo solicitado está retornando no corpo da
+resposta com um \texttt{Content-Type} de \texttt{text/html}, que o
+cliente disse que aceitaria.
+
+\hypertarget{cuxf3digos-de-resposta}{%
+\subsubsection{Códigos de Resposta}\label{cuxf3digos-de-resposta}}
+
+As respostas do servidor contém códigos de \emph{status} para alertar o
+cliente com informações sobre o sucesso da operação. Como desenvolvedor,
+você não precisa conhecer todos os códigos de status (há muitos deles),
+mas você deve conhecer os mais comuns e como eles são usados:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.47\columnwidth}\raggedright
+Código de Status\strut
+\end{minipage} & \begin{minipage}[b]{0.47\columnwidth}\raggedright
+Significado\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{200\ (OK)}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Esta é a resposta padrão para requisições de HTTP bem-sucedidas.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{201\ (CREATED)}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Esta é a resposta padrão para uma requisição de HTTP que resultou em um
+item sendo criado com sucesso.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{204\ (NO\ CONTENT)}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+Esta é a resposta padrão para requisições de HTTP bem-sucedidas, em que
+nada está sendo retornado no corpo da resposta.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{400\ (BAD\ REQUEST)}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+A requisição não pode ser processada devido à sintaxe de requisição
+incorreta, tamanho excessivo ou outro erro do cliente.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{403\ (FORBIDDEN)}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+O cliente não tem permissão para acessar este recurso.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{404\ (NOT\ FOUND)}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+O recurso não pôde ser encontrado neste momento. É possível que tenha
+sido apagado ou não exista.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright
+\texttt{500\ (INTERNAL\ SERVER\ ERROR)}\strut
+\end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\raggedright
+A resposta genérica para uma falha inesperada se não houver mais
+informações específicas disponíveis.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Para cada verbo HTTP, há códigos de \emph{status} esperados que um
+servidor deve retornar após o sucesso:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{GET} - retornar \texttt{200\ (OK)}
+\item
+  \textbf{POST} - retornar \texttt{201\ (CREATED)}
+\item
+  \textbf{PUT} - retornar \texttt{200\ (OK)}
+\item
+  \textbf{DELETE} - retornar \texttt{204\ (NO\ CONTENT)} Se a operação
+  falhar, retorne o código de status mais específico possível
+  correspondente ao problema encontrado.
+\end{itemize}
+
+\hypertarget{exemplos-de-requisiuxe7uxf5es-e-respostas}{%
+\subsubsection{Exemplos de Requisições e
+Respostas}\label{exemplos-de-requisiuxe7uxf5es-e-respostas}}
+
+Digamos que temos um aplicativo que permite visualizar, criar, editar e
+excluir clientes e pedidos de uma pequena loja de roupas hospedada no
+\texttt{fashionboutique.com}. Poderíamos criar uma API HTTP que
+permitisse a um cliente executar estas funções:
+
+Se quiséssemos visualizar todos os clientes (\emph{customers}), a
+requisição ficaria assim:
+
+\begin{verbatim}
+GET http://fashionboutique.com/customers
+Accept: application/json
+\end{verbatim}
+
+Um cabeçalho de resposta possível seria parecido com:
+
+\begin{verbatim}
+Status Code: 200 (OK)
+Content-Type: application/json
+\end{verbatim}
+
+seguido dos dados requisitados dos clientes no formato
+\texttt{application/json}.
+
+Crie um novo cliente postando os dados:
+
+\begin{verbatim}
+POST http://fashionboutique.com/customers
+Body:
+{
+  "customer": {
+    "name" = "Walter Carvalho"
+    "email" = "walter.carvalho@loucademia.org"
+  }
+}
+\end{verbatim}
+
+O servidor, em seguida, gera um ID para esse objeto e retorna-o de volta
+para o cliente, com um cabeçalho do tipo:
+
+\begin{verbatim}
+201 (CREATED)
+Content-Type: application/json
+\end{verbatim}
+
+Para visualizar um único cliente usamos o \texttt{GET} especificando o
+id do cliente:
+
+\begin{verbatim}
+GET http://fashionboutique.com/customers/123
+Accept: application/json
+\end{verbatim}
+
+Um cabeçalho de resposta possível seria semelhante a:
+
+\begin{verbatim}
+Status Code: 200 (OK)
+Content-Type: application/json
+\end{verbatim}
+
+seguido pelos dados para o recurso do \texttt{customer} com id 23 no
+formato \texttt{application/json}.
+
+\end{document}
