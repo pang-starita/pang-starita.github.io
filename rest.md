@@ -257,3 +257,149 @@ Content-type: application/json
 
 seguido pelos dados para o recurso do `customer` com id 23 no formato
 `application/json`.
+
+Podemos atualizar esse cliente usando o `PUT` para enviar os novos dados:
+
+```
+PUT http://fashionboutique.com/customers/123
+Body:
+{
+  “customer”: {
+    “name” = “Walter Carvalho”
+    “email” = “waltercarvalho1@loucademia.com”
+  }
+}
+```
+
+Um cabeçalho de resposta possível teria `Status Code: 200 (OK)`, para
+notificar o cliente de que o item com o ID 123 foi modificado.
+
+Também podemos *EXCLUIR* esse cliente especificando seu id:
+
+```
+DELETE http://fashionboutique.com/customers/123
+```
+
+A resposta teria um cabeçalho contendo `Status Code: 204 (NO CONTENT)`,
+notificando o cliente de que o item com id 123 foi excluído e um corpo
+sem nada.
+
+## PRÁTICA COM O REST
+
+Vamos imaginar que estamos construindo um site de coleta de fotos para um desejo diferente de criar uma API para acompanhar usuários, locais e fotos desses locais. Este site tem um `index.html` e um `style.css`. Cada usuário tem um nome de usuário e uma senha. Cada foto tem um local e um proprietário \(ou seja, o usuário que tirou a foto\). Cada local tem um nome e endereço. Você pode projetar um sistema **REST** que possa acomodar:
+
+- armazenar usuários, fotos e locais
+- acessar locais e acessar determinadas fotos de um determinado local
+
+Comece escrevendo:
+
+- que tipos de solicitações gostaríamos de fazer
+- quais respostas o servidor deveria retornar
+- qual `content-type` cada resposta deveria ter
+
+### SOLUÇÃO POSSÍVEL - MODELOS
+
+```
+{
+  “user”: {
+    "id": <Integer>,
+    “username”: <String>,
+    “password”:  <String>
+  }
+}
+```
+
+```
+{
+  “photo”: {
+    "id": <Integer>,
+    “venue_id”: <Integer>,
+    “author_id”: <Integer>
+  }
+}
+```
+
+```
+{
+  “venue”: {
+    "id": <Integer>,
+    “name”: <String>,
+    “address”: <String>
+  }
+}
+```
+
+### SOLUÇÃO POSSÍVEL - REQUISIÇÕES/RESPOSTAS
+
+#### Requisições GET
+
+```
+Request- GET /index.html Accept: text/html
+Response- 200 (OK) Content-type: text/html
+```
+
+```
+Request- GET /style.css Accept: text/css
+Response- 200 (OK) Content-type: text/css
+```
+
+```
+Request- GET /venues Accept:application/json
+Response- 200 (OK) Content-type: application/json
+```
+
+```
+Request- GET /venues/:id Accept: application/json
+Response- 200 (OK) Content-type: application/json
+```
+
+```
+Request- GET /venues/:id/photos/:id Accept: application/json
+Response- 200 (OK) Content-type: image/png
+```
+
+#### Requisições POST
+
+```
+Request- POST /users
+Response- 201 (CREATED) Content-type: application/json
+```
+
+```
+Request- POST /venues
+Response- 201 (CREATED) Content-type: application/json
+```
+
+```
+Request- POST /venues/:id/photos
+Response- 201 (CREATED) Content-type: application/json
+```
+
+#### Requisições PUT
+
+```
+Request- PUT /users/:id
+Response- 200 (OK)
+```
+
+```
+Request- PUT /venues/:id
+Response- 200 (OK)
+```
+
+```
+Request- PUT /venues/:id/photos/:id
+Response- 200 (OK)
+```
+
+#### Requisições DELETE
+
+```
+Request- DELETE /venues/:id
+Response- 204 (NO CONTENT)
+```
+
+```
+Request- DELETE /venues/:id/photos/:id
+Response- 204 (NO CONTENT)
+```
