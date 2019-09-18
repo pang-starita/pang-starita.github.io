@@ -36,4 +36,9 @@ int main () {
     sscanf(cursor, ";%f", &p2);
     printf("Nome: %s,\tP1 = %4.1f,\tP2 = %4.1f\n", nome, p1, p2);
     return(0);
+}
 ```
+
+[Solução 1: realizando a leitura das 2 notas no mesmo scanf](notas1.c)
+
+[Solução 2: saltando os dados entre o primeiro ; e o segundo](notas2.c)
