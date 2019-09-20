@@ -183,8 +183,46 @@ o código para uso futuro, vamos transformar o código numa função e usá-lo:
 
 ```Python
 def fatorial(n):
-  ...
+  acc = 1
+  i = 2
+  while i <= n:
+    acc *= i
+    i += 1
+  return acc
+
+print('O fatorial de 20 eh', fatorial(20))
+```
 
 ### Cálculo do n-ésimo elemento da sequência de Fibonacci
 
-Vamos aproveitar a atribuição
+Vamos aproveitar a atribuição múltipla do Python, como com o fatorial, vamos
+primeiro escrever o programa para um caso especial, n = 5, que sabemos ser 3,
+pois a sequência até o quinto elemento é `[0,1,1,2,3]`.
+
+```Python
+n = 5
+anterior = 0
+atual = 1
+i = 2
+while i < n:
+  anterior, atual = atual, anterior + atual
+  i += 1
+print('O quinto elemento da sequência de Fibonacci eh', atual)
+```
+
+Observe que a condição de continuidade é `i < n` e não `i <= n`. Por que?
+
+> Quando a malha de repetição vai terminar? Quando o `i` não for mais menor do
+que n, a primeira vez em que isto ocorre é quando `i == n`. Logo a condição
+de continuidade é `i < n`, se inclui-se a igualdade, a malha de repetição
+continuaria até `i == n + 1`.
+
+#### Exercício:
+
+Converta o programa para uma função que calcula o n-ésimo
+elemento da sequência de Fibonacci e chame a função para calcular o centésimo
+elemento.
+
+### Cálculo da string reversa
+
+...

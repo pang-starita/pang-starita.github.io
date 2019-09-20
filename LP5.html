@@ -97,12 +97,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">&#39;Alo, Mamae!&#39;</span></span></code></pre></div>
 <p>Execute a célula pelo teclado com <kbd>Shift</kbd>+<kbd>Enter</kbd> ou com o <em>mouse</em> clicando no botão <kbd>Run</kbd> na barra de ferramentas.</p>
 <p>Ao executar uma célula, o notebook escreve o resultado do cálculo da última instrução se ela resulta num valor e abre uma nova célula para o usuário colocar/calcular novas instruções. A instrução que foi “executada”, na verdade “calculou” o valor textual <code>Alo, Mamae!</code>. Muitas linguagens de programação não consideram uma instrução válida um <em>valor literal</em> solto como o dado. Mas o Python considera um valor como uma instrução válida (inútil, mas válida).</p>
-<p>Experimente “calcular” outros valores como:</p>
+<p>Experimente “calcular” outros valores como (uma linha em cada célula):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="dv">42</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="dv">14</span> <span class="op">*</span> <span class="dv">3</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">&#39;Alo, &#39;</span> <span class="op">+</span> <span class="st">&#39;Mamae!&#39;</span></span></code></pre></div>
+<h3 id="atribuição-de-valores-a-variáveis">Atribuição de valores a variáveis</h3>
+<p>Vamos colocar (atribuir) valores em variáveis usando o operador de atribuição <code>=</code>.</p>
+<p>Coloque numa célula:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>x <span class="op">=</span> <span class="dv">42</span></span></code></pre></div>
+<p>Execute esta célula. Observe que diferente de quando “executamos” valores (cálculo de expressões), a execução da célula não resultou em nenhum valor. Isto porque em Python, a atribuição não gera um valor. Em muitas linguagens (C, C++, Java), a atribuição resulta no valor atribuído. Isto permite atribuições em cascata como: <code>a = b = c = 42</code>. Este tipo de atribuição não é possível em Python.</p>
+<p>Para verificar que a variável <code>x</code> tem o valor <code>42</code>, vamos pedir para imprimir o valor da variável <code>x</code> com a função <code>print()</code>. Na célula nova, coloque:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="bu">print</span>(x)</span></code></pre></div>
+<p>Execute e veja que o valor <code>42</code> é impresso. Isto porque o <code>print()</code> imprime o valor de seus argumentos.</p>
+<p>Vamos trocar o valor de <code>x</code> por <code>'Alo, Mamae!'</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>x <span class="op">=</span> <span class="st">&#39;Alo, Mamae!&#39;</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="bu">print</span>(x)</span></code></pre></div>
+<p>Observe que o valor <code>42</code> da variável <code>x</code> foi substituído pelo texto <code>Alo, Mamae!</code>. Diferente de linguagens fortemente tipadas como o C, C++, Java, o Python não exige (na verdade, não permite) a declaração de variáveis com tipos e permite que o tipo dos valores guardados numa variável mude.</p>
+<p>O Python também permite que <em>múltiplas atribuições</em> sejam realizadas numa mesma instrução:</p>
+<pre><code>x,y,z = 7,11,13
+print(&#39;x =&#39;, x)
+print(&#39;y =&#39;, y)
+print(&#39;z =&#39;, z)</code></pre>
+<h3 id="diferença-entre-atribuições-simultâneas-e-sequenciais">Diferença entre atribuições simultâneas e sequenciais</h3>
+<p>O Python é uma das raras linguagens que permitem atribuições simultâneas, estas atribuições simultâneas são diferentes das atribuições sequenciais. Por exemplo, sejam as atribuições simultâneas abaixo:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>x,y <span class="op">=</span> <span class="dv">1</span>,<span class="dv">2</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>x,y <span class="op">=</span> y,x<span class="op">+</span>y</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="bu">print</span>(<span class="st">&#39;x =&#39;</span>, x, <span class="st">&#39;</span><span class="ch">\t</span><span class="st">y =&#39;</span>, y)</span></code></pre></div>
+<p>Este código imprime: <code>x = 2   y = 3</code></p>
+<p>Se a segunda atribuição simultânea for realizada sequencialmente:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>x,y <span class="op">=</span> <span class="dv">1</span>,<span class="dv">2</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>x <span class="op">=</span> y</span>
+<span id="cb10-3"><a href="#cb10-3"></a>y <span class="op">=</span> x<span class="op">+</span>y</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="bu">print</span>(<span class="st">&#39;x =&#39;</span>, x, <span class="st">&#39;</span><span class="ch">\t</span><span class="st">y =&#39;</span>, y)</span></code></pre></div>
+<p>Este código imprime: <code>x = 2   y = 4</code></p>
+<p>Se invertermos a ordem das atribuições de <code>x</code> e <code>y</code>, temos:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>x,y <span class="op">=</span> <span class="dv">1</span>,<span class="dv">2</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>y <span class="op">=</span> x<span class="op">+</span>y</span>
+<span id="cb11-3"><a href="#cb11-3"></a>x <span class="op">=</span> y</span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="bu">print</span>(<span class="st">&#39;x =&#39;</span>, x, <span class="st">&#39;</span><span class="ch">\t</span><span class="st">y =&#39;</span>, y)</span></code></pre></div>
+<p>Este código imprime: <code>x = 3   y = 3</code></p>
+<p>A diferença está em que quando a atribuição simultânea foi feita, o interpretador Python calculou os valores que estavam à direita da atribuição antes de realizar a atribuição. Isto é, calculou <code>y,x+y</code> e encontrou <code>2,3</code>. Aí, atribuiu <code>2</code> ao <code>x</code> e <code>3</code> ao <code>y</code>. Nos outros dois casos, os valores de <code>x</code> e <code>y</code> foram modificados antes das atribuição desejada. Este fenômeno é conhecido como <em>efeito colateral</em> da concorrência das atribuições. Ele é particularmente complexo quando existem acessos simultâneos a bancos de dados.</p>
 <h3 id="cálculo-do-fatorial-de-n">Cálculo do fatorial de n</h3>
 <p>Vamos resolver com Python o cálculo do fatorial de um número. Lembrando que:</p>
 <p><br /><span class="math display"><em>n</em> ! = 1 . 2 . … . <em>n</em></span><br /></p>
+<p>Numa primeira tentativa para o cálculo do fatorial, vamos fixar o valor de <code>n</code> para um valor cujo fatorial sabemos calcular. Por exemplo, sabemos que <span class="math inline">5 ! = 120</span>.</p>
+<p>O código abaixo usa uma técnica de acumulador para as multiplicações, o <code>1</code> é usado para inicializar o acumulador pois qualquer coisa multiplicada por 1 é a própria coisa. Isto é, o 1 é neutro na multiplicação. Vamos usar uma estrutura de repetição para fazer as sucessivas multiplicações. Multiplicamos sucessivamente o acumulador pela variável de controle que vai variar de 2 até n (5, neste protótipo/exemplo).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>n <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>acc <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>i <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="cf">while</span> i <span class="op">&lt;=</span> n:</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    acc <span class="op">*=</span> i</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="bu">print</span>(<span class="st">&#39;fatorial de &#39;</span>, n, <span class="st">&#39;eh&#39;</span>, acc)</span></code></pre></div>
+<p>A instrução <code>acc *= i</code> é uma atribuição com operação, ela é o mesmo que <code>acc = acc * i</code>. Isto é, coloque no acumulador <code>acc</code>, o valor da multiplicação do conteúdo de <code>acc</code> com o conteúdo de <code>i</code>. Isto é, na primeira iteração, <code>1 * 2</code>, pois <code>acc</code> e <code>i</code> valem, respectivamente, <code>1</code> e <code>2</code>. Agora o <code>acc</code> tem o valor <code>2</code>. Na instrução seguinte, a variável de controle <code>i</code> recebe <code>2 + 1</code>. Como <code>3 &lt;= 5</code> é verdadeiro, temos uma segunda iteração, no fim da qual, <code>acc</code> e <code>i</code> adquirem os valores <code>6</code> e <code>4</code>. Após a terceira iteração temos: <code>24</code> e <code>5</code>. Após a quarta iteração, <code>120</code> e <code>6</code>. Como <code>6 &lt;= 5</code> é falso, o <code>while</code> termina. Aí, o <code>print()</code> é executado.</p>
+<h4 id="função-que-calcula-o-fatorial">Função que calcula o fatorial</h4>
+<p>Agora que sabemos como calcular o fatorial de n, para podermos reutilizar o código para uso futuro, vamos transformar o código numa função e usá-lo:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">def</span> fatorial(n):</span>
+<span id="cb13-2"><a href="#cb13-2"></a>  acc <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  i <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="cf">while</span> i <span class="op">&lt;=</span> n:</span>
+<span id="cb13-5"><a href="#cb13-5"></a>    acc <span class="op">*=</span> i</span>
+<span id="cb13-6"><a href="#cb13-6"></a>    i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>  <span class="cf">return</span> acc</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="bu">print</span>(<span class="st">&#39;O fatorial de 20 eh&#39;</span>, fatorial(<span class="dv">20</span>))</span></code></pre></div>
+<h3 id="cálculo-do-n-ésimo-elemento-da-sequência-de-fibonacci">Cálculo do n-ésimo elemento da sequência de Fibonacci</h3>
+<p>Vamos aproveitar a atribuição múltipla do Python, como com o fatorial, vamos primeiro escrever o programa para um caso especial, n = 5, que sabemos ser 3, pois a sequência até o quinto elemento é <code>[0,1,1,2,3]</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>n <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>anterior <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>atual <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>i <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="cf">while</span> i <span class="op">&lt;</span> n:</span>
+<span id="cb14-6"><a href="#cb14-6"></a>  anterior, atual <span class="op">=</span> atual, anterior <span class="op">+</span> atual</span>
+<span id="cb14-7"><a href="#cb14-7"></a>  i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="bu">print</span>(<span class="st">&#39;O quinto elemento da sequência de Fibonacci eh&#39;</span>, atual)</span></code></pre></div>
+<p>Observe que a condição de continuidade é <code>i &lt; n</code> e não <code>i &lt;= n</code>. Por que?</p>
+<blockquote>
+<p>Quando a malha de repetição vai terminar? Quando o <code>i</code> não for mais menor do que n, a primeira vez em que isto ocorre é quando <code>i == n</code>. Logo a condição de continuidade é <code>i &lt; n</code>, se inclui-se a igualdade, a malha de repetição continuaria até <code>i == n + 1</code>.</p>
+</blockquote>
+<h4 id="exercício">Exercício:</h4>
+<p>Converta o programa para uma função que calcula o n-ésimo elemento da sequência de Fibonacci e chame a função para calcular o centésimo elemento.</p>
+<h3 id="cálculo-da-string-reversa">Cálculo da string reversa</h3>
+<p>…</p>
 </body>
 </html>
