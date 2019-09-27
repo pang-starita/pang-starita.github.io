@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Paulino Ng" />
+  <meta name="dcterms.date" content="2019-08-30" />
+  <title>Aula de Linguagem de Programação Procedural 2</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style>
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Aula de Linguagem de Programação Procedural 2</h1>
+<p class="author">Paulino Ng</p>
+<p class="date">2019-08-30</p>
+</header>
+<h2 id="nomenclatura">Nomenclatura</h2>
+<p>Veremos a seguir vários termos usados em computação para um conjunto de instruções:</p>
+<ul>
+<li><strong>Algoritmo</strong>:</li>
+<li><strong>Programa</strong>:</li>
+<li><strong>Aplicativo</strong>:</li>
+<li><strong>Subprograma</strong>:</li>
+<li><strong>Rotina</strong>:</li>
+<li><strong>Sub-rotina</strong>:</li>
+<li><strong>Função</strong>:</li>
+<li><strong>Procedimento</strong>:</li>
+<li><strong>Método</strong>:</li>
+<li><strong>Atributo</strong>:</li>
+<li><strong>Propriedade</strong>:</li>
+<li><strong>Mensagem</strong>:</li>
+</ul>
+<h2 id="divisão-da-memória-de-um-processo">Divisão da Memória de um Processo</h2>
+<p>Um <em>processo</em> é um programa em execução. Um programa de computação não passa de um texto numa linguagem. O programa executável precisa está carregado na memória principal para executar. Sua execução implica em uso de recursos físicos do computador, como processador, memória, dispositivos de Entradas e Saídas, e de recursos virtuais fornecidos pelo sistema operacional e outros SWs de apoio, como sistema de janelas. Enquanto está executando, o programa em execução está em diferentes <em>estados</em>, a instrução que ele está executando muda constantemente, o conteúdo dos registradores na CPU mudam, etc. Os dados na memória principal mudam tanto de valor quanto de quantidade. Por isso tudo, o nome de processo é dado para um programa em execução. Observe que na maioria dos computadores, temos vários processos em execução simultaneamente. Temos mais processos do que núcleos (<em>cores</em>) de CPU. Isto é possível graças aos sistemas operacionais que compartilham os núcleos entre os processos.</p>
+<p>Os sistemas operacionais também permitem que os programas sejam escritos como se não houvessem outros processos rodando com o seu programa. Seria muito complicado se ao escrever seu programa fosse necessário prever quais outros estão executando ao mesmo tempo. O sistema operacional cria um ambiente virtual para cada programa executar como se estivesse sozinho no computador. Neste ambiente virtual, cada processo enxerga uma memória virtual muito maior do que a memória física existente no computador.</p>
+<p>Chamamos esta visão da memória de espaço de memória do programa, ou processo. Ela é dividida em duas partes: <em>texto</em> e <em>dados</em>. O código do programa, as instruções, são carregadas pelo <em>SO</em> na parte <em>texto</em>. A parte de dados é subdividida em duas partes: <em>heap</em> e <em>pilha</em> (<em>stack</em>). As variáveis globais e estáticas são alocadas no <em>heap</em> pelo compilador. Ao criar objetos ou pedir áreas de memória ao <em>SO</em>, o <em>SO</em> aloca estes pedaços de memória no <em>heap</em>. Os endereços de retorno das chamadas de subprogramas são colocadas na <em>pilha</em>. Além disso, as variáveis locais e argumentos de funções, métodos e procedimentos são alocadas automaticamente na pilha quando o subprograma é chamado, elas também são desalocadas automaticamente quando o subprograma retorna da chamada. Estas alocações dinâmicas fazem com que as áreas de memória cresçam e diminuam dinamicamente durante a execução de um programa.</p>
+<p>Pelo fato das variáveis locais das funções não existirem fora da execução das chamadas, referências (<em>ponteiros</em>) para estas variáveis podem produzir greves erros.</p>
+<hr />
+<h2 id="uso-do-netbeans-para-programação-c">Uso do NetBeans para Programação C</h2>
+<p>Para detalhes de instalação do NetBeans e introdução à programação Java, acesse a <a href="apostila_netbeans.pdf">apostilha de NetBeans</a>. Como o NetBeans já será usado como IDE (<em>Integrated Development Environment</em>) para a programação Java, também usaremos o NetBeans para programar aplicações em C.</p>
+<ol type="1">
+<li><p>Inicie o NetBeans e Comece um Novo Projeto C/C++ - Aplicação C/C++ 1.1 Forneça o nome que você preferir 1.2 O NetBeans por default seleciona como linguagem C++, vá na seleção da linguagem e selecione C;</p></li>
+<li><p>No quadro de navegação, abra o <em>Arquivos Códigos-Fonte</em> e ative o arquivo <code>main.c</code>;</p></li>
+<li><p>No quadro de edição, antes da linha da instrução <code>return</code> acrescente na linha em branco, o código abaixo:</p></li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>    printf(<span class="st">&quot;Alo, Mamae!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span></code></pre></div>
+<p>Respeite a tabulação do código.</p>
+<ol start="4" type="1">
+<li>Execute o programa.</li>
+</ol>
+<h3 id="explicações-sobre-o-programa">Explicações Sobre o Programa</h3>
+<p>Tirando os comentários automáticos, o programa é:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>** argv) {</span>
+<span id="cb2-5"><a href="#cb2-5"></a>    printf(<span class="st">&quot;Alo, Mamae!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="cf">return</span> (EXIT_SUCCESS);</span>
+<span id="cb2-7"><a href="#cb2-7"></a>}</span></code></pre></div>
+<p>As duas primeiras linhas que começam com <code>#include</code>, não são linhas de código C, elas são linhas de código para o <em>pre-compilador C</em>. Antes de compilar um arquivo fonte C, geralmente, fazemos uma pré-compilação. O pré-compilador reconhece instruções que começam com <code>#</code>. O <code>#include</code> diz para o pré-compilador incluir, ou melhor dizendo, substituir a linha do <code>#include</code> por um arquivo. O arquivo <code>stdio.h</code> é um arquivo do sistema que contém diversas declarações de C, entre elas o protótipo da função <code>printf()</code>. Antes de chamar uma função, precisamos declarar o protótipo da função para o compilador.</p>
+<p>O primeiro <code>#include</code> serve para fornecer o protótipo do <code>printf()</code> e o segundo serve para fornecer a constante, (macro), <code>EXIT_SUCCESS</code>, cujo valor é <code>0</code>.</p>
+<p>Um programa C sempre tem uma função <code>main()</code> que é a função que o carregador de programas do <em>SO</em> chama para executar o programa depois de trazer o programa para a memória principal. Na aula passada foi explicado que a <code>main()</code> do C tem 3 protótipos:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a><span class="dt">int</span> main();</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv);</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argc, <span class="dt">char</span> **env);</span></code></pre></div>
+<p>No caso do programa acima, o NetBeans automaticamente usou o segundo protótipo que permite recuperar o nome do programa na variável <code>argv[0]</code> e os outros argumentos passados ao executar o programa. Veremos como passar argumentos e processá-los numa próxima aula.</p>
+<p>A função <code>main()</code> retorna um inteiro, geralmente <code>0</code> quando o programa não termina com algum erro. Como números não carregam seu significado com eles, uma <code>macro</code> foi definida no arquivo <code>stdlib.h</code> com o nome <code>EXIT_SUCCESS</code> com o valor <code>0</code>. Assim, fica claro que o <code>main()</code> retorna o valor de término com sucesso. Antes de terminar o programa na instrução <code>return</code>, a instrução <code>printf("Alo, Mamae!\n")</code> imprime na saída (aba de saída no quadro abaixo da tela de edição) a mensagem <code>Alo, Mamae!</code>. Salta uma linha e mostra quanto tempo durou a execução do programa (isto é feito pelo NetBeans). <img src="images/nb_saida_alo.png" alt="Aba de Saída do NetBeans após execução do programa alo.c" /></p>
+<h3 id="programa-com-subprogramas">Programa com Subprogramas</h3>
+<p>Vamos usar arquivos cabeçalho e arquivo de código sem <code>main()</code> para dividir nossos programas.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a><span class="dt">void</span> alo();</span></code></pre></div>
+<p>Ou</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a><span class="dt">void</span> alo(<span class="dt">void</span>);</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a><span class="pp">#include </span><span class="im">&quot;alo.h&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="dt">void</span> alo() {</span>
+<span id="cb6-4"><a href="#cb6-4"></a>  printf(<span class="st">&quot;Alo, Mamae!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb6-5"><a href="#cb6-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a><span class="pp">#include </span><span class="im">&quot;alo.h&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>** argv) {</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  alo();</span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="cf">return</span> (EXIT_SUCCESS);</span>
+<span id="cb7-6"><a href="#cb7-6"></a>}</span></code></pre></div>
+<h3 id="uso-do-depurador">Uso do depurador</h3>
+<ol type="1">
+<li><p>Insira um <em>breakpoint</em> (ponto de parada) antes da chamada de <code>alo()</code> e outro depois. Para inserir um <em>breakpoint</em> clique no número da linha do programa onde você deseja inserí-lo. Para cancelar o <em>breakpoint</em>, basta clicar de novo nele.</p></li>
+<li><p>Execute no modo de depuração, o <em>play</em> com uma imagem de um breakpoint. Veja que o programa para de executar no primeiro <em>breakpoint</em>. Mas o indicador de que o programa ainda está rodando mostra que o programa não terminou. No quadro inferior, existe uma aba com o título de variáveis. Nela estão as variáveis do ponto de parada e seus valores. Como o programa <code>alo</code> não tem nenhuma variável por enquanto, só veremos os parâmetros da <code>main()</code>, <code>argc</code> e <code>argv</code>. <code>argc</code> tem o valor 1, o que significa que o vetor de sequências de caracteres <code>argv</code> tem um elemento. O valor de <code>argv</code> é o endereço de memória onde está o vetor de argumentos da chamada do programa. Ao clicar no <code>+</code> do argv, você verá o <em>path</em> do arquivo do programa.</p></li>
+<li><p>Vá para o próximo <em>breakpoint</em> clicando no <em>play</em> com botão circular.</p></li>
+<li><p>Termine o programa clicando mais uma vez no <em>play</em> circular.</p></li>
+</ol>
+<h3 id="exercícios">Exercícios</h3>
+<ol type="1">
+<li>Altere a mensagem a ser impressa para “Alo,!” execute e observe o resultado. Para o que você acha que serve o <code>\n</code>? No lugar de <code>\n</code>, experimente usar um <code>\t</code> e um <code>\t\t</code>.</li>
+<li>Experimente aumentar o número de instruções de impressão:</li>
+</ol>
+<pre><code>    printf(&quot;linha 1\n&quot;);
+    printf(&quot;linha 2\n&quot;);</code></pre>
+<p>E veja o que ocorre se você retirar o <code>\n</code> do primeiro <code>printf()</code>. 3. Declare uma variável inteira no <code>main()</code>, inicialize com um valor, por exemplo 42, e mude o valor para outro qualquer. Coloque um <em>breakpoint</em> antes da mudança e outro depois. Rode o depurador e veja o que acontece com o valor da variável no depurador nos 2 pontos de parada.</p>
+</body>
+</html>
