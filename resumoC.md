@@ -31,8 +31,8 @@ Além da instrução de retorno, a única instrução dentro do corpo da `main()
 a chamada à função `printf()`. A função `printf()` imprime uma mensagem
 (*texto*) na tela do usuário (na *console* do usuário). A mensagem é o
 argumento da chamada da função, `"Alo!\n"`. Este texto é chamado de *string* e
-consiste na sequência de caracteres 'A', 'l', 'o', '!', '\n' e '\0'. O carácter
-'\n' é para terminar a linha do `"Alo!"` e começar um nova.
+consiste na sequência de caracteres `'A'`, `'l'`, `'o'`, `'!'`, `'\n'` e `'\0'`.
+O carácter `'\n'` é para terminar a linha do `"Alo!"` e começar um nova.
 
 As instruções em C terminam com um `;` obrigatório.
 
@@ -46,7 +46,8 @@ quantidade de bibliotecas de funções que podem ser reutilizadas nos
 programas poupando muito esforço de programação. Estas bibliotecas estão em
 arquivos `.a` ou `.so` no Unix, ou `.lib` ou `.dll` no MS Windows.
 O editor de ligações estáticas ou dinâmicas vai incluir o código destas
-funções, mas o compilador precisa conhecer o protótipo das funções antes das
+funções ao código executável, mas, antes disto, o compilador precisa conhecer
+o protótipo das funções antes das
 funções serem chamadas nos programas dos programadores-usuários das bibliotecas.
 
 Esta é uma das funções dos arquivos cabeçalho, fornecer os protótipos das
