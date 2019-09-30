@@ -545,6 +545,7 @@ Observe que em C, as condições são sempre colocadas entre parenteses, `()`.
    números lidos. Caso o usuário queira fornece menos de 10 números, ele
    termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0.
    Exemplo de execução:
+   
    > Digite numero = 4
    > Digite numero = 8
    > Digite numero = 0
