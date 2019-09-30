@@ -136,7 +136,7 @@ meio de uma linha. Por exemplo:
 ```C
   x = 0; // x é inicializado com 0 (comentário idiota)
   /* comentário de várias linhas
-   * são usados para explicar uso de funções e estruturas e algoritmos.
+   * são usados para explicar uso de funções, estruturas de dados e algoritmos.
    */
   y = 1 + /* este é um comentário mal posto */ 41;
 ```
@@ -145,7 +145,18 @@ meio de uma linha. Por exemplo:
 
 O C atualmente é uma linguagem fortemente tipada com tipagem estática. Isto é,
 todas as variáveis em C precisam ser declaradas antes de serem utilizadas e
-o tipo das variáveis não pode mudar durante a execução do programa.
+o tipo das variáveis não pode mudar durante a execução do programa. Mas,
+diferente de algumas linguagens que obrigam as declarações de variáveis
+serem feitas no início do arquivo de código fonte (no caso de variáveis
+globais), ou no início do corpo das funções (no caso de variáveeis locais), o
+C permite que as variáveis sejam declaradas em qualquer posição antes do uso
+delas (as globais sempre precisam ser declaradas fora das funções).
+Alguns programadores gostam de declarar as variáveis todas no início de um
+escopo, pois todas as declarações ficam visíveis no mesmo lugar. Outros
+preferem declará-las próximas do seu local de uso. As empresas de SW costumam
+estabelecer regras para estas situações. Neste resumo, vamos declarar as
+variáveis globais no início do arquivo de código fonte ou cabeçalho. As locais
+serão declaradas próximas ao local de uso delas.
 
 As variáveis são sempre declaradas com uma das seguintes sintaxes:
 
@@ -168,6 +179,229 @@ char ch;  // ch é uma variável do tipo carácter
 char linha_nova = '\n'; // linha_nova é uma variável do tipo carácter inicializada
                         // com \n
 char nome[80];          // nome é uma variável capaz de guardar 80 caracteres
+// A seguir declara-se alguns ponteiros, alguns com inicialização
+char *pChNome = "Joao"; // pChNome é um ponteiro para o primeiro caracter da string
+int *pX = &x; // pX é um ponteiro de inteiro para a posição da variável x
+```
+
+## Função de saída: `printf()`
+
+O `printf()` da biblioteca `stdio` do C permite que sejam enviados textos,
+*strings*, para a saída padrão (*standard*), que, considera-se, é a interface de
+linha que mandou rodar o programa. Cuidado ao rodar um programa executável do
+C pela interface gráfica no MS Windows, ao clicar duas vezes no executável, o
+programa provoca a execução de uma janela de *Prompt do DOS*, roda o programa
+nela, imprime as saídas nela e, se não estiver programada nenhuma interação
+com o usuário, ao terminar a execução, a janela *DOS* é fechada sem que se
+tenha tempo para ver as saídas.
+
+Para usar o `printf()` é necessário que a instrução `#include <stdio.h>` tenha
+sido dada no início do arquivo fonte. O protótipo da `printf()` é:
+
+```
+int printf(const char *format, ...);
+```
+
+Os `...` significam valores que podem ser calculados por expressões e que
+serão **convertidos** em texto, *strings*, pelos conversores expressos na
+*string* `format`. `format` é uma *string* que tem o texto de saída e embutido
+neste texto, existem *posições* onde os valores convertidos para texto devem
+ser inseridos. Alguns dos conversores possíveis são %d, %f, %e, %c, %s e %g.
+
+Eis alguns exemplos:
+
+```C
+int x = 42, y = 51;
+// Saída da linha abaixo é: x = 42, y = 51, x + y = 93
+printf("x = %d, y = %d, x + y = %d\n", x, y, x + y);      
+float pi = 3.14159F;
+// Saída da linha abaixo é: Decimal = 3.141590, notacao cientifica = 3.141590e+00
+printf("Decimal = %f, notacao cientifica = %e\n", pi, pi);
+char ch = 'A';
+printf("Caracter em ch = %c\n", ch);   // Saída: Caracter em ch = A
+char *pNome = "Toto da Silva";
+printf("Nome: %s\n", pNome);   // Saída: Nome: Toto da Silva
+```
+
+Os principais conversores na *string* `format` do `printf()` são:
+
+| Conversor | Descrição |
+|-----------|-----------|
+| d ou i  | Converte um valor inteiro com sinal para sua representação decimal |
+| u  | Converte um inteiro sem sinal para sua representação decimal  |
+| o  | Converte um inteiro sem sinal para sua representação octal |
+| x ou X  | Converte um inteiro sem sinal para sua representação hexadecimal |
+| e ou E | Converte um valor de ponto flutuante \(double\) numa notação científica |
+| f ou F | Converte um valor de ponto flutuante \(double\) numa representação decimal |
+| c | Converte um carácter sem sinal num carácter de saída |
+| s | Converte uma *string* de C numa *string* de saída |
+
+Os conversores podem ter modificadores antes deles para especificar o número de
+"casas" de saída são desejados na conversão, ou para sinalizar representações de números longos e outras. Um dos modificadores mais usados é para os números de
+ponto flutuante serem representados com uma quantidade fixa de casas decimais:
+
+```C
+printf("%.2f\n", 3.1416);      // Saida: 3.14
+```
+
+O valor de **retorno** do `printf()` é o número de caracteres enviados à saída,
+sem conta o carácter nulo usado para terminar as *strings* em C. Se acontecer
+algum erro na saída, o valor retornado é negativo.
+
+O número de argumentos do `printf()` é variável e com tipos variáveis, deve-se
+ter argumentos suficientes para os conversores da *string* `format` e com tipos
+compatíveis para a conversão. Argumentos insuficientes ou excessivos podem
+provocar saídas bizarras.
+
+## Função de entrada: `scanf()`
+
+A função `scanf()` é o complemento da `printf()`, ela realiza a leitura de
+textos vindos, normalmente, do teclado do usuário e converte para representações
+dos tipos adequados para as variáveis que vão guardar os valores.
+
+O protótipo da `scanf()` é dado por:
+
+```C
+int scanf(const char *format, ...);
+```
+
+Como com o `printf()`, para usar a `scanf()` é necessário ter feito
+`#include <stdio.h>`.
+
+Além disso, para que os valores convertidos sejam colocados nas variáveis, é
+necessário fornecer o endereço das variáveis na lista de argumentos após a
+*string* `format`. Isto porque, a `scanf()` precisa modificar o conteúdo das
+variáveis-argumento e não do valor delas. O C não tem passagem de parâmetros
+por referência como outras linguagens, apenas por valor. De certa forma, a
+passagem de um ponteiro com o valor do endereço de uma variável é uma forma
+de passagem por referência.
+
+Exemplos de uso do `scanf()`:
+
+```C
+int i;
+long li;
+float f;
+double n;
+printf("Digite um inteiro = ");
+scanf("%d", &i);
+printf("Digite um inteiro longo = ");
+scanf("%ld", &li);
+printf("Digite um numero real = ");
+scanf("%f", &f);
+printf("Digite um numero real com mais casas decimais = ");
+scanf("%f", &n);
+// como exercício, escreva os printfs para verificar se os valores lidos estão corretos
+```
+
+Observe que os conversores são praticamente os mesmos usados pelo `printf()`.
+O `%f` serve tanto para `float` como para `double`, como no `printf()`.
+
+A leitura de *string* com o `%s` só lê até o separador (geralmente o espaço),
+para ler uma string até o final da linha, usa-se a função `fgets()`, cujo
+protótipo é:
+
+```C
+char *fgets(char *s, int size, FILE *stream);
+```
+
+O parâmetro `s` é o *buffer* de caracteres onde a linha de texto deve ser lida,
+geralmente declarada com algo como: `char s[80]`. O parâmetro `size` indica
+quantos caracteres devem ser lidos no máximo (1 a menos do que o valor de `size`
+para poder colocar o carácter nulo no fim). `stream` é o dispositivo de entrada,
+no caso do teclado do usuário, é o `stdin`, mas poderia ser um arquivo, ou
+outro tipo de entrada.
+
+### Exemplo de programa para leitura e impressão
+
+O programa a seguir lê o nome de um aluno, suas notas P1 e P2 e calcula a média.
+
+```C
+#include <stdio.h>
+int main() {
+  char nome[80];
+  float p1, p2;
+  printf("Nome do aluno: ");
+  fgets(nome, 80, stdin);
+  printf("Nota P1 = ");
+  scanf("%f", &p1);
+  printf("Nota P2 = ");
+  scanf("%f", &p2);
+  printf("O aluno: %s, com P1 = %5.2f e P2 = %5.2f ficou com média %4.1f\n",
+         nome, p1, p2, (p1 + p2)/2);
+}
+```
+
+## Operações sobre números em C
+
+O C permite as operações tradicionais com números:
+
+| Operação | Descrição |
+|----------|-----------|
+| `+`  | Adição tanto de inteiros como de ponto flutuante |
+| `-`  | Subtração  |
+| `*`  | Multiplicação  |
+| `/`  | Divisão, divisão inteira se ambos os operandos forem inteiros |
+
+Além disso, existem operações especiais para inteiros.
+
+### Operações especiais sobre inteiros
+
+O operador `%` calcula o resto de uma divisão inteira. Ele é chamado de operador
+módulo, pois esta operação na matemática de números inteiros é chamada de módulo.
+`10 % 2` lê-se 10 módulo 2 e resulta em `0`. Não confunda a operação módulo com
+o cálculo do valor absoluto. Para calcular o valor absoluto de um número pode-se
+usar a biblioteca matemática (`#include <math.h>`) com a função `fabs()` que
+calcula o valor absoluto de um `double` e retorna um `double`. Se precisar
+calcular o valor absoluto de um inteiro e não quiser usar o operador ternário,
+você pode usar a função `abs()` da `stdlib.h`.
+
+Uma maneira perigosa de obter o valor absoluto de 2 números é com a *macro*:
+
+```
+#define ABS(x) ((x) < 0) ? (-(x)) : (x)
+```
+
+Use este tipo de *macro* sempre com muito cuidado.
+
+Além dessas operações, o valores inteiros são usados para trabalhar
+representações binárias. Assim, temos ainda as operações:
+
+| Operação | Descrição |
+|----------|-----------|
+| i << n | Deslocamento para a esquerda, os bits do i são deslocados de n bits para a esquerda  |
+| i >> n | Deslocamento para a direita, os bits do i são deslocados de n bits para a direita|
+| i & j  | Cada bit de i faz uma operação de E com seu bit correspondente de j |
+| i \| j  | Cada bit de i faz uma operação de OU com seu bit correspondente de j |
+| i ^ j  |   Cada bit de i faz uma operação de XOU com seu bit correspondente de j   |
+| ~i | Inverte cada bit de i |
+
+#### Exemplo de uso das operações sobre bits
+
+O exemplo abaixo lê um endereço IPv4 na sua notação a.b.c.d, uma máscara e
+retorna o endereço de rede.
+
+```C
+#include <stdio.h>
+int main() {
+  printf("Por favor, fornessa o endereco IP na forma a.b.c.d: ");
+  int a, b, c, d, ip, msk, rde;
+  scanf("%d.%d.%d.%d", &a, &b, &c, &d);
+  ip = d + 256 * (c + 256 * (b + 256 * a));
+  printf("Por favor, fornessa a mascara tambem na forma a.b.c.d: ");
+  scanf("%d.%d.%d.%d", &a, &b, &c, &d);
+  msk = d + 256 * (c + 256 * (b + 256 * a));
+  rde = ip & msk;
+  printf("O endereço de rede em hexa eh %X\n", rde);
+  d = rde % 256;
+  rde /= 256;
+  c = rde % 256;
+  rde /= 256;
+  b = rde % 256;
+  a = rde / 256;
+  printf("Ou %d.%d.%d.%d\n", a, b, c, d);
+  return 0;
+}
 ```
 
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.

@@ -130,11 +130,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>O C tem 2 tipos de comentários: <code>//</code> e <code>/* */</code>. <code>//</code> inicia um comentário que vai até o final da linha. <code>/*</code> inicia um comentário que termina quando <code>*/</code> é encontrado. Isto permite comentários em múltiplas linhas e comentários no meio de uma linha. Por exemplo:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a>  x = <span class="dv">0</span>; <span class="co">// x é inicializado com 0 (comentário idiota)</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="co">/* comentário de várias linhas</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="co">   * são usados para explicar uso de funções e estruturas e algoritmos.</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">   * são usados para explicar uso de funções, estruturas de dados e algoritmos.</span></span>
 <span id="cb7-4"><a href="#cb7-4"></a><span class="co">   */</span></span>
 <span id="cb7-5"><a href="#cb7-5"></a>  y = <span class="dv">1</span> + <span class="co">/* este é um comentário mal posto */</span> <span class="dv">41</span>;</span></code></pre></div>
 <h2 id="declaração-de-variáveis-em-c">Declaração de variáveis em C</h2>
-<p>O C atualmente é uma linguagem fortemente tipada com tipagem estática. Isto é, todas as variáveis em C precisam ser declaradas antes de serem utilizadas e o tipo das variáveis não pode mudar durante a execução do programa.</p>
+<p>O C atualmente é uma linguagem fortemente tipada com tipagem estática. Isto é, todas as variáveis em C precisam ser declaradas antes de serem utilizadas e o tipo das variáveis não pode mudar durante a execução do programa. Mas, diferente de algumas linguagens que obrigam as declarações de variáveis serem feitas no início do arquivo de código fonte (no caso de variáveis globais), ou no início do corpo das funções (no caso de variáveeis locais), o C permite que as variáveis sejam declaradas em qualquer posição antes do uso delas (as globais sempre precisam ser declaradas fora das funções). Alguns programadores gostam de declarar as variáveis todas no início de um escopo, pois todas as declarações ficam visíveis no mesmo lugar. Outros preferem declará-las próximas do seu local de uso. As empresas de SW costumam estabelecer regras para estas situações. Neste resumo, vamos declarar as variáveis globais no início do arquivo de código fonte ou cabeçalho. As locais serão declaradas próximas ao local de uso delas.</p>
 <p>As variáveis são sempre declaradas com uma das seguintes sintaxes:</p>
 <pre><code>&lt;tipo&gt; nome_da_var;
 &lt;tipo&gt; &lt;lista de nomes de variáveis&gt;;
@@ -149,7 +149,203 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-7"><a href="#cb9-7"></a><span class="dt">char</span> ch;  <span class="co">// ch é uma variável do tipo carácter</span></span>
 <span id="cb9-8"><a href="#cb9-8"></a><span class="dt">char</span> linha_nova = <span class="ch">&#39;\n&#39;</span>; <span class="co">// linha_nova é uma variável do tipo carácter inicializada</span></span>
 <span id="cb9-9"><a href="#cb9-9"></a>                        <span class="co">// com \n</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="dt">char</span> nome[<span class="dv">80</span>];          <span class="co">// nome é uma variável capaz de guardar 80 caracteres</span></span></code></pre></div>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="dt">char</span> nome[<span class="dv">80</span>];          <span class="co">// nome é uma variável capaz de guardar 80 caracteres</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">// A seguir declara-se alguns ponteiros, alguns com inicialização</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="dt">char</span> *pChNome = <span class="st">&quot;Joao&quot;</span>; <span class="co">// pChNome é um ponteiro para o primeiro caracter da string</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="dt">int</span> *pX = &amp;x; <span class="co">// pX é um ponteiro de inteiro para a posição da variável x</span></span></code></pre></div>
+<h2 id="função-de-saída-printf">Função de saída: <code>printf()</code></h2>
+<p>O <code>printf()</code> da biblioteca <code>stdio</code> do C permite que sejam enviados textos, <em>strings</em>, para a saída padrão (<em>standard</em>), que, considera-se, é a interface de linha que mandou rodar o programa. Cuidado ao rodar um programa executável do C pela interface gráfica no MS Windows, ao clicar duas vezes no executável, o programa provoca a execução de uma janela de <em>Prompt do DOS</em>, roda o programa nela, imprime as saídas nela e, se não estiver programada nenhuma interação com o usuário, ao terminar a execução, a janela <em>DOS</em> é fechada sem que se tenha tempo para ver as saídas.</p>
+<p>Para usar o <code>printf()</code> é necessário que a instrução <code>#include &lt;stdio.h&gt;</code> tenha sido dada no início do arquivo fonte. O protótipo da <code>printf()</code> é:</p>
+<pre><code>int printf(const char *format, ...);</code></pre>
+<p>Os <code>...</code> significam valores que podem ser calculados por expressões e que serão <strong>convertidos</strong> em texto, <em>strings</em>, pelos conversores expressos na <em>string</em> <code>format</code>. <code>format</code> é uma <em>string</em> que tem o texto de saída e embutido neste texto, existem <em>posições</em> onde os valores convertidos para texto devem ser inseridos. Alguns dos conversores possíveis são %d, %f, %e, %c, %s e %g.</p>
+<p>Eis alguns exemplos:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a><span class="dt">int</span> x = <span class="dv">42</span>, y = <span class="dv">51</span>;</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co">// Saída da linha abaixo é: x = 42, y = 51, x + y = 93</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>printf(<span class="st">&quot;x = %d, y = %d, x + y = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, x, y, x + y);      </span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="dt">float</span> pi = <span class="fl">3.14159</span><span class="bu">F</span>;</span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">// Saída da linha abaixo é: Decimal = 3.141590, notacao cientifica = 3.141590e+00</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>printf(<span class="st">&quot;Decimal = %f, notacao cientifica = %e</span><span class="sc">\n</span><span class="st">&quot;</span>, pi, pi);</span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="dt">char</span> ch = <span class="ch">&#39;A&#39;</span>;</span>
+<span id="cb11-8"><a href="#cb11-8"></a>printf(<span class="st">&quot;Caracter em ch = %c</span><span class="sc">\n</span><span class="st">&quot;</span>, ch);   <span class="co">// Saída: Caracter em ch = A</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="dt">char</span> *pNome = <span class="st">&quot;Toto da Silva&quot;</span>;</span>
+<span id="cb11-10"><a href="#cb11-10"></a>printf(<span class="st">&quot;Nome: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, pNome);   <span class="co">// Saída: Nome: Toto da Silva</span></span></code></pre></div>
+<p>Os principais conversores na <em>string</em> <code>format</code> do <code>printf()</code> são:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Conversor</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>d ou i</td>
+<td>Converte um valor inteiro com sinal para sua representação decimal</td>
+</tr>
+<tr class="even">
+<td>u</td>
+<td>Converte um inteiro sem sinal para sua representação decimal</td>
+</tr>
+<tr class="odd">
+<td>o</td>
+<td>Converte um inteiro sem sinal para sua representação octal</td>
+</tr>
+<tr class="even">
+<td>x ou X</td>
+<td>Converte um inteiro sem sinal para sua representação hexadecimal</td>
+</tr>
+<tr class="odd">
+<td>e ou E</td>
+<td>Converte um valor de ponto flutuante (double) numa notação científica</td>
+</tr>
+<tr class="even">
+<td>f ou F</td>
+<td>Converte um valor de ponto flutuante (double) numa representação decimal</td>
+</tr>
+<tr class="odd">
+<td>c</td>
+<td>Converte um carácter sem sinal num carácter de saída</td>
+</tr>
+<tr class="even">
+<td>s</td>
+<td>Converte uma <em>string</em> de C numa <em>string</em> de saída</td>
+</tr>
+</tbody>
+</table>
+<p>Os conversores podem ter modificadores antes deles para especificar o número de “casas” de saída são desejados na conversão, ou para sinalizar representações de números longos e outras. Um dos modificadores mais usados é para os números de ponto flutuante serem representados com uma quantidade fixa de casas decimais:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a>printf(<span class="st">&quot;%.2f</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="fl">3.1416</span>);      <span class="co">// Saida: 3.14</span></span></code></pre></div>
+<p>O valor de <strong>retorno</strong> do <code>printf()</code> é o número de caracteres enviados à saída, sem conta o carácter nulo usado para terminar as <em>strings</em> em C. Se acontecer algum erro na saída, o valor retornado é negativo.</p>
+<p>O número de argumentos do <code>printf()</code> é variável e com tipos variáveis, deve-se ter argumentos suficientes para os conversores da <em>string</em> <code>format</code> e com tipos compatíveis para a conversão. Argumentos insuficientes ou excessivos podem provocar saídas bizarras.</p>
+<h2 id="função-de-entrada-scanf">Função de entrada: <code>scanf()</code></h2>
+<p>A função <code>scanf()</code> é o complemento da <code>printf()</code>, ela realiza a leitura de textos vindos, normalmente, do teclado do usuário e converte para representações dos tipos adequados para as variáveis que vão guardar os valores.</p>
+<p>O protótipo da <code>scanf()</code> é dado por:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a><span class="dt">int</span> scanf(<span class="dt">const</span> <span class="dt">char</span> *format, ...);</span></code></pre></div>
+<p>Como com o <code>printf()</code>, para usar a <code>scanf()</code> é necessário ter feito <code>#include &lt;stdio.h&gt;</code>.</p>
+<p>Além disso, para que os valores convertidos sejam colocados nas variáveis, é necessário fornecer o endereço das variáveis na lista de argumentos após a <em>string</em> <code>format</code>. Isto porque, a <code>scanf()</code> precisa modificar o conteúdo das variáveis-argumento e não do valor delas. O C não tem passagem de parâmetros por referência como outras linguagens, apenas por valor. De certa forma, a passagem de um ponteiro com o valor do endereço de uma variável é uma forma de passagem por referência.</p>
+<p>Exemplos de uso do <code>scanf()</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1"></a><span class="dt">int</span> i;</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="dt">long</span> li;</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="dt">float</span> f;</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="dt">double</span> n;</span>
+<span id="cb14-5"><a href="#cb14-5"></a>printf(<span class="st">&quot;Digite um inteiro = &quot;</span>);</span>
+<span id="cb14-6"><a href="#cb14-6"></a>scanf(<span class="st">&quot;%d&quot;</span>, &amp;i);</span>
+<span id="cb14-7"><a href="#cb14-7"></a>printf(<span class="st">&quot;Digite um inteiro longo = &quot;</span>);</span>
+<span id="cb14-8"><a href="#cb14-8"></a>scanf(<span class="st">&quot;%ld&quot;</span>, &amp;li);</span>
+<span id="cb14-9"><a href="#cb14-9"></a>printf(<span class="st">&quot;Digite um numero real = &quot;</span>);</span>
+<span id="cb14-10"><a href="#cb14-10"></a>scanf(<span class="st">&quot;%f&quot;</span>, &amp;f);</span>
+<span id="cb14-11"><a href="#cb14-11"></a>printf(<span class="st">&quot;Digite um numero real com mais casas decimais = &quot;</span>);</span>
+<span id="cb14-12"><a href="#cb14-12"></a>scanf(<span class="st">&quot;%f&quot;</span>, &amp;n);</span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="co">// como exercício, escreva os printfs para verificar se os valores lidos estão corretos</span></span></code></pre></div>
+<p>Observe que os conversores são praticamente os mesmos usados pelo <code>printf()</code>. O <code>%f</code> serve tanto para <code>float</code> como para <code>double</code>, como no <code>printf()</code>.</p>
+<p>A leitura de <em>string</em> com o <code>%s</code> só lê até o separador (geralmente o espaço), para ler uma string até o final da linha, usa-se a função <code>fgets()</code>, cujo protótipo é:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1"></a><span class="dt">char</span> *fgets(<span class="dt">char</span> *s, <span class="dt">int</span> size, <span class="dt">FILE</span> *stream);</span></code></pre></div>
+<p>O parâmetro <code>s</code> é o <em>buffer</em> de caracteres onde a linha de texto deve ser lida, geralmente declarada com algo como: <code>char s[80]</code>. O parâmetro <code>size</code> indica quantos caracteres devem ser lidos no máximo (1 a menos do que o valor de <code>size</code> para poder colocar o carácter nulo no fim). <code>stream</code> é o dispositivo de entrada, no caso do teclado do usuário, é o <code>stdin</code>, mas poderia ser um arquivo, ou outro tipo de entrada.</p>
+<h3 id="exemplo-de-programa-para-leitura-e-impressão">Exemplo de programa para leitura e impressão</h3>
+<p>O programa a seguir lê o nome de um aluno, suas notas P1 e P2 e calcula a média.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="dt">int</span> main() {</span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="dt">char</span> nome[<span class="dv">80</span>];</span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="dt">float</span> p1, p2;</span>
+<span id="cb16-5"><a href="#cb16-5"></a>  printf(<span class="st">&quot;Nome do aluno: &quot;</span>);</span>
+<span id="cb16-6"><a href="#cb16-6"></a>  fgets(nome, <span class="dv">80</span>, stdin);</span>
+<span id="cb16-7"><a href="#cb16-7"></a>  printf(<span class="st">&quot;Nota P1 = &quot;</span>);</span>
+<span id="cb16-8"><a href="#cb16-8"></a>  scanf(<span class="st">&quot;%f&quot;</span>, &amp;p1);</span>
+<span id="cb16-9"><a href="#cb16-9"></a>  printf(<span class="st">&quot;Nota P2 = &quot;</span>);</span>
+<span id="cb16-10"><a href="#cb16-10"></a>  scanf(<span class="st">&quot;%f&quot;</span>, &amp;p2);</span>
+<span id="cb16-11"><a href="#cb16-11"></a>  printf(<span class="st">&quot;O aluno: %s, com P1 = %5.2f e P2 = %5.2f ficou com média %4.1f</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb16-12"><a href="#cb16-12"></a>         nome, p1, p2, (p1 + p2)/<span class="dv">2</span>);</span>
+<span id="cb16-13"><a href="#cb16-13"></a>}</span></code></pre></div>
+<h2 id="operações-sobre-números-em-c">Operações sobre números em C</h2>
+<p>O C permite as operações tradicionais com números:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Operação</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>+</code></td>
+<td>Adição tanto de inteiros como de ponto flutuante</td>
+</tr>
+<tr class="even">
+<td><code>-</code></td>
+<td>Subtração</td>
+</tr>
+<tr class="odd">
+<td><code>*</code></td>
+<td>Multiplicação</td>
+</tr>
+<tr class="even">
+<td><code>/</code></td>
+<td>Divisão, divisão inteira se ambos os operandos forem inteiros</td>
+</tr>
+</tbody>
+</table>
+<p>Além disso, existem operações especiais para inteiros.</p>
+<h3 id="operações-especiais-sobre-inteiros">Operações especiais sobre inteiros</h3>
+<p>O operador <code>%</code> calcula o resto de uma divisão inteira. Ele é chamado de operador módulo, pois esta operação na matemática de números inteiros é chamada de módulo. <code>10 % 2</code> lê-se 10 módulo 2 e resulta em <code>0</code>. Não confunda a operação módulo com o cálculo do valor absoluto. Para calcular o valor absoluto de um número pode-se usar a biblioteca matemática (<code>#include &lt;math.h&gt;</code>) com a função <code>fabs()</code> que calcula o valor absoluto de um <code>double</code> e retorna um <code>double</code>. Se precisar calcular o valor absoluto de um inteiro e não quiser usar o operador ternário, você pode usar a função <code>abs()</code> da <code>stdlib.h</code>.</p>
+<p>Uma maneira perigosa de obter o valor absoluto de 2 números é com a <em>macro</em>:</p>
+<pre><code>#define ABS(x) ((x) &lt; 0) ? (-(x)) : (x)</code></pre>
+<p>Use este tipo de <em>macro</em> sempre com muito cuidado.</p>
+<p>Além dessas operações, o valores inteiros são usados para trabalhar representações binárias. Assim, temos ainda as operações:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Operação</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>i &lt;&lt; n</td>
+<td>Deslocamento para a esquerda, os bits do i são deslocados de n bits para a esquerda</td>
+</tr>
+<tr class="even">
+<td>i &gt;&gt; n</td>
+<td>Deslocamento para a direita, os bits do i são deslocados de n bits para a direita</td>
+</tr>
+<tr class="odd">
+<td>i &amp; j</td>
+<td>Cada bit de i faz uma operação de E com seu bit correspondente de j</td>
+</tr>
+<tr class="even">
+<td>i | j</td>
+<td>Cada bit de i faz uma operação de OU com seu bit correspondente de j</td>
+</tr>
+<tr class="odd">
+<td>i ^ j</td>
+<td>Cada bit de i faz uma operação de XOU com seu bit correspondente de j</td>
+</tr>
+<tr class="even">
+<td>~i</td>
+<td>Inverte cada bit de i</td>
+</tr>
+</tbody>
+</table>
+<h4 id="exemplo-de-uso-das-operações-sobre-bits">Exemplo de uso das operações sobre bits</h4>
+<p>O exemplo abaixo lê um endereço IPv4 na sua notação a.b.c.d, uma máscara e retorna o endereço de rede.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="dt">int</span> main() {</span>
+<span id="cb18-3"><a href="#cb18-3"></a>  printf(<span class="st">&quot;Por favor, fornessa o endereco IP na forma a.b.c.d: &quot;</span>);</span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="dt">int</span> a, b, c, d, ip, msk, rde;</span>
+<span id="cb18-5"><a href="#cb18-5"></a>  scanf(<span class="st">&quot;%d.%d.%d.%d&quot;</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span>
+<span id="cb18-6"><a href="#cb18-6"></a>  ip = d + <span class="dv">256</span> * (c + <span class="dv">256</span> * (b + <span class="dv">256</span> * a));</span>
+<span id="cb18-7"><a href="#cb18-7"></a>  printf(<span class="st">&quot;Por favor, fornessa a mascara tambem na forma a.b.c.d: &quot;</span>);</span>
+<span id="cb18-8"><a href="#cb18-8"></a>  scanf(<span class="st">&quot;%d.%d.%d.%d&quot;</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span>
+<span id="cb18-9"><a href="#cb18-9"></a>  msk = d + <span class="dv">256</span> * (c + <span class="dv">256</span> * (b + <span class="dv">256</span> * a));</span>
+<span id="cb18-10"><a href="#cb18-10"></a>  rde = ip &amp; msk;</span>
+<span id="cb18-11"><a href="#cb18-11"></a>  printf(<span class="st">&quot;O endereço de rede em hexa eh %X</span><span class="sc">\n</span><span class="st">&quot;</span>, rde);</span>
+<span id="cb18-12"><a href="#cb18-12"></a>  d = rde % <span class="dv">256</span>;</span>
+<span id="cb18-13"><a href="#cb18-13"></a>  rde /= <span class="dv">256</span>;</span>
+<span id="cb18-14"><a href="#cb18-14"></a>  c = rde % <span class="dv">256</span>;</span>
+<span id="cb18-15"><a href="#cb18-15"></a>  rde /= <span class="dv">256</span>;</span>
+<span id="cb18-16"><a href="#cb18-16"></a>  b = rde % <span class="dv">256</span>;</span>
+<span id="cb18-17"><a href="#cb18-17"></a>  a = rde / <span class="dv">256</span>;</span>
+<span id="cb18-18"><a href="#cb18-18"></a>  printf(<span class="st">&quot;Ou %d.%d.%d.%d</span><span class="sc">\n</span><span class="st">&quot;</span>, a, b, c, d);</span>
+<span id="cb18-19"><a href="#cb18-19"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb18-20"><a href="#cb18-20"></a>}</span></code></pre></div>
 <p>[1]. Kernighan, B.W. &amp; Ritche, D.M., The C Programming Language, Prentice-Hall.</p>
 </body>
 </html>
