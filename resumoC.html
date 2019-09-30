@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Paulino Ng" />
+  <meta name="dcterms.date" content="2019-09-30" />
+  <title>Resumo de Programação C</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style>
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Resumo de Programação C</h1>
+<p class="author">Paulino Ng</p>
+<p class="date">2019-09-30</p>
+</header>
+<h2 id="programa-alo">Programa Alo</h2>
+<p>Seguindo os passos de [1], este resumo começa com o programa alo.c, cujo código é:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="dt">int</span> main() {</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  printf(<span class="st">&quot;Alo!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb1-6"><a href="#cb1-6"></a>}</span></code></pre></div>
+<p>A linha <code>#include &lt;stdio.h&gt;</code> pede para o pré-compilador do C incluir o arquivo <code>stdio.h</code> no lugar da linha. Isto permite usar a chamada da função <code>printf()</code>.</p>
+<p>Todo programa C deve ter uma implementação da função <code>main()</code>. Esta é a função que o sistema operacional <em>chama</em> ao carregar o programa para a execução.</p>
+<p>A função <code>main()</code> retorna um valor inteiro para indicar se o programa executou corretamente ou não. Se a <code>main()</code> retorna <code>0</code> (zero), o programa executou sem erros. Se executar com algum tipo de erro, o valor do retorno é diferente de <code>0</code>.</p>
+<p>Além da instrução de retorno, a única instrução dentro do corpo da <code>main()</code> é a chamada à função <code>printf()</code>. A função <code>printf()</code> imprime uma mensagem (<em>texto</em>) na tela do usuário (na <em>console</em> do usuário). A mensagem é o argumento da chamada da função, <code>"Alo!\n"</code>. Este texto é chamado de <em>string</em> e consiste na sequência de caracteres ‘A’, ‘l’, ‘o’, ‘!’, ‘’ e ‘\0’. O carácter ‘’ é para terminar a linha do <code>"Alo!"</code> e começar um nova.</p>
+<p>As instruções em C terminam com um <code>;</code> obrigatório.</p>
+<h2 id="pré-processador">Pré-processador</h2>
+<h3 id="include"><code>#include</code></h3>
+<p>Pelo fato do C ser uma linguagem de programação bastante simples, não existe muita coisa pronta na linguagem. Por outro lado, o C possui uma grande quantidade de bibliotecas de funções que podem ser reutilizadas nos programas poupando muito esforço de programação. Estas bibliotecas estão em arquivos <code>.a</code> ou <code>.so</code> no Unix, ou <code>.lib</code> ou <code>.dll</code> no MS Windows. O editor de ligações estáticas ou dinâmicas vai incluir o código destas funções, mas o compilador precisa conhecer o protótipo das funções antes das funções serem chamadas nos programas dos programadores-usuários das bibliotecas.</p>
+<p>Esta é uma das funções dos arquivos cabeçalho, fornecer os protótipos das funções das bibliotecas. Além disso, é nos arquivos cabeçalhos onde estruturas de dados, constantes e variáveis globais são declaradas em programas C.</p>
+<p>Os arquivos cabeçalho de C, geralmente, usam a extensão <code>.h</code>. Os arquivos cabeçalho das bibliotecas costumam está em diretórios do sistema de compilação. Mas, o programador pode criar seus próprios arquivos cabeçalho e colocá-los em qualquer diretório.</p>
+<p>Como as declarações dos arquivos cabeçalho são necessárias para poder usar as bibliotecas, o programador teria de copiá-los em cada arquivo de código que utilizasse as funções das bibliotecas. Para evitar estas cópias, os arquivos de códigos C (tanto fonte como cabeçalho), pedem para um pré-compilador(ou pré-processador) para incluir os arquivos cabeçalho. A instrução <code>#include &lt;stdio.h&gt;</code> é uma instrução para o pré-compilador de C substituir esta linha pelo conteúdo do arquivo <code>stdio.h</code>. Os <code>&lt;&gt;</code> servem para indicar que o arquivo deve ser procurado nos diretórios de sistema. No lugar de <code>&lt;&gt;</code> (<em>bicudos</em>), podemos usar <code>""</code>. Isto é, <code>#include "stdio.h"</code>, neste caso, o pré-compilador procura o arquivo <code>stdio.h</code> no diretório do código fonte antes dos diretórios de sistema.</p>
+<h3 id="define"><code>#define</code></h3>
+<p>Além do <code>#include</code>, o pré-compilador C permite criar <em>macros</em>. Na sua forma mais simples <em>macros</em> servem para definir constantes. Por exemplo, para definir a constante π em C, pode-se fazer:</p>
+<pre><code>#define PI 3.141592653589793</code></pre>
+<p>Se dentro do código C aparecer o nome da <em>macro</em> (<code>PI</code>), o nome vai ser substituído pelo valor associado. Por exemplo:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>    printf(<span class="st">&quot;%f&quot;</span>, sin(PI/<span class="dv">4</span>));</span></code></pre></div>
+<p>O pré-compilador vai substituir <code>PI</code> pelo valor e o código que será compilado é:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a>    printf(<span class="st">&quot;%f&quot;</span>, sin(<span class="fl">3.141592653589793</span>/<span class="dv">4</span>));</span></code></pre></div>
+<p>As macros podem ser parametrizadas, isto é, podemos colocar parâmetros para as macros. Uma maneira inocente de definir uma macro para calcular o menor valor (o valor mínimo) entre 2 números é:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">#define MIN(x,y) (x &lt; y) ? x : y</span></span></code></pre></div>
+<p>Macros parametrizadas são muito avançadas para este resumo.</p>
+<h3 id="ifdef-e-ifndef"><code>#ifdef</code> e <code>#ifndef</code></h3>
+<p>Os arquivos cabeçalho incluem outros arquivos cabeçalho e pode ocorrer de numa sequência de inclusões, um mesmo arquivo ser incluído mais de uma vez. Para evitar o erro de múltiplas declarações (o que não é permitido em C), é necessário usar um esquema de exclusão de múltiplas declarações. Isto é obtido pelo uso do condicional do pré-compilador. A estrutura que todos os arquivos de cabeçalho usam é:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a><span class="pp">#ifndef _nome_do_arquivo.H_</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="pp">#define _nome_do_arquivo.H_</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">// declarações e outros conteúdos do arquivo cabeçalho</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="pp">#endif</span></span></code></pre></div>
+<p>Estas instruções para o pré-compilador permitem que um arquivo cabeçalho seja incluído múltiplas vezes sem provocar dupla declaração de variáveis, protótipos, etc.</p>
+<h2 id="comentários-em-c">Comentários em C</h2>
+<p>O C tem 2 tipos de comentários: <code>//</code> e <code>/* */</code>. <code>//</code> inicia um comentário que vai até o final da linha. <code>/*</code> inicia um comentário que termina quando <code>*/</code> é encontrado. Isto permite comentários em múltiplas linhas e comentários no meio de uma linha. Por exemplo:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a>  x = <span class="dv">0</span>; <span class="co">// x é inicializado com 0 (comentário idiota)</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="co">/* comentário de várias linhas</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">   * são usados para explicar uso de funções e estruturas e algoritmos.</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">   */</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  y = <span class="dv">1</span> + <span class="co">/* este é um comentário mal posto */</span> <span class="dv">41</span>;</span></code></pre></div>
+<h2 id="declaração-de-variáveis-em-c">Declaração de variáveis em C</h2>
+<p>O C atualmente é uma linguagem fortemente tipada com tipagem estática. Isto é, todas as variáveis em C precisam ser declaradas antes de serem utilizadas e o tipo das variáveis não pode mudar durante a execução do programa.</p>
+<p>As variáveis são sempre declaradas com uma das seguintes sintaxes:</p>
+<pre><code>&lt;tipo&gt; nome_da_var;
+&lt;tipo&gt; &lt;lista de nomes de variáveis&gt;;
+&lt;tipo&gt; nome_da_var = &lt;expressão com valor calculável durante a compilação&gt;;</code></pre>
+<p>A seguir, tem-se algumas declarações válidas em C:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1"></a><span class="dt">int</span> x, y, z;  <span class="co">// x, y e z são variáveis inteiras (32 bits com o gcc atual)</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>log <span class="dt">int</span> lx, ly, lz; <span class="co">// lx, ly e lz são variáveis inteiras com mais bits do que int</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="dt">long</span> lx1;    <span class="co">// lx1 é long int, o int é opcional</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="dt">short</span> sx, sy; <span class="co">// sx e sy são inteiros com um número menor de bits do que int</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="dt">float</span> f, g; <span class="co">// f e g são variáveis de ponto flutuante com 32 bits</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="dt">double</span> ff, gg;  <span class="co">// ff e gg são variáveis de ponto flutuante com 64 bits</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="dt">char</span> ch;  <span class="co">// ch é uma variável do tipo carácter</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="dt">char</span> linha_nova = <span class="ch">&#39;\n&#39;</span>; <span class="co">// linha_nova é uma variável do tipo carácter inicializada</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>                        <span class="co">// com \n</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="dt">char</span> nome[<span class="dv">80</span>];          <span class="co">// nome é uma variável capaz de guardar 80 caracteres</span></span></code></pre></div>
+<p>[1]. Kernighan, B.W. &amp; Ritche, D.M., The C Programming Language, Prentice-Hall.</p>
+</body>
+</html>
