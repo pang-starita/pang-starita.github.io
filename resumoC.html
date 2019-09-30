@@ -171,10 +171,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-10"><a href="#cb11-10"></a>printf(<span class="st">&quot;Nome: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, pNome);   <span class="co">// Saída: Nome: Toto da Silva</span></span></code></pre></div>
 <p>Os principais conversores na <em>string</em> <code>format</code> do <code>printf()</code> são:</p>
 <table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Conversor</th>
@@ -191,26 +187,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>Converte um inteiro sem sinal para sua representação decimal</td>
 </tr>
 <tr class="odd">
-<td>o</td>
-<td>Converte um inteiro sem sinal para sua representação octal</td>
-</tr>
-<tr class="even">
 <td>x ou X</td>
 <td>Converte um inteiro sem sinal para sua representação hexadecimal</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>e ou E</td>
 <td>Converte um valor de ponto flutuante (double) numa notação científica</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>f ou F</td>
 <td>Converte um valor de ponto flutuante (double) numa representação decimal</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>c</td>
 <td>Converte um carácter sem sinal num carácter de saída</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>s</td>
 <td>Converte uma <em>string</em> de C numa <em>string</em> de saída</td>
 </tr>
@@ -303,27 +295,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>i &lt;&lt; n</td>
+<td><code>i &lt;&lt; n</code></td>
 <td>Deslocamento para a esquerda, os bits do i são deslocados de n bits para a esquerda</td>
 </tr>
 <tr class="even">
-<td>i &gt;&gt; n</td>
+<td><code>i &gt;&gt; n</code></td>
 <td>Deslocamento para a direita, os bits do i são deslocados de n bits para a direita</td>
 </tr>
 <tr class="odd">
-<td>i &amp; j</td>
+<td><code>i &amp; j</code></td>
 <td>Cada bit de i faz uma operação de E com seu bit correspondente de j</td>
 </tr>
 <tr class="even">
-<td>i | j</td>
+<td><code>i | j</code></td>
 <td>Cada bit de i faz uma operação de OU com seu bit correspondente de j</td>
 </tr>
 <tr class="odd">
-<td>i ^ j</td>
+<td><code>i ^ j</code></td>
 <td>Cada bit de i faz uma operação de XOU com seu bit correspondente de j</td>
 </tr>
 <tr class="even">
-<td>~i</td>
+<td><code>~i</code></td>
 <td>Inverte cada bit de i</td>
 </tr>
 </tbody>
@@ -368,20 +360,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>a || b</td>
-<td>é verdadeira se pelo menos um deles, a OU b, for verdadeira</td>
+<td><code>a || b</code></td>
+<td>é verdadeira se pelo menos um deles, <code>a</code> OU <code>b</code>, for verdadeira</td>
 </tr>
 <tr class="even">
-<td>a &amp;&amp; b</td>
-<td>só é verdadeira se ambos a E b forem verdadeiras</td>
+<td><code>a &amp;&amp; b</code></td>
+<td>só é verdadeira se ambos <code>a</code> E <code>b</code> forem verdadeiras</td>
 </tr>
 <tr class="odd">
-<td>a ^^ b</td>
-<td>verdadeira de uma for verdadeira e a outra falsa</td>
+<td><code>a ^^ b</code></td>
+<td>verdadeira se uma for verdadeira e a outra falsa</td>
 </tr>
 <tr class="even">
-<td>! a</td>
-<td>verdadeira se a for falsa</td>
+<td><code>! a</code></td>
+<td>verdadeira se <code>a</code> for falsa</td>
 </tr>
 </tbody>
 </table>
@@ -398,27 +390,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>a &lt; b</td>
+<td><code>a &lt; b</code></td>
 <td>a menor que b</td>
 </tr>
 <tr class="even">
-<td>a &lt;= b</td>
+<td><code>a &lt;= b</code></td>
 <td>a menor ou igual a b</td>
 </tr>
 <tr class="odd">
-<td>a == b</td>
+<td><code>a == b</code></td>
 <td>a igual a b</td>
 </tr>
 <tr class="even">
-<td>a &gt; b</td>
+<td><code>a &gt; b</code></td>
 <td>a maior do que b</td>
 </tr>
 <tr class="odd">
-<td>a &gt;= b</td>
+<td><code>a &gt;= b</code></td>
 <td>a maior ou igual a b</td>
 </tr>
 <tr class="even">
-<td>a != b</td>
+<td><code>a != b</code></td>
 <td>a diferente de b</td>
 </tr>
 </tbody>

@@ -229,7 +229,6 @@ Os principais conversores na *string* `format` do `printf()` são:
 |-----------|-----------|
 | d ou i  | Converte um valor inteiro com sinal para sua representação decimal |
 | u  | Converte um inteiro sem sinal para sua representação decimal  |
-| o  | Converte um inteiro sem sinal para sua representação octal |
 | x ou X  | Converte um inteiro sem sinal para sua representação hexadecimal |
 | e ou E | Converte um valor de ponto flutuante \(double\) numa notação científica |
 | f ou F | Converte um valor de ponto flutuante \(double\) numa representação decimal |
@@ -369,12 +368,12 @@ representações binárias. Assim, temos ainda as operações:
 
 | Operação | Descrição |
 |----------|-----------|
-| i << n | Deslocamento para a esquerda, os bits do i são deslocados de n bits para a esquerda  |
-| i >> n | Deslocamento para a direita, os bits do i são deslocados de n bits para a direita|
-| i & j  | Cada bit de i faz uma operação de E com seu bit correspondente de j |
-| i \| j  | Cada bit de i faz uma operação de OU com seu bit correspondente de j |
-| i ^ j  |   Cada bit de i faz uma operação de XOU com seu bit correspondente de j   |
-| ~i | Inverte cada bit de i |
+| `i << n` | Deslocamento para a esquerda, os bits do i são deslocados de n bits para a esquerda  |
+| `i >> n` | Deslocamento para a direita, os bits do i são deslocados de n bits para a direita|
+| `i & j`  | Cada bit de i faz uma operação de E com seu bit correspondente de j |
+| `i | j`  | Cada bit de i faz uma operação de OU com seu bit correspondente de j |
+| `i ^ j`  |   Cada bit de i faz uma operação de XOU com seu bit correspondente de j   |
+| `~i` | Inverte cada bit de i |
 
 #### Exemplo de uso das operações sobre bits
 
@@ -426,10 +425,10 @@ O C tem 4 operações lógicas:
 
 | Operação | Descrição |
 |----------|-----------|
-| a \|\| b  | é verdadeira se pelo menos um deles, a OU b, for verdadeira |
-| a && b | só é verdadeira se ambos a E b forem verdadeiras |
-| a ^^ b  | verdadeira de uma for verdadeira e a outra falsa |
-| ! a | verdadeira se a for falsa |
+| `a || b`  | é verdadeira se pelo menos um deles, `a` OU `b`, for verdadeira |
+| `a && b` | só é verdadeira se ambos `a` E `b` forem verdadeiras |
+| `a ^^ b`  | verdadeira se uma for verdadeira e a outra falsa |
+| `! a` | verdadeira se `a` for falsa |
 
 Não assuma que o resultado de uma operação dá algo diferente de verdadeiro ou
 falso. Alguns códigos, erroneamente, assumem que o resultado verdadeiro de uma
@@ -454,12 +453,12 @@ Os operadores de comparação em C são:
 
 | Operação | Descrição |
 |----------|-----------|
-| a < b  | a menor que b |
-| a <= b | a menor ou igual a b  |
-| a == b | a igual a b  |
-| a > b  | a maior do que b |
-| a >= b | a maior ou igual a b |
-| a != b | a diferente de b |
+| `a < b`  | a menor que b |
+| `a <= b` | a menor ou igual a b  |
+| `a == b` | a igual a b  |
+| `a > b`  | a maior do que b |
+| `a >= b` | a maior ou igual a b |
+| `a != b` | a diferente de b |
 
 Observe que C não sabe comparar *string*, para comparar *strings* em C é
 necessário usar a biblioteca `string.h`.
