@@ -404,4 +404,140 @@ int main() {
 }
 ```
 
+### Operações lógicas em C
+
+O C não possui um tipo de dado lógico como o Java e outras linguagens. Nas
+instruções de C que usam condições, a condição é considerada falsa se o valor
+calculado da condição for nulo. Assim, `0` inteiro e de ponto flutuante
+tem o valor *falso* numa condição. Assim como o caracter `'\0'`. Observe que a
+*string* vazia, `""`, não é falso como pode ser verificado rodando o programa
+abaixo:
+
+```C
+#include <stdio.h>
+int main() {
+  if ("") printf("A string vazia nao eh falso.\n");
+  if (! '\0') printf("Mas o caracter nulo eh falso");
+  return 0;
+}
+```
+
+O C tem 4 operações lógicas:
+
+| Operação | Descrição |
+|----------|-----------|
+| a \|\| b  | é verdadeira se pelo menos um deles, a OU b, for verdadeira |
+| a && b | só é verdadeira se ambos a E b forem verdadeiras |
+| a ^^ b  | verdadeira de uma for verdadeira e a outra falsa |
+| ! a | verdadeira se a for falsa |
+
+Não assuma que o resultado de uma operação dá algo diferente de verdadeiro ou
+falso. Alguns códigos, erroneamente, assumem que o resultado verdadeiro de uma
+operação lógica envolvendo números inteiros é `-1`. O compilador pode não
+concordar com isto.
+
+### Operações de comparação
+
+Em C é possível comparar números de mesmo tipo, ou de tipos diferentes desde que
+seja possível *promover* um número de um tipo para um outro. A comparação
+resulta em verdadeiro ou falso dependendo do tipo de comparação. O compilador sabe
+promover um `int` para `long`, `long long`, `float` ou `double`. De forma geral,
+o compilador é conservador e não converte automaticamente de um tipo com mais
+bits para um tipo com menos bits, especialmente se com isto existe perda de
+informação. Como os caracteres em C são supostos utilizarem uma representação
+de 8 bits sem sinal, podemos comparar os caracteres como inteiros de 8 bits.
+Isto dá certo, isto é, respeita a ordem alfabética quando temos letras só
+maiúsculas ou minúsculas na codificação ASCII. Isto é, `'z' > 'a'` é verdadeiro.
+Mas , `'Z' > 'a'` é falso.
+
+Os operadores de comparação em C são:
+
+| Operação | Descrição |
+|----------|-----------|
+| a < b  | a menor que b |
+| a <= b | a menor ou igual a b  |
+| a == b | a igual a b  |
+| a > b  | a maior do que b |
+| a >= b | a maior ou igual a b |
+| a != b | a diferente de b |
+
+Observe que C não sabe comparar *string*, para comparar *strings* em C é
+necessário usar a biblioteca `string.h`.
+
+Observe que como qualquer valor nulo é falso e qualquer valor não nulo é
+verdadeiro, numa condição podemos simplesmente fazer `a - b` e isto é a mesma
+coisa que `a != b`.
+
+## Protótipos de funções
+
+Em C, para poder usar uma função de uma biblioteca é necessário fornecer o
+protótipo dela antes. O protótipo de uma função tem a forma geral:
+
+```C
+<tipo de retorno> nome_da_função(<lista de parâmetros>);
+```
+
+O `<tipo de retorno>` é qualquer tipo básico do C ou tipo definido pelo
+programador. A `<lista de parâmetros>` é uma lista com 0 (zero) ou mais
+parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um
+nome. Os parâmetros são separados por vírgulas.
+
+A seguir temos alguns protótipos válidos para a função `main()`:
+
+```C
+int main();
+int main(int argc, char **argv);
+int main(int argc, char *argv[]);
+int main(int argc, char **argv, char **environ);
+```
+
+A função `main()` é a única em C que tem mais de um protótipo. Os parâmetros
+dela permitem um programa interagir com os argumentos fornecidos pelo usuário
+ao executar o programa. Tanto através da linha de comando (argumentos `argc`
+e `argv`), como através das variáveis de ambiente (`environ`).
+
+## Estruturas de controle de fluxo de instruções em C
+
+### Condicional
+
+A instrução condicional em C tem uma das duas formas:
+
+```C
+if (condição) instrução_then;
+```
+ ou
+
+ ```C
+ if (condição) instrução_then;
+ else instrução_else;
+ ```
+
+No lugar de uma instrução, podemos ter sempre um bloco de instruções
+cercadas com `{}`. Observe que uma dúvida comum em novatos é a obrigatoriedade
+do `else`. O `else` não é obrigatório. O cascateamento (isto é, `if` em sequência)
+de `if`s não tem sintaxe específica como em programação de SHELL ou Python.
+Assim, sequências de `if`s são obtidas com:
+
+```C
+if (condição1) instrução_then_1;
+else if (condição2) instrução_then_2;
+...
+else instrução_else;
+```
+
+Do ponto de vista de estilo de programação deveríamos ter identação para o
+segundo if com um recuo e assim por diante. Este tipo de cascateamento,
+infelizmente, produz código de leitura difícil. Por essa razão, neste resumo
+não se usa um recuo maior para `else if`.
+
+Observe que em C, as condições são sempre colocadas entre parenteses, `()`.
+
+### Malhas de repetição
+
+#### `while (condição) instrução;`
+
+#### `do instrução while (condição)`
+
+#### `for (ini; condição; inc) instrução;`
+
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.

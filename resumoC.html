@@ -346,6 +346,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-18"><a href="#cb18-18"></a>  printf(<span class="st">&quot;Ou %d.%d.%d.%d</span><span class="sc">\n</span><span class="st">&quot;</span>, a, b, c, d);</span>
 <span id="cb18-19"><a href="#cb18-19"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
 <span id="cb18-20"><a href="#cb18-20"></a>}</span></code></pre></div>
+<h3 id="operações-lógicas-em-c">Operações lógicas em C</h3>
+<p>O C não possui um tipo de dado lógico como o Java e outras linguagens. Nas instruções de C que usam condições, a condição é considerada falsa se o valor calculado da condição for nulo. Assim, <code>0</code> inteiro e de ponto flutuante tem o valor <em>falso</em> numa condição. Assim como o caracter <code>'\0'</code>. Observe que a <em>string</em> vazia, <code>""</code>, não é falso como pode ser verificado rodando o programa abaixo:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="dt">int</span> main() {</span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="cf">if</span> (<span class="st">&quot;&quot;</span>) printf(<span class="st">&quot;A string vazia nao eh falso.</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="cf">if</span> (! &#39;\<span class="dv">0</span><span class="er">&#39;</span>) printf(<span class="st">&quot;Mas o caracter nulo eh falso&quot;</span>);</span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb19-6"><a href="#cb19-6"></a>}</span></code></pre></div>
+<p>O C tem 4 operações lógicas:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Operação</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a || b</td>
+<td>é verdadeira se pelo menos um deles, a OU b, for verdadeira</td>
+</tr>
+<tr class="even">
+<td>a &amp;&amp; b</td>
+<td>só é verdadeira se ambos a E b forem verdadeiras</td>
+</tr>
+<tr class="odd">
+<td>a ^^ b</td>
+<td>verdadeira de uma for verdadeira e a outra falsa</td>
+</tr>
+<tr class="even">
+<td>! a</td>
+<td>verdadeira se a for falsa</td>
+</tr>
+</tbody>
+</table>
+<p>Não assuma que o resultado de uma operação dá algo diferente de verdadeiro ou falso. Alguns códigos, erroneamente, assumem que o resultado verdadeiro de uma operação lógica envolvendo números inteiros é <code>-1</code>. O compilador pode não concordar com isto.</p>
+<h3 id="operações-de-comparação">Operações de comparação</h3>
+<p>Em C é possível comparar números de mesmo tipo, ou de tipos diferentes desde que seja possível <em>promover</em> um número de um tipo para um outro. A comparação resulta em verdadeiro ou falso dependendo do tipo de comparação. O compilador sabe promover um <code>int</code> para <code>long</code>, <code>long long</code>, <code>float</code> ou <code>double</code>. De forma geral, o compilador é conservador e não converte automaticamente de um tipo com mais bits para um tipo com menos bits, especialmente se com isto existe perda de informação. Como os caracteres em C são supostos utilizarem uma representação de 8 bits sem sinal, podemos comparar os caracteres como inteiros de 8 bits. Isto dá certo, isto é, respeita a ordem alfabética quando temos letras só maiúsculas ou minúsculas na codificação ASCII. Isto é, <code>'z' &gt; 'a'</code> é verdadeiro. Mas , <code>'Z' &gt; 'a'</code> é falso.</p>
+<p>Os operadores de comparação em C são:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Operação</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a &lt; b</td>
+<td>a menor que b</td>
+</tr>
+<tr class="even">
+<td>a &lt;= b</td>
+<td>a menor ou igual a b</td>
+</tr>
+<tr class="odd">
+<td>a == b</td>
+<td>a igual a b</td>
+</tr>
+<tr class="even">
+<td>a &gt; b</td>
+<td>a maior do que b</td>
+</tr>
+<tr class="odd">
+<td>a &gt;= b</td>
+<td>a maior ou igual a b</td>
+</tr>
+<tr class="even">
+<td>a != b</td>
+<td>a diferente de b</td>
+</tr>
+</tbody>
+</table>
+<p>Observe que C não sabe comparar <em>string</em>, para comparar <em>strings</em> em C é necessário usar a biblioteca <code>string.h</code>.</p>
+<p>Observe que como qualquer valor nulo é falso e qualquer valor não nulo é verdadeiro, numa condição podemos simplesmente fazer <code>a - b</code> e isto é a mesma coisa que <code>a != b</code>.</p>
+<h2 id="protótipos-de-funções">Protótipos de funções</h2>
+<p>Em C, para poder usar uma função de uma biblioteca é necessário fornecer o protótipo dela antes. O protótipo de uma função tem a forma geral:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a>&lt;tipo de retorno&gt; nome_da_função(&lt;lista de parâmetros&gt;);</span></code></pre></div>
+<p>O <code>&lt;tipo de retorno&gt;</code> é qualquer tipo básico do C ou tipo definido pelo programador. A <code>&lt;lista de parâmetros&gt;</code> é uma lista com 0 (zero) ou mais parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um nome. Os parâmetros são separados por vírgulas.</p>
+<p>A seguir temos alguns protótipos válidos para a função <code>main()</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a><span class="dt">int</span> main();</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv);</span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> *argv[]);</span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv, <span class="dt">char</span> **environ);</span></code></pre></div>
+<p>A função <code>main()</code> é a única em C que tem mais de um protótipo. Os parâmetros dela permitem um programa interagir com os argumentos fornecidos pelo usuário ao executar o programa. Tanto através da linha de comando (argumentos <code>argc</code> e <code>argv</code>), como através das variáveis de ambiente (<code>environ</code>).</p>
+<h2 id="estruturas-de-controle-de-fluxo-de-instruções-em-c">Estruturas de controle de fluxo de instruções em C</h2>
+<h3 id="condicional">Condicional</h3>
+<p>A instrução condicional em C tem uma das duas formas:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a><span class="cf">if</span> (condição) instrução_then;</span></code></pre></div>
+<p>ou</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1"></a><span class="cf">if</span> (condição) instrução_then;</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
+<p>No lugar de uma instrução, podemos ter sempre um bloco de instruções cercadas com <code>{}</code>. Observe que uma dúvida comum em novatos é a obrigatoriedade do <code>else</code>. O <code>else</code> não é obrigatório. O cascateamento (isto é, <code>if</code> em sequência) de <code>if</code>s não tem sintaxe específica como em programação de SHELL ou Python. Assim, sequências de <code>if</code>s são obtidas com:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a><span class="cf">if</span> (condição1) instrução_then_1;</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="cf">else</span> <span class="cf">if</span> (condição2) instrução_then_2;</span>
+<span id="cb24-3"><a href="#cb24-3"></a>...</span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
+<p>Do ponto de vista de estilo de programação deveríamos ter identação para o segundo if com um recuo e assim por diante. Este tipo de cascateamento, infelizmente, produz código de leitura difícil. Por essa razão, neste resumo não se usa um recuo maior para <code>else if</code>.</p>
+<p>Observe que em C, as condições são sempre colocadas entre parenteses, <code>()</code>.</p>
+<h3 id="malhas-de-repetição">Malhas de repetição</h3>
+<h4 id="while-condição-instrução"><code>while (condição) instrução;</code></h4>
+<h4 id="do-instrução-while-condição"><code>do instrução while (condição)</code></h4>
+<h4 id="for-ini-condição-inc-instrução"><code>for (ini; condição; inc) instrução;</code></h4>
 <p>[1]. Kernighan, B.W. &amp; Ritche, D.M., The C Programming Language, Prentice-Hall.</p>
 </body>
 </html>
