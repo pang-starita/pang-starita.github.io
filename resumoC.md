@@ -540,4 +540,16 @@ Observe que em C, as condições são sempre colocadas entre parenteses, `()`.
 
 #### `for (ini; condição; inc) instrução;`
 
+## Exercício:
+
+1. Escreva um programa que lê no máximo 10 números reais e calcule a média dos
+   números lidos. Caso o usuário queira fornece menos de 10 números, ele
+   termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0.
+   Exemplo de execução:
+   > Digite numero = 4
+   > Digite numero = 8
+   > Digite numero = 0
+   > Os numeros digitados foram: 4.0, 8.0
+   > A media foi: 6.0
+
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.
