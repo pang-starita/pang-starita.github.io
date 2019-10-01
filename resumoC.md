@@ -225,8 +225,8 @@ printf("Nome: %s\n", pNome);   // Saída: Nome: Toto da Silva
 
 Os principais conversores na *string* `format` do `printf()` são:
 
-| Conversor | Descrição |
-|-----------|-----------|
+| Conversor |          Descrição                             |
+|-----------|-----------------------------------------------------------------|
 | d ou i  | Converte um valor inteiro com sinal para sua representação decimal |
 | u  | Converte um inteiro sem sinal para sua representação decimal  |
 | x ou X  | Converte um inteiro sem sinal para sua representação hexadecimal |
@@ -335,8 +335,8 @@ int main() {
 
 O C permite as operações tradicionais com números:
 
-| Operação | Descrição |
-|----------|-----------|
+| Operação |     Descrição                              |
+|----------|----------------------------------------------|
 | `+`  | Adição tanto de inteiros como de ponto flutuante |
 | `-`  | Subtração  |
 | `*`  | Multiplicação  |
@@ -355,19 +355,33 @@ calcula o valor absoluto de um `double` e retorna um `double`. Se precisar
 calcular o valor absoluto de um inteiro e não quiser usar o operador ternário,
 você pode usar a função `abs()` da `stdlib.h`.
 
-Uma maneira perigosa de obter o valor absoluto de 2 números é com a *macro*:
+Todas as variáveis de tipos inteiros em C aceitam as operações de incremento
+\(`++`\) e decremento \(`--`\). Estas operações são diferentes conforme elas
+são colocadas antes ou depois das variáveis.
 
-```
-#define ABS(x) ((x) < 0) ? (-(x)) : (x)
-```
+ Operação     Nome                     Descrição
+----------    ----------------------   --------------------------------------------
+ `--i`        Decremento pré-fixado    O decremento é realizado antes da instrução
+ `++i`        Incremento pré-fixado    O incremento é realizado antes da instrução
+ `i--`        Decremento pós-fixado    O decremento é realizado após a instrução
+ `i++`        Incremento pós-fixado    O incremento é realizado após a instrução
+----------    ----------------------   --------------------------------------------
 
-Use este tipo de *macro* sempre com muito cuidado.
+ Por exemplo:
 
-Além dessas operações, o valores inteiros são usados para trabalhar
+ ```C
+ int 5;
+ printf("i = %d\n", i++);      // Saída: i = 5, incremento pós-fixado
+ printf("i = %d\n", i);        // Saída: i = 6
+ printf("i = %d\n", ++i);      // Saída: i = 7, incremento pré-fixado
+ printf("i = %d\n", i);        // Saída: i = 7
+ ```
+
+Além dessas operações, os valores inteiros são usados para trabalhar
 representações binárias. Assim, temos ainda as operações:
 
-| Operação | Descrição |
-|----------|-----------|
+| Operação |                     Descrição                        |
+|----------|-------------------------------------------------------|
 | `i << n` | Deslocamento para a esquerda, os bits do i são deslocados de n bits para a esquerda  |
 | `i >> n` | Deslocamento para a direita, os bits do i são deslocados de n bits para a direita|
 | `i & j`  | Cada bit de i faz uma operação de E com seu bit correspondente de j |
@@ -423,8 +437,8 @@ int main() {
 
 O C tem 4 operações lógicas:
 
-| Operação | Descrição |
-|----------|-----------|
+| Operação |           Descrição                 |
+|----------|----------------------------------------------------|
 | `a || b`  | é verdadeira se pelo menos um deles, `a` OU `b`, for verdadeira |
 | `a && b` | só é verdadeira se ambos `a` E `b` forem verdadeiras |
 | `a ^^ b`  | verdadeira se uma for verdadeira e a outra falsa |
@@ -451,8 +465,8 @@ Mas , `'Z' > 'a'` é falso.
 
 Os operadores de comparação em C são:
 
-| Operação | Descrição |
-|----------|-----------|
+| Operação |       Descrição      |
+|----------|----------------------|
 | `a < b`  | a menor que b |
 | `a <= b` | a menor ou igual a b  |
 | `a == b` | a igual a b  |
@@ -533,11 +547,108 @@ Observe que em C, as condições são sempre colocadas entre parenteses, `()`.
 
 ### Malhas de repetição
 
-#### `while (condição) instrução;`
+#### Enquanto
 
-#### `do instrução while (condição)`
+A instrução de repetição *enquanto* no C é padrão e tem a sintaxe:
 
-#### `for (ini; condição; inc) instrução;`
+```
+while (condição) instrução;
+```
+
+Enquanto a condição for verdadeira, a instrução é repetida.
+Onde a instrução pode ser uma instrução simples ou um bloco de instruções
+cercadas por chaves, `{}`. A repetição só para se a condição for falsa. Se no
+início ela já é falsa, a instrução não será executada nenhuma vez. É óbvio
+que a execução da instrução ou do bloco de instruções deve ser tal que
+a condição se torne falsa em algum momento.
+
+Exemplo: soma de todos os elementos dentro de um *array* terminado por 0.
+
+```C
+int vetor[] = {1, 2, 3, 4, 5, 6, 7, 0};    // array de 8 inteiros
+int indice = 0;
+int soma = 0;                              // acumulador da soma
+while (vetor[indice]) {      // lembre-se de que 0 eh == falso
+  soma += vetor[indice++];   // observe o uso do incremento
+}
+// a variável soma tem a soma de todos os elementos do vetor
+```
+
+#### Repita
+
+O C não tem um `repeat` como o Pascal, Ada e outras linguagens. No lugar dele,
+para repetir uma instrução, ou um bloco, usa-se o `do while`. A sintaxe dele é
+dada por:
+
+```C
+do instrução; while (condição);
+```
+
+A instrução é executada uma vez, enquanto a condição for verdadeira, ela
+é repetida.
+
+Exemplo: cópia de uma string num buffer de caracteres
+
+```
+char texto[] = "Este eh um texto.";
+char copia[16];    // buffer de 16 caracteres
+char *pCh = texto; // ponteiro de caracter aponta para o 'E' de texto
+int indice = 0;
+do {       // estas chaves não eram necessárias, mas é uma questão estilística
+  copia[indice++] = *pCh++;    // após a cópia do carácter, o indice e o ponteiro avançam
+} while (*pCh);    // testa o fim da string - STRINGs em C terminam com '\0' == false
+copia[indice]='\0';    // para manter a convenção de terminar a string com 0
+printf("Texto copiado: %s\n", copia);
+```
+
+#### Para inicialização de contador, fim do contador, passo
+
+O `for` do C não é igual ao `Para` do Pascal e linguagens semelhantes.
+O `for` do C permite múltiplas inicializações \(separadas por vírgulas\) e
+múltiplas instruções de incremento/decremento no lugar do `passo`. O `passo`
+não precisa ser constante e inteiro. A sintaxe do `for` do C é:
+
+```
+for (ini; condição; inc) instrução;
+```
+
+O exemplo do `do while` pode ser reescrito com o `for` pelo código abaixo:
+
+```
+char texto[] = "Este eh outro texto.";
+char copia[16];    // buffer de 16 caracteres
+char *pCh; // ponteiro de carácter
+int indice;
+for (indice = 0, pCh = texto; *pCh; indice++, pCh++) {
+  copia[indice] = *pCh;    // copia o carácter apontado pelo pCh na posição indice
+}
+copia[indice]='\0';    // para manter a convenção de terminar a string com 0
+printf("Texto copiado: %s\n", copia);
+```
+
+O `for` do C pode ser substituído por um `while` com um código do tipo:
+
+```
+ini;
+while (condição) {
+  instrução;
+  inc;
+}
+```
+
+Todos os elementos do `for`, `ini`, `condição`, `inc` e instrução, são opcionais.
+Se a condição não for dada, ela é considerada sempre verdadeira. Nesse caso, o
+*loop* pode ser terminado se uma instrução de `break` for executada. Ou um
+evento externo provocar a execução de código alternativo.
+
+#### Instruções `break` e `continue`
+
+A instrução `break` pode ser usada para terminar a execução de uma malha de
+repetição. Independente do bloco de instruções ainda possuir instruções ou
+não, o `break` vai para a próxima instrução depois da malha de repetição.
+
+A instrução `continue` termina a iteração atual e vai para a seguinte. Isto é,
+ela começa uma nova iteração (se a condição permitir).
 
 ## Exercício:
 
@@ -545,11 +656,30 @@ Observe que em C, as condições são sempre colocadas entre parenteses, `()`.
    números lidos. Caso o usuário queira fornece menos de 10 números, ele
    termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0.
    Exemplo de execução:
-   
-   > Digite numero = 4
-   > Digite numero = 8
-   > Digite numero = 0
-   > Os numeros digitados foram: 4.0, 8.0
+
+   > Digite numero = 4<br>
+   > Digite numero = 8<br>
+   > Digite numero = 0<br>
+   > Os numeros digitados foram: 4.0, 8.0<br>
    > A media foi: 6.0
+
+## Switch-case
+
+O C tem uma instrução de controle de fluxo com múltiplas sequências possíveis,
+o `switch-case`. A sintaxe da instrução é dada por:
+
+```C
+switch (expressão de valor inteiro) {
+  case <valor1>:
+    instruções1;
+  case <valor2>:
+    instruções2;
+  ...
+  default:
+    instruções_default;
+}
+```
+
+
 
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.

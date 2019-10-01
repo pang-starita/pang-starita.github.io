@@ -171,6 +171,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-10"><a href="#cb11-10"></a>printf(<span class="st">&quot;Nome: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, pNome);   <span class="co">// Saída: Nome: Toto da Silva</span></span></code></pre></div>
 <p>Os principais conversores na <em>string</em> <code>format</code> do <code>printf()</code> são:</p>
 <table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 85%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Conversor</th>
@@ -282,11 +286,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Além disso, existem operações especiais para inteiros.</p>
 <h3 id="operações-especiais-sobre-inteiros">Operações especiais sobre inteiros</h3>
 <p>O operador <code>%</code> calcula o resto de uma divisão inteira. Ele é chamado de operador módulo, pois esta operação na matemática de números inteiros é chamada de módulo. <code>10 % 2</code> lê-se 10 módulo 2 e resulta em <code>0</code>. Não confunda a operação módulo com o cálculo do valor absoluto. Para calcular o valor absoluto de um número pode-se usar a biblioteca matemática (<code>#include &lt;math.h&gt;</code>) com a função <code>fabs()</code> que calcula o valor absoluto de um <code>double</code> e retorna um <code>double</code>. Se precisar calcular o valor absoluto de um inteiro e não quiser usar o operador ternário, você pode usar a função <code>abs()</code> da <code>stdlib.h</code>.</p>
-<p>Uma maneira perigosa de obter o valor absoluto de 2 números é com a <em>macro</em>:</p>
-<pre><code>#define ABS(x) ((x) &lt; 0) ? (-(x)) : (x)</code></pre>
-<p>Use este tipo de <em>macro</em> sempre com muito cuidado.</p>
-<p>Além dessas operações, o valores inteiros são usados para trabalhar representações binárias. Assim, temos ainda as operações:</p>
+<p>Todas as variáveis de tipos inteiros em C aceitam as operações de incremento (<code>++</code>) e decremento (<code>--</code>). Estas operações são diferentes conforme elas são colocadas antes ou depois das variáveis.</p>
 <table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Operação</th>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: left;">Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>--i</code></td>
+<td style="text-align: left;">Decremento pré-fixado</td>
+<td style="text-align: left;">O decremento é realizado antes da instrução</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>++i</code></td>
+<td style="text-align: left;">Incremento pré-fixado</td>
+<td style="text-align: left;">O incremento é realizado antes da instrução</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>i--</code></td>
+<td style="text-align: left;">Decremento pós-fixado</td>
+<td style="text-align: left;">O decremento é realizado após a instrução</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>i++</code></td>
+<td style="text-align: left;">Incremento pós-fixado</td>
+<td style="text-align: left;">O incremento é realizado após a instrução</td>
+</tr>
+</tbody>
+</table>
+<p>Por exemplo:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1"></a><span class="dt">int</span> <span class="dv">5</span>;</span>
+<span id="cb17-2"><a href="#cb17-2"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, i++);      <span class="co">// Saída: i = 5, incremento pós-fixado</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, i);        <span class="co">// Saída: i = 6</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, ++i);      <span class="co">// Saída: i = 7, incremento pré-fixado</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, i);        <span class="co">// Saída: i = 7</span></span></code></pre></div>
+<p>Além dessas operações, os valores inteiros são usados para trabalhar representações binárias. Assim, temos ainda as operações:</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 84%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Operação</th>
@@ -442,16 +485,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Do ponto de vista de estilo de programação deveríamos ter identação para o segundo if com um recuo e assim por diante. Este tipo de cascateamento, infelizmente, produz código de leitura difícil. Por essa razão, neste resumo não se usa um recuo maior para <code>else if</code>.</p>
 <p>Observe que em C, as condições são sempre colocadas entre parenteses, <code>()</code>.</p>
 <h3 id="malhas-de-repetição">Malhas de repetição</h3>
-<h4 id="while-condição-instrução"><code>while (condição) instrução;</code></h4>
-<h4 id="do-instrução-while-condição"><code>do instrução while (condição)</code></h4>
-<h4 id="for-ini-condição-inc-instrução"><code>for (ini; condição; inc) instrução;</code></h4>
+<h4 id="enquanto">Enquanto</h4>
+<p>A instrução de repetição <em>enquanto</em> no C é padrão e tem a sintaxe:</p>
+<pre><code>while (condição) instrução;</code></pre>
+<p>Enquanto a condição for verdadeira, a instrução é repetida. Onde a instrução pode ser uma instrução simples ou um bloco de instruções cercadas por chaves, <code>{}</code>. A repetição só para se a condição for falsa. Se no início ela já é falsa, a instrução não será executada nenhuma vez. É óbvio que a execução da instrução ou do bloco de instruções deve ser tal que a condição se torne falsa em algum momento.</p>
+<p>Exemplo: soma de todos os elementos dentro de um <em>array</em> terminado por 0.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1"></a><span class="dt">int</span> vetor[] = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">0</span>};    <span class="co">// array de 8 inteiros</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="dt">int</span> indice = <span class="dv">0</span>;</span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="dt">int</span> soma = <span class="dv">0</span>;                              <span class="co">// acumulador da soma</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="cf">while</span> (vetor[indice]) {      <span class="co">// lembre-se de que 0 eh == falso</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a>  soma += vetor[indice++];   <span class="co">// observe o uso do incremento</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a>}</span>
+<span id="cb26-7"><a href="#cb26-7"></a><span class="co">// a variável soma tem a soma de todos os elementos do vetor</span></span></code></pre></div>
+<h4 id="repita">Repita</h4>
+<p>O C não tem um <code>repeat</code> como o Pascal, Ada e outras linguagens. No lugar dele, para repetir uma instrução, ou um bloco, usa-se o <code>do while</code>. A sintaxe dele é dada por:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1"></a><span class="cf">do</span> instrução; <span class="cf">while</span> (condição);</span></code></pre></div>
+<p>A instrução é executada uma vez, enquanto a condição for verdadeira, ela é repetida.</p>
+<p>Exemplo: cópia de uma string num buffer de caracteres</p>
+<pre><code>char texto[] = &quot;Este eh um texto.&quot;;
+char copia[16];    // buffer de 16 caracteres
+char *pCh = texto; // ponteiro de caracter aponta para o &#39;E&#39; de texto
+int indice = 0;
+do {       // estas chaves não eram necessárias, mas é uma questão estilística
+  copia[indice++] = *pCh++;    // após a cópia do carácter, o indice e o ponteiro avançam
+} while (*pCh);    // testa o fim da string - STRINGs em C terminam com &#39;\0&#39; == false
+copia[indice]=&#39;\0&#39;;    // para manter a convenção de terminar a string com 0
+printf(&quot;Texto copiado: %s\n&quot;, copia);</code></pre>
+<h4 id="para-inicialização-de-contador-fim-do-contador-passo">Para inicialização de contador, fim do contador, passo</h4>
+<p>O <code>for</code> do C não é igual ao <code>Para</code> do Pascal e linguagens semelhantes. O <code>for</code> do C permite múltiplas inicializações (separadas por vírgulas) e múltiplas instruções de incremento/decremento no lugar do <code>passo</code>. O <code>passo</code> não precisa ser constante e inteiro. A sintaxe do <code>for</code> do C é:</p>
+<pre><code>for (ini; condição; inc) instrução;</code></pre>
+<p>O exemplo do <code>do while</code> pode ser reescrito com o <code>for</code> pelo código abaixo:</p>
+<pre><code>char texto[] = &quot;Este eh outro texto.&quot;;
+char copia[16];    // buffer de 16 caracteres
+char *pCh; // ponteiro de carácter
+int indice;
+for (indice = 0, pCh = texto; *pCh; indice++, pCh++) {
+  copia[indice] = *pCh;    // copia o carácter apontado pelo pCh na posição indice
+}
+copia[indice]=&#39;\0&#39;;    // para manter a convenção de terminar a string com 0
+printf(&quot;Texto copiado: %s\n&quot;, copia);</code></pre>
+<p>O <code>for</code> do C pode ser substituído por um <code>while</code> com um código do tipo:</p>
+<pre><code>ini;
+while (condição) {
+  instrução;
+  inc;
+}</code></pre>
+<p>Todos os elementos do <code>for</code>, <code>ini</code>, <code>condição</code>, <code>inc</code> e instrução, são opcionais. Se a condição não for dada, ela é considerada sempre verdadeira. Nesse caso, o <em>loop</em> pode ser terminado se uma instrução de <code>break</code> for executada. Ou um evento externo provocar a execução de código alternativo.</p>
+<h4 id="instruções-break-e-continue">Instruções <code>break</code> e <code>continue</code></h4>
+<p>A instrução <code>break</code> pode ser usada para terminar a execução de uma malha de repetição. Independente do bloco de instruções ainda possuir instruções ou não, o <code>break</code> vai para a próxima instrução depois da malha de repetição.</p>
+<p>A instrução <code>continue</code> termina a iteração atual e vai para a seguinte. Isto é, ela começa uma nova iteração (se a condição permitir).</p>
 <h2 id="exercício">Exercício:</h2>
 <ol type="1">
 <li><p>Escreva um programa que lê no máximo 10 números reais e calcule a média dos números lidos. Caso o usuário queira fornece menos de 10 números, ele termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0. Exemplo de execução:</p>
 <blockquote>
-<p>Digite numero = 4<br>Digite numero = 8<br>Digite numero = 0</p><p>Os numeros digitados foram: 4.0, 8.0<br>A media foi: 6.0</p>
+<p>Digite numero = 4<br> Digite numero = 8<br> Digite numero = 0<br> Os numeros digitados foram: 4.0, 8.0<br> A media foi: 6.0</p>
 </blockquote></li>
 </ol>
+<h2 id="switch-case">Switch-case</h2>
+<p>O C tem uma instrução de controle de fluxo com múltiplas sequências possíveis, o <code>switch-case</code>. A sintaxe da instrução é dada por:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1"></a><span class="cf">switch</span> (expressão de valor inteiro) {</span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="cf">case</span> &lt;valor1&gt;:</span>
+<span id="cb32-3"><a href="#cb32-3"></a>    instruções1;</span>
+<span id="cb32-4"><a href="#cb32-4"></a>  <span class="cf">case</span> &lt;valor2&gt;:</span>
+<span id="cb32-5"><a href="#cb32-5"></a>    instruções2;</span>
+<span id="cb32-6"><a href="#cb32-6"></a>  ...</span>
+<span id="cb32-7"><a href="#cb32-7"></a>  <span class="cf">default</span>:</span>
+<span id="cb32-8"><a href="#cb32-8"></a>    instruções_default;</span>
+<span id="cb32-9"><a href="#cb32-9"></a>}</span></code></pre></div>
 <p>[1]. Kernighan, B.W. &amp; Ritche, D.M., The C Programming Language, Prentice-Hall.</p>
 </body>
 </html>
