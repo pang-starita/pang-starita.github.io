@@ -49,6 +49,8 @@ Os componentes da arquitetura de *von Neumann* são:
 4. **Entradas**: responsável por capturar/receber os dados externos ao computador
 5. **Saídas**: responsável por enviar os dados para o meios externos ao computador
 
+![Arquitetura de um computador monoprocessador](monoprocessador.png)
+
 ### Memória principal do computador
 
 Ela é formada pelos módulos de memória DDR nos PCs que os alunos usam.
@@ -97,14 +99,56 @@ modernos são capazes de otimizar o código muito melhor do que a maioria dos
 programadores. A programação de microcontroladores muitas vezes é realizada em
 *Assembly*.
 
-### Conceitos de + alto nível
+### Conceitos de mais alto nível
 
-#### tipos de dados
+As linguagens de programação procuram proporcionar conceitos de mais alto nível
+e esconder conceitos de baixo nível. Assim, linguagens estruturadas fornecem
+estruturas de fluxo de instruções que eliminam os desvios incondicionais que
+Dijkstra denunciou como culpados por muitos erros de programação. No lugar de
+desvios, usam-se estruturas sequenciais, condicionais, de repetição e chamada
+de sub-programas \(funções ou procedimentos\).
 
-#### estruturas de controle de fluxo de instrução
+#### Tipos de dados
 
-##### condicionais
+O hardware do computador praticamente só conhece valores binários \(digitais\).
+Estes não são facilmente interpretados por seres humanos. É mais compreensível
+entender os dados do mundo real com números decimais, reais e textos.
+As linguagens de programação fornecem representações binárias para estes tipos
+de dados livrando o programador das representações binárias na maior parte do
+tempo. Assim, as linguagens de programação oferecem tipos de dados inteiros,
+ponto flutuante para números reais, caracteres em algum tipo de codificação.
+Atualmente, usa-se muito a codificação ASCII e a UTF-8. Os textos são formados
+com sequências de caracteres.
 
-##### repetição
+#### Estruturas de controle de fluxo de instrução
 
-##### subprogramas: funções e procedimentos
+As instruções na maioria das linguagens de programação são supostas serem
+executadas **sequencialmente**. A sequência das instruções pode precisar
+seguir caminhos diferentes dependendo do valor de alguns dados. Isto é obtido
+com instruções condicionais. Em que o valor de uma condição determina o fluxo
+de instruções a ser seguido.
+
+Frequentemente, uma sequência de instruções precisa ser repetida, para tanto,
+usa-se as **instruções de repetição**.
+
+Muitas vezes, percebe-se que trechos de código realizam um tipo de processamento
+bastante específico e precisamos usar este tipo de processamento em diferentes
+programas e partes de programas. Este tipo de ideia sugere que existem
+subprogramas que são repetidamente usados nos programas. O conceito de
+subprograma foi expandido e a instrução que usa um subprograma é denominada
+de **chamada de subprograma**. Apesar de rodar o mesmo código em cada chamada
+de subprograma, podemos querer mudar alguns dados que são processados pelo
+subprograma. Estes dados que mudam de chamada para chamada de subprograma são
+chamados de **parâmetros** dos subprogramas. Os valores dos dados que são passados
+para os subprogramas são chamados de **argumentos**. Muitas vezes os termos
+parâmetros e argumentos são usados como sinônimos, apesar de não serem. Nesta
+disciplina vamos usá-los como sinônimos.
+
+Os subprogramas podem ser divididos em 2 tipos diferentes: **funções** e
+**procedimentos**. As funções procuram calcular algo baseados nos valores dos
+argumentos na chamada. Elas sempre retornam um valor. Os procedimentos podem
+realizar tarefas diferentes, em geral, interações com os meios externos ou
+alterações dos estados de dados globais. Os procedimentos não retornam valores.
+
+A chamada de um subprograma desvia o fluxo de instruções para o subprograma. O
+subprograma retorna ao programa \(ou subprograma\) que o chamou quando termina. 
