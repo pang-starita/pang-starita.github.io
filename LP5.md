@@ -195,25 +195,57 @@ print('O fatorial de 20 eh', fatorial(20))
 
 ### Cálculo do n-ésimo elemento da sequência de Fibonacci
 
-Vamos aproveitar a atribuição múltipla do Python, como com o fatorial, vamos
-primeiro escrever o programa para um caso especial, n = 5, que sabemos ser 3,
-pois a sequência até o quinto elemento é `[0,1,1,2,3]`.
+A sequência de Fibonacci é dada por: `0, 1, 1, 2, 3, 5, 8, 13, ...`
+Os números da sequência são calculados de forma que um elemento da sequência
+é sempre a soma dos 2 anteriores.
+
+Estes números aparecem em muitos fenômenos naturais e em muitas ocasiões
+na computação. O primeiro número da sequência é `0`, o segundo é `1` e a
+partir daí, sempre calculamos o próximo como a soma dos 2 anteriores. O
+algoritmo para calcular o n-ésimo elemento da sequência consiste em calcular
+sequencialmente os anteriores até termos os 2 anteriores ao n-ésimo e, aí,
+somamos estes 2 e obtemos o n-ésimo. Assim, informalmente, o algoritmo pode
+ser descrito por:
+
+1. Se o `n` é `1` ou `2`, o n-ésimo elemento da sequência é, `0` ou `1`,
+ respectivamente.
+2. Usaremos uma variável para memorizar o valor da sequência duas posições
+ atrás, vamos chamá-la de `fMenos2` e outra variável para uma posição atrás,
+ `fMenos1`. Inicializamos `fMenos2` com 0 e `fMenos1` com 1.
+3. Usaremos uma variável para indicar que já calculamos o i-ésimo elemento
+ da sequência, o nome desta variável é `i`. Ela é inicializada com 2.
+ 4. Enquanto `i < n`, calculamos a soma de `fMenos2` com `fMenos1` e colocamos
+  em `soma`, este é  o novo valor da sequência, quer dizer que podemos aumentar
+  o `i` de 1 e agora `fMenos2` recebe o valor de `fMenos1` e `fMenos1` recebe o
+  valor de soma. Quando este `enquanto` acabar de repetir estas atualizações,
+  teremos o `i` igual ao `n` e o valor em `soma` ou `fMenos1` é o valor que
+  procuramos.
+
+Como fizemos com o fatorial, vamos
+primeiro escrever o programa para um caso especial, n = 8, que sabemos ser 13.
 
 ```Python
-n = 5
-anterior = 0
-atual = 1
-i = 2
-while i < n:
-  anterior, atual = atual, anterior + atual
-  i += 1
-print('O quinto elemento da sequência de Fibonacci eh', atual)
+n = 8
+if n == 1:
+  print("O primeiro elemento da sequencia eh 0")
+elif n == 2:
+  print("O segundo elemento da sequencia eh 1")
+else:
+  fMenos2 = 0
+  fMenos1 = 1
+  i = 2
+  while i < n:
+    soma = fMenos1 + fMenos2
+    i += 1
+    fMenos2 = fMenos1
+    fMenos1 = soma
+  print('O ' + str(i) + '-esimo elemento da sequência de Fibonacci eh', soma)
 ```
 
 Observe que a condição de continuidade é `i < n` e não `i <= n`. Por que?
 
 > Quando a malha de repetição vai terminar? Quando o `i` não for mais menor do
-que n, a primeira vez em que isto ocorre é quando `i == n`. Logo a condição
+que `n`. A primeira vez em que isto ocorre é quando `i == n`. Logo a condição
 de continuidade é `i < n`, se inclui-se a igualdade, a malha de repetição
 continuaria até `i == n + 1`.
 
@@ -223,6 +255,36 @@ Converta o programa para uma função que calcula o n-ésimo
 elemento da sequência de Fibonacci e chame a função para calcular o centésimo
 elemento.
 
+Solução: [Programa que imprime o valor do centésimo elemento da sequência de Fibonacci](fibo100.py)
+
 ### Cálculo da string reversa
 
-...
+Problema: dado um texto, calcular o texto invertido, o primeiro carácter é o
+último, o segundo o penúltimo, ...
+
+No Python, os caracteres de uma *string* podem ser acessados por índice. O
+primeiro carácter tem índice `0`. Além disso, um carácter em Python é uma
+*string* com um único carácter. Um algoritmo simples para reverter uma *string*
+é:
+
+1. Usar uma variável para acumular os caracteres na ordem contrária à que
+ esta sendo lido o texto. A variável começa com a *string* vazia.
+2. Para cada carácter no texto, concatená-la como primeiro carácter ao
+ acumulador. Isto é, o último carácter lido é o primeiro carácter no acumulador.
+
+Em Python, este algoritmo pode ser escrito como:
+
+```Python
+texto = 'Texto a ser invertido'
+otxet = ""
+for ch in texto:
+  otxet = ch + otxet
+print('"' + texto + '" invertido fica:', otxet)
+```
+
+#### Exercício:
+
+Converta o programa em uma função. Que recebe o texto como argumento e retorna
+o texto invertido.
+
+Solução: [Programa com a função pedida](reverte.py)

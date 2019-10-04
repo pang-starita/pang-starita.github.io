@@ -162,22 +162,52 @@ print(&#39;z =&#39;, z)</code></pre>
 <span id="cb13-8"><a href="#cb13-8"></a></span>
 <span id="cb13-9"><a href="#cb13-9"></a><span class="bu">print</span>(<span class="st">&#39;O fatorial de 20 eh&#39;</span>, fatorial(<span class="dv">20</span>))</span></code></pre></div>
 <h3 id="cálculo-do-n-ésimo-elemento-da-sequência-de-fibonacci">Cálculo do n-ésimo elemento da sequência de Fibonacci</h3>
-<p>Vamos aproveitar a atribuição múltipla do Python, como com o fatorial, vamos primeiro escrever o programa para um caso especial, n = 5, que sabemos ser 3, pois a sequência até o quinto elemento é <code>[0,1,1,2,3]</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>n <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>anterior <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a>atual <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>i <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="cf">while</span> i <span class="op">&lt;</span> n:</span>
-<span id="cb14-6"><a href="#cb14-6"></a>  anterior, atual <span class="op">=</span> atual, anterior <span class="op">+</span> atual</span>
-<span id="cb14-7"><a href="#cb14-7"></a>  i <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="bu">print</span>(<span class="st">&#39;O quinto elemento da sequência de Fibonacci eh&#39;</span>, atual)</span></code></pre></div>
+<p>A sequência de Fibonacci é dada por: <code>0, 1, 1, 2, 3, 5, 8, 13, ...</code> Os números da sequência são calculados de forma que um elemento da sequência é sempre a soma dos 2 anteriores.</p>
+<p>Estes números aparecem em muitos fenômenos naturais e em muitas ocasiões na computação. O primeiro número da sequência é <code>0</code>, o segundo é <code>1</code> e a partir daí, sempre calculamos o próximo como a soma dos 2 anteriores. O algoritmo para calcular o n-ésimo elemento da sequência consiste em calcular sequencialmente os anteriores até termos os 2 anteriores ao n-ésimo e, aí, somamos estes 2 e obtemos o n-ésimo. Assim, informalmente, o algoritmo pode ser descrito por:</p>
+<ol type="1">
+<li>Se o <code>n</code> é <code>1</code> ou <code>2</code>, o n-ésimo elemento da sequência é, <code>0</code> ou <code>1</code>, respectivamente.</li>
+<li>Usaremos uma variável para memorizar o valor da sequência duas posições atrás, vamos chamá-la de <code>fMenos2</code> e outra variável para uma posição atrás, <code>fMenos1</code>. Inicializamos <code>fMenos2</code> com 0 e <code>fMenos1</code> com 1.</li>
+<li>Usaremos uma variável para indicar que já calculamos o i-ésimo elemento da sequência, o nome desta variável é <code>i</code>. Ela é inicializada com 2.</li>
+<li>Enquanto <code>i &lt; n</code>, calculamos a soma de <code>fMenos2</code> com <code>fMenos1</code> e colocamos em <code>soma</code>, este é o novo valor da sequência, quer dizer que podemos aumentar o <code>i</code> de 1 e agora <code>fMenos2</code> recebe o valor de <code>fMenos1</code> e <code>fMenos1</code> recebe o valor de soma. Quando este <code>enquanto</code> acabar de repetir estas atualizações, teremos o <code>i</code> igual ao <code>n</code> e o valor em <code>soma</code> ou <code>fMenos1</code> é o valor que procuramos.</li>
+</ol>
+<p>Como fizemos com o fatorial, vamos primeiro escrever o programa para um caso especial, n = 8, que sabemos ser 13.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>n <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="cf">if</span> n <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="bu">print</span>(<span class="st">&quot;O primeiro elemento da sequencia eh 0&quot;</span>)</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="cf">elif</span> n <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="bu">print</span>(<span class="st">&quot;O segundo elemento da sequencia eh 1&quot;</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="cf">else</span>:</span>
+<span id="cb14-7"><a href="#cb14-7"></a>  fMenos2 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>  fMenos1 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a>  i <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a>  <span class="cf">while</span> i <span class="op">&lt;</span> n:</span>
+<span id="cb14-11"><a href="#cb14-11"></a>    soma <span class="op">=</span> fMenos1 <span class="op">+</span> fMenos2</span>
+<span id="cb14-12"><a href="#cb14-12"></a>    i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>    fMenos2 <span class="op">=</span> fMenos1</span>
+<span id="cb14-14"><a href="#cb14-14"></a>    fMenos1 <span class="op">=</span> soma</span>
+<span id="cb14-15"><a href="#cb14-15"></a>  <span class="bu">print</span>(<span class="st">&#39;O &#39;</span> <span class="op">+</span> <span class="bu">str</span>(i) <span class="op">+</span> <span class="st">&#39;-esimo elemento da sequência de Fibonacci eh&#39;</span>, soma)</span></code></pre></div>
 <p>Observe que a condição de continuidade é <code>i &lt; n</code> e não <code>i &lt;= n</code>. Por que?</p>
 <blockquote>
-<p>Quando a malha de repetição vai terminar? Quando o <code>i</code> não for mais menor do que n, a primeira vez em que isto ocorre é quando <code>i == n</code>. Logo a condição de continuidade é <code>i &lt; n</code>, se inclui-se a igualdade, a malha de repetição continuaria até <code>i == n + 1</code>.</p>
+<p>Quando a malha de repetição vai terminar? Quando o <code>i</code> não for mais menor do que <code>n</code>. A primeira vez em que isto ocorre é quando <code>i == n</code>. Logo a condição de continuidade é <code>i &lt; n</code>, se inclui-se a igualdade, a malha de repetição continuaria até <code>i == n + 1</code>.</p>
 </blockquote>
 <h4 id="exercício">Exercício:</h4>
 <p>Converta o programa para uma função que calcula o n-ésimo elemento da sequência de Fibonacci e chame a função para calcular o centésimo elemento.</p>
+<p>Solução: <a href="fibo100.py">Programa que imprime o valor do centésimo elemento da sequência de Fibonacci</a></p>
 <h3 id="cálculo-da-string-reversa">Cálculo da string reversa</h3>
-<p>…</p>
+<p>Problema: dado um texto, calcular o texto invertido, o primeiro carácter é o último, o segundo o penúltimo, …</p>
+<p>No Python, os caracteres de uma <em>string</em> podem ser acessados por índice. O primeiro carácter tem índice <code>0</code>. Além disso, um carácter em Python é uma <em>string</em> com um único carácter. Um algoritmo simples para reverter uma <em>string</em> é:</p>
+<ol type="1">
+<li>Usar uma variável para acumular os caracteres na ordem contrária à que esta sendo lido o texto. A variável começa com a <em>string</em> vazia.</li>
+<li>Para cada carácter no texto, concatená-la como primeiro carácter ao acumulador. Isto é, o último carácter lido é o primeiro carácter no acumulador.</li>
+</ol>
+<p>Em Python, este algoritmo pode ser escrito como:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>texto <span class="op">=</span> <span class="st">&#39;Texto a ser invertido&#39;</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>otxet <span class="op">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="cf">for</span> ch <span class="kw">in</span> texto:</span>
+<span id="cb15-4"><a href="#cb15-4"></a>  otxet <span class="op">=</span> ch <span class="op">+</span> otxet</span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="bu">print</span>(<span class="st">&#39;&quot;&#39;</span> <span class="op">+</span> texto <span class="op">+</span> <span class="st">&#39;&quot; invertido fica:&#39;</span>, otxet)</span></code></pre></div>
+<h4 id="exercício-1">Exercício:</h4>
+<p>Converta o programa em uma função. Que recebe o texto como argumento e retorna o texto invertido.</p>
+<p>Solução: <a href="reverte.py">Programa com a função pedida</a></p>
 </body>
 </html>

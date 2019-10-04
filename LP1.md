@@ -151,4 +151,21 @@ realizar tarefas diferentes, em geral, interações com os meios externos ou
 alterações dos estados de dados globais. Os procedimentos não retornam valores.
 
 A chamada de um subprograma desvia o fluxo de instruções para o subprograma. O
-subprograma retorna ao programa \(ou subprograma\) que o chamou quando termina. 
+subprograma retorna ao programa \(ou subprograma\) que o chamou quando termina.
+
+### Subprogramas
+
+A ideia de subprograma é bastante simples: Existem trechos de programas que
+precisamos escrever repetidamente. Para evitar estas reescritas que deixam
+o texto do programa muito grande. Sempre que estes trechos repetitivos
+executam uma tarefa muito bem definida, transformamos estes trechos em
+subprogramas. No lugar onde escreveríamos estes trechos de código, chamamos
+o subprograma que realiza a tarefa. Em linguagens antigas, existia uma
+instrução `CALL` para chamar os subprogramas. Em linguagens mais modernas,
+os subprogramas são chamados de *funções* quando retornam valores e
+*procedimentos* quando não retornam nenhum valor. A chamada dos subprogramas
+não precisam mais de um `CALL` explicito, basta escrever o nome da função, ou
+do procedimento e a lista de argumentos, quando houver, entre parênteses, `()`.
+
+A definição do código da função ou do procedimento é chamado de *implementação*
+da função. O código do que a função deve executar é chamado de *corpo da função*.

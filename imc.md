@@ -4,7 +4,7 @@
 
 # IMC
 
-O **IMC** é um indicador internacional usado para determinar se uma pessoal está
+O **IMC** é um indicador internacional usado para determinar se uma pessoa está
 com o peso ideal. Ele é calculado pela fórmula:
 
 IMC = massa/(altura . altura)
