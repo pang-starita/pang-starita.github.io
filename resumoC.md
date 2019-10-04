@@ -2,6 +2,8 @@
 % Paulino Ng
 % 2019-09-30
 
+> Advertência: Este é um trabalho em andamento (WIP - work-in-progress).
+
 ## Programa Alo
 
 Seguindo os passos de [1], este resumo começa com o programa alo.c, cujo código
@@ -202,11 +204,17 @@ sido dada no início do arquivo fonte. O protótipo da `printf()` é:
 int printf(const char *format, ...);
 ```
 
-Os `...` significam valores que podem ser calculados por expressões e que
-serão **convertidos** em texto, *strings*, pelos conversores expressos na
+Os `...` significam lista de valores que podem ser calculados de expressões,
+este valores serão **convertidos** em texto, *strings*,
+pelos conversores expressos na
 *string* `format`. `format` é uma *string* que tem o texto de saída e embutido
 neste texto, existem *posições* onde os valores convertidos para texto devem
 ser inseridos. Alguns dos conversores possíveis são %d, %f, %e, %c, %s e %g.
+A quantidade de valores é variável, pode não ter nenhum, ou muitos. Deveria
+ter o mesmo número de valores que o número de *conversores* na *string* `format`.
+Mas, isto não é obrigatório, isto é, o compilador não verifica isto e não
+reclama se a quantidade de valores é diferente da quantidade de conversores.
+O resultado deste descasamento é aleatório.
 
 Eis alguns exemplos:
 
@@ -227,16 +235,21 @@ Os principais conversores na *string* `format` do `printf()` são:
 
 | Conversor |          Descrição                             |
 |-----------|-----------------------------------------------------------------|
-| d ou i  | Converte um valor inteiro com sinal para sua representação decimal |
-| u  | Converte um inteiro sem sinal para sua representação decimal  |
-| x ou X  | Converte um inteiro sem sinal para sua representação hexadecimal |
-| e ou E | Converte um valor de ponto flutuante \(double\) numa notação científica |
-| f ou F | Converte um valor de ponto flutuante \(double\) numa representação decimal |
-| c | Converte um carácter sem sinal num carácter de saída |
-| s | Converte uma *string* de C numa *string* de saída |
+| `%d` ou `%i` | Converte um valor inteiro com sinal para sua representação decimal |
+| `%u` | Converte um inteiro sem sinal para sua representação decimal  |
+| `%x` ou `%X`  | Converte um inteiro sem sinal para sua representação hexadecimal |
+| `%e` ou `%E` | Converte um valor de ponto flutuante \(double\) numa notação científica |
+| `%f` ou `%F` | Converte um valor de ponto flutuante \(double\) numa representação decimal |
+| `%c` | Converte um carácter sem sinal num carácter de saída |
+| `%s` | Converte uma *string* de C numa *string* de saída |
 
-Os conversores podem ter modificadores antes deles para especificar o número de
-"casas" de saída são desejados na conversão, ou para sinalizar representações de números longos e outras. Um dos modificadores mais usados é para os números de
+Os conversores podem ter modificadores antes deles:
+
+- para especificar o número de "casas" de saída que são desejados na conversão;
+- para sinalizar representações de números longos e
+- para especificar um determinado formato de saída.
+
+  Um dos modificadores mais usados é para os números de
 ponto flutuante serem representados com uma quantidade fixa de casas decimais:
 
 ```C
@@ -244,10 +257,10 @@ printf("%.2f\n", 3.1416);      // Saida: 3.14
 ```
 
 O valor de **retorno** do `printf()` é o número de caracteres enviados à saída,
-sem conta o carácter nulo usado para terminar as *strings* em C. Se acontecer
-algum erro na saída, o valor retornado é negativo.
+sem conta o carácter nulo usado para terminar a *string* conforme a convenção do
+C. Se acontecer algum erro na saída, o valor retornado é negativo.
 
-O número de argumentos do `printf()` é variável e com tipos variáveis, deve-se
+> O número de argumentos do `printf()` é variável e com tipos variáveis, deve-se
 ter argumentos suficientes para os conversores da *string* `format` e com tipos
 compatíveis para a conversão. Argumentos insuficientes ou excessivos podem
 provocar saídas bizarras.
@@ -296,13 +309,16 @@ scanf("%f", &n);
 Observe que os conversores são praticamente os mesmos usados pelo `printf()`.
 O `%f` serve tanto para `float` como para `double`, como no `printf()`.
 
-A leitura de *string* com o `%s` só lê até o separador (geralmente o espaço),
+A leitura de *string* com o `%s` só lê até o separador (geralmente um espaço
+  ou um sinal de pomtuação),
 para ler uma string até o final da linha, usa-se a função `fgets()`, cujo
 protótipo é:
 
 ```C
 char *fgets(char *s, int size, FILE *stream);
 ```
+
+> Nunca use a antiga gets().
 
 O parâmetro `s` é o *buffer* de caracteres onde a linha de texto deve ser lida,
 geralmente declarada com algo como: `char s[80]`. O parâmetro `size` indica
@@ -527,7 +543,7 @@ if (condição) instrução_then;
 
 No lugar de uma instrução, podemos ter sempre um bloco de instruções
 cercadas com `{}`. Observe que uma dúvida comum em novatos é a obrigatoriedade
-do `else`. O `else` não é obrigatório. O cascateamento (isto é, `if` em sequência)
+do `else`. O **`else` não é obrigatório**. O cascateamento (isto é, `if`s em sequência)
 de `if`s não tem sintaxe específica como em programação de SHELL ou Python.
 Assim, sequências de `if`s são obtidas com:
 
@@ -539,11 +555,25 @@ else instrução_else;
 ```
 
 Do ponto de vista de estilo de programação deveríamos ter identação para o
-segundo if com um recuo e assim por diante. Este tipo de cascateamento,
+segundo if com um recuo e assim por diante.
+
+```C
+if (condição1)
+  instrução_then_1;
+else
+  if (condição2)
+    instrução_then_2;
+  else
+    if (condição3)
+      ...
+                else instrução_else;
+```
+
+Este tipo de cascateamento,
 infelizmente, produz código de leitura difícil. Por essa razão, neste resumo
 não se usa um recuo maior para `else if`.
 
-Observe que em C, as condições são sempre colocadas entre parenteses, `()`.
+> Observe que em C, as condições são sempre colocadas entre parenteses, `()`.
 
 ### Malhas de repetição
 
@@ -587,6 +617,9 @@ do instrução; while (condição);
 A instrução é executada uma vez, enquanto a condição for verdadeira, ela
 é repetida.
 
+> Cuidado: com relação à condição de parada, o `do-while` tem condição invertida
+> com relação a do `until`.
+
 Exemplo: cópia de uma string num buffer de caracteres
 
 ```
@@ -603,7 +636,9 @@ printf("Texto copiado: %s\n", copia);
 
 #### Para inicialização de contador, fim do contador, passo
 
-O `for` do C não é igual ao `Para` do Pascal e linguagens semelhantes.
+O `for` do C não é igual ao `Para` do Pascal e linguagens semelhantes. O `for`
+do C não precisa trabalhar com um contador inteiro e não tem um número preciso
+iterações (repetições).
 O `for` do C permite múltiplas inicializações \(separadas por vírgulas\) e
 múltiplas instruções de incremento/decremento no lugar do `passo`. O `passo`
 não precisa ser constante e inteiro. A sintaxe do `for` do C é:
@@ -612,7 +647,7 @@ não precisa ser constante e inteiro. A sintaxe do `for` do C é:
 for (ini; condição; inc) instrução;
 ```
 
-O exemplo do `do while` pode ser reescrito com o `for` pelo código abaixo:
+O exemplo do `do-while` pode ser reescrito com o `for` pelo código abaixo:
 
 ```
 char texto[] = "Este eh outro texto.";
@@ -625,6 +660,10 @@ for (indice = 0, pCh = texto; *pCh; indice++, pCh++) {
 copia[indice]='\0';    // para manter a convenção de terminar a string com 0
 printf("Texto copiado: %s\n", copia);
 ```
+
+> No C ANSI e no C++ era comum declarar a variável de controle no próprio `for`,
+> nas novas especificações de C, este tipo de declaração provoca erro de
+> compilação.
 
 O `for` do C pode ser substituído por um `while` com um código do tipo:
 
@@ -663,7 +702,7 @@ ela começa uma nova iteração (se a condição permitir).
    > Os numeros digitados foram: 4.0, 8.0<br>
    > A media foi: 6.0
 
-## Switch-case
+### Switch-case
 
 O C tem uma instrução de controle de fluxo com múltiplas sequências possíveis,
 o `switch-case`. A sintaxe da instrução é dada por:
@@ -680,6 +719,89 @@ switch (expressão de valor inteiro) {
 }
 ```
 
+### Funções em C
+
+#### Chamada de funções
+
+#### Escopo de variáveis: Variáveis locais x variáveis globais
+
+#### Ciclo de vida das variáveis
+
+#### Variáveis estáticas - escopo e ciclo de vida
+
+### Unidade de compilação
+
+## Dados em C
+
+### Tipos de Dados
+
+A linguagem C possui todos os tipos de dados básicos para a programação de
+sistemas. Isto é, os tipos de dados que o Hardware normalmente sabe trabalhar.
+O C tem os tipos básicos como `int`, `float`, `double` e `char`. Estes tipos
+podem sofrer extensões com modificadores como `long`, `short` e `unsigned`.
+Os 2 primeiros influenciam na quantidade de bits do tipo básico, o último
+influencia na representação. É óbvio que estes modificadores não podem ser
+usados com qualquer tipo básico, algumas combinações deles não fazem sentido e
+não podem ser usadas.
+
+#### Tipo carácter
+
+O tipo carácter do C é o `char` que é um inteiro sem sinal de 8 bits.
+O C, diferente de linguagens mais modernas, só dá suporte a caracteres
+internacionais através de bibliotecas de caracteres estendidos com tipos como
+`wchar_t`, ou `char16_t`, ou `char32_t`. Uma discussão aprofundada sobre
+caracteres internacionais foge do escopo deste resumo.
+
+O C não possui na linguagem suporte a *string*, entretanto, existem convenções
+que são quase universalmente seguidas. Uma *string* em C é obtida com um vetor
+de `char`s. O vetor deve ser grande o suficiente para conter todos os caracteres
+mais 1. Por convenção, uma string *sempre* termina com o carácter `'\0'`, ou
+simplesmente, `0`. Isto é, o C não tem uma estrutura de dados para *string*
+em que existem um campo para o tamanho da *string* e outro campo para o vetor
+de caracteres como fazem algumas linguagens. As bibliotecas de C trabalham com
+*string* imaginando que esta convenção está sendo seguida. Por isto, se na
+*string* `format` do `printf()`, o programador usa o conversor `%s` para
+imprimir um vetor de caracteres e este vetor não termina com `'\0'`, um lixo
+será impresso. Experimente o programa abaixo:
+
+```C
+#include <stdio.h>
+int main() {
+  char texto[] = "Esta eh uma string correta, terminada com 0.";
+  char copia[80];  // vamos colocar uma cópia sem terminar com 0
+  int i;
+  for (i = 0; texto[i+1]; i++) copia[i] = texto[i];
+  printf("texto: %s\n", texto);
+  printf("copia: %s\n", copia);
+  return 0;
+}
+```
+
+O programa acima vai ter o comportamento que é o pesadelo de muitos
+programadores, em alguns casos, não vai apresentar nenhum "erro". Isto é,
+a copia vai apresentar o mesmo que texto. Em alguns casos, vai ser diferente.
+Tudo depende dos valores presentes no vetor cópia.
+
+Para trabalhar com *strings* em C, usa-se a biblioteca `string.h` que tem
+funções como:
+
+- `strlen()`: calcula o comprimento de uma *string*.
+- `strcpy()`: copia uma *string* para um vetor de carateres (buffer).
+- `strcmp()`: compara duas *strings*, resulta em `< 0` se a primeira *string* é
+alfabeticamente anterior à segunda, `> 0` se a ordem alfabética da primeira é
+posterior à segunda, ou `0` se ambas são iguais.
+
+#### Tipos inteiros
+
+#### Tipos em ponto flutuante
+
+#### Vetores
+
+#### Ponteiros
+
+#### Registros ou estruturas
+
+#### Uniões
 
 
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.
