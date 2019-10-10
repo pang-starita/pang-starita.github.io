@@ -66,15 +66,17 @@ as instruções que o programa precisa para ser executado. Se uma função de um
 biblioteca compartilhada (`.dll`) for necessária para um programa, o SO se
 encarrega de mapeá-la na memória do programa dinamicamente.
 
-## Pré-processador
+## Pré-compilador
 
 ### `#include`
 
 Pelo fato do C ser uma linguagem de programação bastante simples, não existe
 muita coisa pronta na linguagem. Por outro lado, o C possui uma grande
 quantidade de bibliotecas de funções que podem ser reutilizadas nos
-programas poupando muito esforço de programação. Estas bibliotecas estão em
-arquivos `.a` ou `.so` no Unix, ou `.lib` ou `.dll` no MS Windows.
+programas poupando muito esforço de programação.
+
+As bibliotecas estáticas e dinâmicas estão em arquivos com extensão
+ `.a` ou `.so` no Unix, ou `.lib` ou `.dll` no MS Windows.
 O editor de ligações estáticas ou dinâmicas vai incluir o código destas
 funções ao código executável, mas, antes disto, o compilador precisa conhecer
 o protótipo das funções antes das
@@ -92,8 +94,8 @@ qualquer diretório.
 Como as declarações dos arquivos cabeçalho são necessárias para poder usar
 as bibliotecas, o programador teria de copiá-los em cada arquivo de código que
 utilizasse as funções das bibliotecas. Para evitar estas cópias, os arquivos
-de códigos C (tanto fonte como cabeçalho), pedem para um pré-compilador(ou
-  pré-processador) para
+de códigos C \(tanto código fonte como cabeçalho\), pedem para um
+pré-compilador \(ou pré-processador\) para
 incluir os arquivos cabeçalho. A instrução `#include <stdio.h>` é uma
 instrução para o pré-compilador de C substituir esta linha pelo conteúdo do
 arquivo `stdio.h`. Os `<>` servem para indicar que o arquivo deve ser procurado
@@ -103,7 +105,8 @@ Isto é, `#include "stdio.h"`, neste caso, o pré-compilador procura o arquivo
 
 ### `#define`
 
-Além do `#include`, o pré-compilador C permite criar *macros*. Na sua forma mais
+Além da instrução `#include`, o pré-compilador C permite criar *macros*.
+Na sua forma mais
 simples *macros* servem para definir constantes. Por exemplo, para definir a
 constante $\pi$ em C, pode-se fazer:
 
@@ -124,21 +127,60 @@ O pré-compilador vai substituir `PI` pelo valor e o código que será compilado
     printf("%f", sin(3.141592653589793/4));
 ```
 
-As macros podem ser parametrizadas, isto é, podemos colocar parâmetros para as
-macros. Uma maneira inocente de definir uma macro para calcular o menor
-valor (o valor mínimo) entre 2 números é:
+Mas *macro* é um mecanismo geral, o nome da macro pode ser substituído por
+qualquer texto de programa. Assim, se quisermos usar a palavra `Enquanto`
+no lugar de `while`, poderíamos criar a macro:
 
 ```C
-#define MIN(x,y) (x < y) ? x : y
+#define Enquanto while
 ```
 
-Macros parametrizadas são muito avançadas para este resumo.
+E escrever o código com:
+
+```C
+int main() {
+  int i = 0;
+  Enquanto (i < 10) {
+    printf("Alo\n");
+    i++;
+  }
+}
+```
+
+As macros podem ser parametrizadas, isto é, podemos colocar parâmetros para as
+macros. Podemos trocar o `printf()` do código anterior para `Imprima()` com:
+
+```C
+#define Imprima(msg) printf(msg)
+```
+
+E o código ficaria:
+
+```C
+int main() {
+  int i = 0;
+  Enquanto (i < 10) {
+    Imprima("Alo\n");
+    i++;
+  }
+}
+```
+
+> Cuidado com *macros*, principalmente as parametrizadas, elas podem ter
+> efeitos colaterais muito complexos. Elas dificultam a localização e compreensão
+> de erros de lógica.
 
 ### `#ifdef` e `#ifndef`
 
 Os arquivos cabeçalho incluem outros arquivos cabeçalho e pode ocorrer de numa
-sequência de inclusões, um mesmo arquivo ser incluído mais de uma vez. Para
-evitar o erro de múltiplas declarações (o que não é permitido em C), é
+sequência de inclusões, um mesmo arquivo ser incluído mais de uma vez.
+Imagine que você escreveu um arquivo cabeçalho, `meu.h`, e por algum motivo
+seu arquivo cabeçalho precisa da inclusão do arquivo `stdlib.h` que possui
+diversas constantes úteis do sistema. O código fonte inclui seu arquivo
+cabeçalho e como também precisa de algumas constantes do sistema, ele também
+inclui o arquivo `stdlib.h`. Pode ocorrer problemas na compilação se as
+constantes forem declaradas múltiplas vezes.
+Para evitar o erro de múltiplas declarações (o que não é permitido em C), é
 necessário usar um esquema de exclusão de múltiplas declarações. Isto é obtido
 pelo uso do condicional do pré-compilador. A estrutura que todos os arquivos
 de cabeçalho usam é:
@@ -158,6 +200,11 @@ etc.
 
 ## Comentários em C
 
+Comentários nos códigos fonte são importantes para explicar como usar as
+funções e estruturas de dados e para explicar o algoritmo que está sendo
+usado para realizar um cálculo. Comentários do tipo: `isto é uma variável`,
+`esta é uma função`, `este é o main()`, são inúteis e devem ser evitados.
+
 O C tem 2 tipos de comentários: `//` e `/* */`. `//` inicia um comentário que
 vai até o final da linha. `/*` inicia um comentário que termina quando `*/` é
 encontrado. Isto permite comentários em múltiplas linhas e comentários no
@@ -166,9 +213,10 @@ meio de uma linha. Por exemplo:
 ```C
   x = 0; // x é inicializado com 0 (comentário idiota)
   /* comentário de várias linhas
-   * são usados para explicar uso de funções, estruturas de dados e algoritmos.
+   * são usados para explicar uso de funções, estruturas
+   * de dados e algoritmos.
    */
-  y = 1 + /* este é um comentário mal posto */ 41;
+  y = 1 + /* este é um comentário num lugar ruim */ 41;
 ```
 
 ## Declaração de variáveis em C
@@ -177,14 +225,15 @@ O C atualmente é uma linguagem fortemente tipada com tipagem estática. Isto é
 todas as variáveis em C precisam ser declaradas antes de serem utilizadas e
 o tipo das variáveis não pode mudar durante a execução do programa. Mas,
 diferente de algumas linguagens que obrigam as declarações de variáveis
-serem feitas no início do arquivo de código fonte (no caso de variáveis
-globais), ou no início do corpo das funções (no caso de variáveeis locais), o
+serem feitas no início do arquivo de código fonte \(no caso de variáveis
+globais\), ou no início do corpo das funções (no caso de variáveis locais), o
 C permite que as variáveis sejam declaradas em qualquer posição antes do uso
-delas (as globais sempre precisam ser declaradas fora das funções).
+delas \(as globais sempre precisam ser declaradas fora das funções\).
 Alguns programadores gostam de declarar as variáveis todas no início de um
 escopo, pois todas as declarações ficam visíveis no mesmo lugar. Outros
 preferem declará-las próximas do seu local de uso. As empresas de SW costumam
-estabelecer regras para estas situações. Neste resumo, vamos declarar as
+estabelecer regras para estas situações nas suas normas de estilo de
+programação. Neste resumo, vamos declarar as
 variáveis globais no início do arquivo de código fonte ou cabeçalho. As locais
 serão declaradas próximas ao local de uso delas.
 
@@ -193,58 +242,59 @@ As variáveis são sempre declaradas com uma das seguintes sintaxes:
 ```
 <tipo> nome_da_var;
 <tipo> <lista de nomes de variáveis>;
-<tipo> nome_da_var = <expressão com valor calculável durante a compilação>;
+<tipo> nome_da_var = <expressão com valor calculável antes da declaração>;
 ```
 
 A seguir, tem-se algumas declarações válidas em C:
 
 ```C
-int x, y, z;  // x, y e z são variáveis inteiras (32 bits com o gcc atual)
-log int lx, ly, lz; // lx, ly e lz são variáveis inteiras com mais bits do que int
-long lx1;    // lx1 é long int, o int é opcional
-short sx, sy; // sx e sy são inteiros com um número menor de bits do que int
-float f, g; // f e g são variáveis de ponto flutuante com 32 bits
-double ff, gg;  // ff e gg são variáveis de ponto flutuante com 64 bits
-char ch;  // ch é uma variável do tipo carácter
-char linha_nova = '\n'; // linha_nova é uma variável do tipo carácter inicializada
-                        // com \n
+int x, y, z;       // x, y e z são variáveis inteiras (32 bits)
+log int lx, ly, lz;    // lx, ly e lz são variáveis inteiras (64 bits)
+long lx1;          // lx1 é um long int, o int é opcional
+short sx, sy;      // sx e sy são inteiros (16 bits)
+float f, g;        // f e g são variáveis de ponto flutuante com 32 bits
+double ff, gg;     // ff e gg são variáveis de ponto flutuante com 64 bits
+char ch;           // ch é uma variável do tipo carácter
+char linha_nova = '\n'; // linha_nova é uma variável do tipo carácter
+                        // inicializada com \n
 char nome[80];          // nome é uma variável capaz de guardar 80 caracteres
 // A seguir declara-se alguns ponteiros, alguns com inicialização
-char *pChNome = "Joao"; // pChNome é um ponteiro para o primeiro caracter da string
-int *pX = &x; // pX é um ponteiro de inteiro para a posição da variável x
+char *pChNome = "Joao"; // pChNome é um ponteiro para o carácter 'J'
+int *pX = &x;      // pX é um ponteiro de inteiro para a posição da variável x
 ```
 
 ## Função de saída: `printf()`
 
 O `printf()` da biblioteca `stdio` do C permite que sejam enviados textos,
-*strings*, para a saída padrão (*standard*), que, considera-se, é a interface de
-linha que mandou rodar o programa. Cuidado ao rodar um programa executável do
-C pela interface gráfica no MS Windows, ao clicar duas vezes no executável, o
+*strings*, para a saída padrão (*stdout*), que, considera-se, é a interface de
+linha que mandou rodar o programa.
+
+> Cuidado ao rodar um programa executável do
+C pelo `explorer` do MS Windows, ao clicar duas vezes no executável, o
 programa provoca a execução de uma janela de *Prompt do DOS*, roda o programa
 nela, imprime as saídas nela e, se não estiver programada nenhuma interação
 com o usuário, ao terminar a execução, a janela *DOS* é fechada sem que se
 tenha tempo para ver as saídas.
 
 Para usar o `printf()` é necessário que a instrução `#include <stdio.h>` tenha
-sido dada no início do arquivo fonte. O protótipo da `printf()` é:
+sido dada no início do arquivo de código fonte. O protótipo da `printf()` é:
 
 ```
 int printf(const char *format, ...);
 ```
 
 Os `...` significam lista de valores que podem ser calculados de expressões,
-este valores serão **convertidos** em texto, *strings*,
-pelos conversores expressos na
+este valores serão **convertidos** em texto, pelos conversores expressos na
 *string* `format`. `format` é uma *string* que tem o texto de saída e embutido
 neste texto, existem *posições* onde os valores convertidos para texto devem
 ser inseridos. Alguns dos conversores possíveis são %d, %f, %e, %c, %s e %g.
 A quantidade de valores é variável, pode não ter nenhum, ou muitos. Deveria
 ter o mesmo número de valores que o número de *conversores* na *string* `format`.
 Mas, isto não é obrigatório, isto é, o compilador não verifica isto e não
-reclama se a quantidade de valores é diferente da quantidade de conversores.
-O resultado deste descasamento é aleatório.
+reclama se a quantidade de valores for diferente da quantidade de conversores.
+O resultado deste descasamento não é definido e tem comportamento aleatório.
 
-Eis alguns exemplos:
+Eis alguns exemplos de uso do `printf()`:
 
 ```C
 int x = 42, y = 51;
@@ -273,11 +323,11 @@ Os principais conversores na *string* `format` do `printf()` são:
 
 Os conversores podem ter modificadores antes deles:
 
-- para especificar o número de "casas" de saída que são desejados na conversão;
-- para sinalizar representações de números longos e
-- para especificar um determinado formato de saída.
+- para especificar o número de "casas" de saída que são desejados na conversão, por exemplo: `%6d`, inteiro com 6 casas;
+- para sinalizar representações de números longos, por exemplo: `%ld` e
+- para especificar um determinado formato de saída, por exemplo, `%7.2f`.
 
-  Um dos modificadores mais usados é para os números de
+Um dos modificadores mais usados é para os números de
 ponto flutuante serem representados com uma quantidade fixa de casas decimais:
 
 ```C
@@ -296,7 +346,8 @@ provocar saídas bizarras.
 ## Função de entrada: `scanf()`
 
 A função `scanf()` é o complemento da `printf()`, ela realiza a leitura de
-textos vindos, normalmente, do teclado do usuário e converte para representações
+textos vindos, normalmente, do teclado do usuário, \(`stdin`\)
+e converte para representações
 dos tipos adequados para as variáveis que vão guardar os valores.
 
 O protótipo da `scanf()` é dado por:
@@ -311,10 +362,11 @@ Como com o `printf()`, para usar a `scanf()` é necessário ter feito
 Além disso, para que os valores convertidos sejam colocados nas variáveis, é
 necessário fornecer o endereço das variáveis na lista de argumentos após a
 *string* `format`. Isto porque, a `scanf()` precisa modificar o conteúdo das
-variáveis-argumento e não do valor delas. O C não tem passagem de parâmetros
+variáveis-argumento, ela não precisa do valor das variáveis.
+O C não tem passagem de parâmetros
 por referência como outras linguagens, apenas por valor. De certa forma, a
 passagem de um ponteiro com o valor do endereço de uma variável é uma forma
-de passagem por referência.
+de passagem por referência conforme insinuam diversos autores.
 
 Exemplos de uso do `scanf()`:
 
@@ -331,14 +383,18 @@ printf("Digite um numero real = ");
 scanf("%f", &f);
 printf("Digite um numero real com mais casas decimais = ");
 scanf("%f", &n);
-// como exercício, escreva os printfs para verificar se os valores lidos estão corretos
+char nome[80];
+printf("Digite um nome: ");
+scanf("%s", nome); // só lê o primeiro nome, para de ler no espaço
+// como exercício, escreva os printfs para verificar
+// se os valores lidos estão corretos
 ```
 
 Observe que os conversores são praticamente os mesmos usados pelo `printf()`.
 O `%f` serve tanto para `float` como para `double`, como no `printf()`.
 
-A leitura de *string* com o `%s` só lê até o separador (geralmente um espaço
-  ou um sinal de pomtuação),
+A leitura de *string* com o `%s` só lê até o separador \(geralmente um espaço
+  ou um sinal de pontuação\),
 para ler uma string até o final da linha, usa-se a função `fgets()`, cujo
 protótipo é:
 
@@ -375,6 +431,8 @@ int main() {
 }
 ```
 
+O programa leu o salto de linha na variável `nome`. Como podemos eliminá-lo?
+
 ## Operações sobre números em C
 
 O C permite as operações tradicionais com números:
@@ -392,7 +450,11 @@ Além disso, existem operações especiais para inteiros.
 
 O operador `%` calcula o resto de uma divisão inteira. Ele é chamado de operador
 módulo, pois esta operação na matemática de números inteiros é chamada de módulo.
-`10 % 2` lê-se 10 módulo 2 e resulta em `0`. Não confunda a operação módulo com
+`10 % 2` lê-se 10 módulo 2 e resulta em `0`.Uma  maneira de determinar se um
+número é divisível por outro é calcular o resto
+da divisão, se for `0`, o primeiro número é divisível pelo segundo.
+
+Não confunda a operação módulo com
 o cálculo do valor absoluto. Para calcular o valor absoluto de um número pode-se
 usar a biblioteca matemática (`#include <math.h>`) com a função `fabs()` que
 calcula o valor absoluto de um `double` e retorna um `double`. Se precisar
@@ -400,8 +462,9 @@ calcular o valor absoluto de um inteiro e não quiser usar o operador ternário,
 você pode usar a função `abs()` da `stdlib.h`.
 
 Todas as variáveis de tipos inteiros em C aceitam as operações de incremento
-\(`++`\) e decremento \(`--`\). Estas operações são diferentes conforme elas
-são colocadas antes ou depois das variáveis.
+\(`++`\) e decremento \(`--`\). Estas operações aumentam o valor da variável
+de 1 ou diminuem de 1, respectivamente. Estas operações são diferentes conforme
+elas são colocadas antes ou depois das variáveis.
 
  Operação     Nome                     Descrição
 ----------    ----------------------   --------------------------------------------
@@ -449,7 +512,7 @@ int main() {
   scanf("%d.%d.%d.%d", &a, &b, &c, &d);
   msk = d + 256 * (c + 256 * (b + 256 * a));
   rde = ip & msk;
-  printf("O endereço de rede em hexa eh %X\n", rde);
+  printf("O endereco de rede em hexa eh %X\n", rde);
   d = rde % 256;
   rde /= 256;
   c = rde % 256;
@@ -501,7 +564,9 @@ resulta em verdadeiro ou falso dependendo do tipo de comparação. O compilador 
 promover um `int` para `long`, `long long`, `float` ou `double`. De forma geral,
 o compilador é conservador e não converte automaticamente de um tipo com mais
 bits para um tipo com menos bits, especialmente se com isto existe perda de
-informação. Como os caracteres em C são supostos utilizarem uma representação
+informação.
+
+Como os caracteres em C são supostos utilizarem uma representação
 de 8 bits sem sinal, podemos comparar os caracteres como inteiros de 8 bits.
 Isto dá certo, isto é, respeita a ordem alfabética quando temos letras só
 maiúsculas ou minúsculas na codificação ASCII. Isto é, `'z' > 'a'` é verdadeiro.
