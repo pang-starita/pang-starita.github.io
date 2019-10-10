@@ -38,6 +38,34 @@ O carácter `'\n'` é para terminar a linha do `"Alo!"` e começar um nova.
 
 As instruções em C terminam com um `;` obrigatório.
 
+## Etapas para a geração de um programa executável de C
+
+![Etapas da edição até o código executável.](images/etapas_compilacao.png)
+
+O C é uma linguagem de programação compilada. Isto é, o código fonte precisa ser
+compilado para poder ser executado, diferente de linguagem interpretada cujos
+programas não precisam ser compilados para serem executados pelo interpretador.
+Como ocorre com o Python.
+
+A figura ilustra o código fonte que é inicialmente editado pelo programador com o
+uso de um *editor de texto*. Isto resulta num arquivo `.c`. Este arquivo é
+processado pelo pré-compilador que inclui os arquivos cabeçalhos, substitui as
+macros, ... Isto gera um arquivo intermediário que é compilado pelo *compilador*.
+O arquivo compilado é um código objeto, ou arquivo objeto.
+Este arquivo é binário e já
+possui as instruções de máquina da tradução das instruções C do código fonte.
+Este código, entretanto ainda não pode ser executado, pois falta o código
+das bibliotecas.
+O *editor de ligações* é quem *costura* o código objeto com as bibliotecas e
+constrói o *arquivo executável*.
+
+Os sistemas operacionais modernos trabalham com bibliotecas compartilhadas, isto
+é, bibliotecas cujas funções podem ser compartilhadas entre diferentes
+aplicações durante a execução. Assim, o código executável pode não ter todas
+as instruções que o programa precisa para ser executado. Se uma função de uma
+biblioteca compartilhada (`.dll`) for necessária para um programa, o SO se
+encarrega de mapeá-la na memória do programa dinamicamente.
+
 ## Pré-processador
 
 ### `#include`
@@ -77,7 +105,7 @@ Isto é, `#include "stdio.h"`, neste caso, o pré-compilador procura o arquivo
 
 Além do `#include`, o pré-compilador C permite criar *macros*. Na sua forma mais
 simples *macros* servem para definir constantes. Por exemplo, para definir a
-constante &pi; em C, pode-se fazer:
+constante $\pi$ em C, pode-se fazer:
 
 ```
 #define PI 3.141592653589793
@@ -689,7 +717,7 @@ não, o `break` vai para a próxima instrução depois da malha de repetição.
 A instrução `continue` termina a iteração atual e vai para a seguinte. Isto é,
 ela começa uma nova iteração (se a condição permitir).
 
-## Exercício:
+### Exercício:
 
 1. Escreva um programa que lê no máximo 10 números reais e calcule a média dos
    números lidos. Caso o usuário queira fornece menos de 10 números, ele
@@ -786,22 +814,54 @@ Para trabalhar com *strings* em C, usa-se a biblioteca `string.h` que tem
 funções como:
 
 - `strlen()`: calcula o comprimento de uma *string*.
-- `strcpy()`: copia uma *string* para um vetor de carateres (buffer).
-- `strcmp()`: compara duas *strings*, resulta em `< 0` se a primeira *string* é
+- `strncpy()`: copia uma *string* para um vetor de carateres (*buffer*).
+- `strncmp()`: compara duas *strings*, resulta em `< 0` se a primeira *string* é
 alfabeticamente anterior à segunda, `> 0` se a ordem alfabética da primeira é
 posterior à segunda, ou `0` se ambas são iguais.
 
 #### Tipos inteiros
 
+- char \(8 bits\)
+- short \(16 bits\)
+- int \(32 bits\)
+- long \(64 bits\)
+
 #### Tipos em ponto flutuante
+
+- float \(32 bits\)
+- double \(64 bits\)
 
 #### Vetores
 
+- `char nome[80];`
+- `int vi[32];`
+- `double matriz[3][3]; // vetor de 3 vetores de 3 elementos do tipo double`
+
 #### Ponteiros
+
+- `char *ptCh = nome; // ponteiro para o primeiro caracter de nome`
+- `int i; int *ptInt = &i; // ponteiro para o i`
 
 #### Registros ou estruturas
 
+```C
+struct pessoa {
+  char nome[80];
+  char endereco[80];
+  char cpf[12];
+  int idade;
+} p1, p2;
+```
+
 #### Uniões
+
+```C
+union misto {
+  int i;
+  float f;
+  char txt[4];
+} mx;
+```
 
 
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.

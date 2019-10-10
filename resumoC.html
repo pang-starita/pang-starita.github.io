@@ -104,6 +104,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>A função <code>main()</code> retorna um valor inteiro para indicar se o programa executou corretamente ou não. Se a <code>main()</code> retorna <code>0</code> (zero), o programa executou sem erros. Se executar com algum tipo de erro, o valor do retorno é diferente de <code>0</code>.</p>
 <p>Além da instrução de retorno, a única instrução dentro do corpo da <code>main()</code> é a chamada à função <code>printf()</code>. A função <code>printf()</code> imprime uma mensagem (<em>texto</em>) na tela do usuário (na <em>console</em> do usuário). A mensagem é o argumento da chamada da função, <code>"Alo!\n"</code>. Este texto é chamado de <em>string</em> e consiste na sequência de caracteres <code>'A'</code>, <code>'l'</code>, <code>'o'</code>, <code>'!'</code>, <code>'\n'</code> e <code>'\0'</code>. O carácter <code>'\n'</code> é para terminar a linha do <code>"Alo!"</code> e começar um nova.</p>
 <p>As instruções em C terminam com um <code>;</code> obrigatório.</p>
+<h2 id="etapas-para-a-geração-de-um-programa-executável-de-c">Etapas para a geração de um programa executável de C</h2>
+<figure>
+<img src="images/etapas_compilacao.png" alt="" /><figcaption>Etapas da edição até o código executável.</figcaption>
+</figure>
+<p>O C é uma linguagem de programação compilada. Isto é, o código fonte precisa ser compilado para poder ser executado, diferente de linguagem interpretada cujos programas não precisam ser compilados para serem executados pelo interpretador. Como ocorre com o Python.</p>
+<p>A figura ilustra o código fonte que é inicialmente editado pelo programador com o uso de um <em>editor de texto</em>. Isto resulta num arquivo <code>.c</code>. Este arquivo é processado pelo pré-compilador que inclui os arquivos cabeçalhos, substitui as macros, … Isto gera um arquivo intermediário que é compilado pelo <em>compilador</em>. O arquivo compilado é um código objeto, ou arquivo objeto. Este arquivo é binário e já possui as instruções de máquina da tradução das instruções C do código fonte. Este código, entretanto ainda não pode ser executado, pois falta o código das bibliotecas. O <em>editor de ligações</em> é quem <em>costura</em> o código objeto com as bibliotecas e constrói o <em>arquivo executável</em>.</p>
+<p>Os sistemas operacionais modernos trabalham com bibliotecas compartilhadas, isto é, bibliotecas cujas funções podem ser compartilhadas entre diferentes aplicações durante a execução. Assim, o código executável pode não ter todas as instruções que o programa precisa para ser executado. Se uma função de uma biblioteca compartilhada (<code>.dll</code>) for necessária para um programa, o SO se encarrega de mapeá-la na memória do programa dinamicamente.</p>
 <h2 id="pré-processador">Pré-processador</h2>
 <h3 id="include"><code>#include</code></h3>
 <p>Pelo fato do C ser uma linguagem de programação bastante simples, não existe muita coisa pronta na linguagem. Por outro lado, o C possui uma grande quantidade de bibliotecas de funções que podem ser reutilizadas nos programas poupando muito esforço de programação. Estas bibliotecas estão em arquivos <code>.a</code> ou <code>.so</code> no Unix, ou <code>.lib</code> ou <code>.dll</code> no MS Windows. O editor de ligações estáticas ou dinâmicas vai incluir o código destas funções ao código executável, mas, antes disto, o compilador precisa conhecer o protótipo das funções antes das funções serem chamadas nos programas dos programadores-usuários das bibliotecas.</p>
@@ -111,7 +118,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Os arquivos cabeçalho de C, geralmente, usam a extensão <code>.h</code>. Os arquivos cabeçalho das bibliotecas costumam está em diretórios do sistema de compilação. Mas, o programador pode criar seus próprios arquivos cabeçalho e colocá-los em qualquer diretório.</p>
 <p>Como as declarações dos arquivos cabeçalho são necessárias para poder usar as bibliotecas, o programador teria de copiá-los em cada arquivo de código que utilizasse as funções das bibliotecas. Para evitar estas cópias, os arquivos de códigos C (tanto fonte como cabeçalho), pedem para um pré-compilador(ou pré-processador) para incluir os arquivos cabeçalho. A instrução <code>#include &lt;stdio.h&gt;</code> é uma instrução para o pré-compilador de C substituir esta linha pelo conteúdo do arquivo <code>stdio.h</code>. Os <code>&lt;&gt;</code> servem para indicar que o arquivo deve ser procurado nos diretórios de sistema. No lugar de <code>&lt;&gt;</code> (<em>bicudos</em>), podemos usar <code>""</code>. Isto é, <code>#include "stdio.h"</code>, neste caso, o pré-compilador procura o arquivo <code>stdio.h</code> no diretório do código fonte antes dos diretórios de sistema.</p>
 <h3 id="define"><code>#define</code></h3>
-<p>Além do <code>#include</code>, o pré-compilador C permite criar <em>macros</em>. Na sua forma mais simples <em>macros</em> servem para definir constantes. Por exemplo, para definir a constante π em C, pode-se fazer:</p>
+<p>Além do <code>#include</code>, o pré-compilador C permite criar <em>macros</em>. Na sua forma mais simples <em>macros</em> servem para definir constantes. Por exemplo, para definir a constante <span class="math inline"><em>π</em></span> em C, pode-se fazer:</p>
 <pre><code>#define PI 3.141592653589793</code></pre>
 <p>Se dentro do código C aparecer o nome da <em>macro</em> (<code>PI</code>), o nome vai ser substituído pelo valor associado. Por exemplo:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>    printf(<span class="st">&quot;%f&quot;</span>, sin(PI/<span class="dv">4</span>));</span></code></pre></div>
@@ -566,7 +573,7 @@ while (condição) {
 <h4 id="instruções-break-e-continue">Instruções <code>break</code> e <code>continue</code></h4>
 <p>A instrução <code>break</code> pode ser usada para terminar a execução de uma malha de repetição. Independente do bloco de instruções ainda possuir instruções ou não, o <code>break</code> vai para a próxima instrução depois da malha de repetição.</p>
 <p>A instrução <code>continue</code> termina a iteração atual e vai para a seguinte. Isto é, ela começa uma nova iteração (se a condição permitir).</p>
-<h2 id="exercício">Exercício:</h2>
+<h3 id="exercício">Exercício:</h3>
 <ol type="1">
 <li><p>Escreva um programa que lê no máximo 10 números reais e calcule a média dos números lidos. Caso o usuário queira fornece menos de 10 números, ele termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0. Exemplo de execução:</p>
 <blockquote>
@@ -610,15 +617,45 @@ while (condição) {
 <p>Para trabalhar com <em>strings</em> em C, usa-se a biblioteca <code>string.h</code> que tem funções como:</p>
 <ul>
 <li><code>strlen()</code>: calcula o comprimento de uma <em>string</em>.</li>
-<li><code>strcpy()</code>: copia uma <em>string</em> para um vetor de carateres (buffer).</li>
-<li><code>strcmp()</code>: compara duas <em>strings</em>, resulta em <code>&lt; 0</code> se a primeira <em>string</em> é alfabeticamente anterior à segunda, <code>&gt; 0</code> se a ordem alfabética da primeira é posterior à segunda, ou <code>0</code> se ambas são iguais.</li>
+<li><code>strncpy()</code>: copia uma <em>string</em> para um vetor de carateres (<em>buffer</em>).</li>
+<li><code>strncmp()</code>: compara duas <em>strings</em>, resulta em <code>&lt; 0</code> se a primeira <em>string</em> é alfabeticamente anterior à segunda, <code>&gt; 0</code> se a ordem alfabética da primeira é posterior à segunda, ou <code>0</code> se ambas são iguais.</li>
 </ul>
 <h4 id="tipos-inteiros">Tipos inteiros</h4>
+<ul>
+<li>char (8 bits)</li>
+<li>short (16 bits)</li>
+<li>int (32 bits)</li>
+<li>long (64 bits)</li>
+</ul>
 <h4 id="tipos-em-ponto-flutuante">Tipos em ponto flutuante</h4>
+<ul>
+<li>float (32 bits)</li>
+<li>double (64 bits)</li>
+</ul>
 <h4 id="vetores">Vetores</h4>
+<ul>
+<li><code>char nome[80];</code></li>
+<li><code>int vi[32];</code></li>
+<li><code>double matriz[3][3]; // vetor de 3 vetores de 3 elementos do tipo double</code></li>
+</ul>
 <h4 id="ponteiros">Ponteiros</h4>
+<ul>
+<li><code>char *ptCh = nome; // ponteiro para o primeiro caracter de nome</code></li>
+<li><code>int i; int *ptInt = &amp;i; // ponteiro para o i</code></li>
+</ul>
 <h4 id="registros-ou-estruturas">Registros ou estruturas</h4>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">struct</span> pessoa {</span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="dt">char</span> nome[<span class="dv">80</span>];</span>
+<span id="cb35-3"><a href="#cb35-3"></a>  <span class="dt">char</span> endereco[<span class="dv">80</span>];</span>
+<span id="cb35-4"><a href="#cb35-4"></a>  <span class="dt">char</span> cpf[<span class="dv">12</span>];</span>
+<span id="cb35-5"><a href="#cb35-5"></a>  <span class="dt">int</span> idade;</span>
+<span id="cb35-6"><a href="#cb35-6"></a>} p1, p2;</span></code></pre></div>
 <h4 id="uniões">Uniões</h4>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1"></a><span class="kw">union</span> misto {</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="dt">int</span> i;</span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="dt">float</span> f;</span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="dt">char</span> txt[<span class="dv">4</span>];</span>
+<span id="cb36-5"><a href="#cb36-5"></a>} mx;</span></code></pre></div>
 <p>[1]. Kernighan, B.W. &amp; Ritche, D.M., The C Programming Language, Prentice-Hall.</p>
 </body>
 </html>
