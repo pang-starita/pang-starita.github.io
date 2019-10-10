@@ -276,6 +276,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb16-11"><a href="#cb16-11"></a>  printf(<span class="st">&quot;O aluno: %s, com P1 = %5.2f e P2 = %5.2f ficou com média %4.1f</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
 <span id="cb16-12"><a href="#cb16-12"></a>         nome, p1, p2, (p1 + p2)/<span class="dv">2</span>);</span>
 <span id="cb16-13"><a href="#cb16-13"></a>}</span></code></pre></div>
+<h2 id="dados-em-c">Dados em C</h2>
+<h3 id="tipos-de-dados">Tipos de Dados</h3>
+<p>A linguagem C possui todos os tipos de dados básicos para a programação de sistemas. Isto é, os tipos de dados que o Hardware normalmente sabe trabalhar. O C tem os tipos básicos como <code>int</code>, <code>float</code>, <code>double</code> e <code>char</code>. Estes tipos podem sofrer extensões com modificadores como <code>long</code>, <code>short</code> e <code>unsigned</code>. Os 2 primeiros influenciam na quantidade de bits do tipo básico, o último influencia na representação. É óbvio que estes modificadores não podem ser usados com qualquer tipo básico, algumas combinações deles não fazem sentido e não podem ser usadas.</p>
+<h4 id="tipo-carácter">Tipo carácter</h4>
+<p>O tipo carácter do C é o <code>char</code> que é um inteiro de 8 bits. O C, diferente de linguagens mais modernas, só dá suporte a caracteres internacionais através de bibliotecas de caracteres estendidos com tipos como <code>wchar_t</code>, ou <code>char16_t</code>, ou <code>char32_t</code>. Uma discussão aprofundada sobre caracteres internacionais foge do escopo deste resumo. Assim, os caracteres em C devem sempre ser os da tabela ASCII.</p>
+<figure>
+<img src="images/ascii_chart.png" alt="" /><figcaption>Tabela ASCII<br>Fonte: Wikipedia</figcaption>
+</figure>
+<p>Como pode ser observado na tabela ASCII, os códigos de 0 a 31 são caracteres de controle para o dispositivo de saída. O 127 também corresponde a um carácter de controle, o <kbd>DEL</kbd>, que apaga um carácter que esteja sob o cursor de saída. O programa abaixo imprime o código (número inteiro) correspondente a cada carácter visível.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="dt">int</span> main() {</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    <span class="dt">int</span> i;</span>
+<span id="cb17-5"><a href="#cb17-5"></a>    <span class="dt">char</span> ch;</span>
+<span id="cb17-6"><a href="#cb17-6"></a>    <span class="cf">for</span> (i = ch = <span class="dv">31</span>; i &lt; <span class="dv">128</span>; i++, ch++) {</span>
+<span id="cb17-7"><a href="#cb17-7"></a>        printf(<span class="st">&quot;%3d:&#39;%c&#39;</span><span class="sc">\t</span><span class="st">&quot;</span>, i, ch);</span>
+<span id="cb17-8"><a href="#cb17-8"></a>        <span class="cf">if</span> (i % <span class="dv">10</span> == <span class="dv">0</span>) printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb17-9"><a href="#cb17-9"></a>    }</span>
+<span id="cb17-10"><a href="#cb17-10"></a>    printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb17-11"><a href="#cb17-11"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb17-12"><a href="#cb17-12"></a>}</span></code></pre></div>
+<figure>
+<img src="images/saida_chars.png" alt="" /><figcaption>Saída do programa para imprimir os caracteres da tabela ASCII</figcaption>
+</figure>
+<p>O C não possui na linguagem suporte a <em>string</em>, entretanto, existem convenções que são quase universalmente seguidas. Uma <em>string</em> em C é obtida com um vetor de <code>char</code>s. O vetor deve ser grande o suficiente para conter todos os caracteres mais 1. Por convenção, uma string <em>sempre</em> termina com o carácter <code>'\0'</code>, ou simplesmente, <code>0</code>. Isto é, o C não tem uma estrutura de dados para <em>string</em> em que existem um campo para o tamanho da <em>string</em> e outro campo para o vetor de caracteres como fazem algumas linguagens. As bibliotecas de C trabalham com <em>string</em> imaginando que esta convenção está sendo seguida. Por isto, se na <em>string</em> <code>format</code> do <code>printf()</code>, o programador usa o conversor <code>%s</code> para imprimir um vetor de caracteres e este vetor não termina com <code>'\0'</code>, um lixo será impresso. Experimente o programa abaixo:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="dt">int</span> main() {</span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="dt">char</span> texto[] = <span class="st">&quot;Esta eh uma string correta, terminada com 0.&quot;</span>;</span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="dt">char</span> copia[<span class="dv">80</span>];  <span class="co">// vamos colocar uma cópia sem terminar com 0</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="dt">int</span> i;</span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; texto[i+<span class="dv">1</span>]; i++) copia[i] = texto[i];</span>
+<span id="cb18-7"><a href="#cb18-7"></a>  printf(<span class="st">&quot;texto: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, texto);</span>
+<span id="cb18-8"><a href="#cb18-8"></a>  printf(<span class="st">&quot;copia: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, copia);</span>
+<span id="cb18-9"><a href="#cb18-9"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb18-10"><a href="#cb18-10"></a>}</span></code></pre></div>
+<p>O programa acima vai ter o comportamento que é o pesadelo de muitos programadores, em alguns casos, não vai apresentar nenhum “erro”. Isto é, a copia vai apresentar o mesmo que texto. Em alguns casos, vai ser diferente. Tudo depende dos valores presentes no vetor cópia.</p>
+<p>Para trabalhar com <em>strings</em> em C, usa-se a biblioteca <code>string.h</code> que tem funções como:</p>
+<ul>
+<li><code>strlen()</code>: calcula o comprimento de uma <em>string</em>.</li>
+<li><code>strncpy()</code>: copia uma <em>string</em> para um vetor de carateres (<em>buffer</em>).</li>
+<li><code>strncmp()</code>: compara duas <em>strings</em>, resulta em <code>&lt; 0</code> se a primeira <em>string</em> é alfabeticamente anterior à segunda, <code>&gt; 0</code> se a ordem alfabética da primeira é posterior à segunda, ou <code>0</code> se ambas são iguais.</li>
+</ul>
+<h4 id="tipos-inteiros">Tipos inteiros</h4>
+<ul>
+<li>char (8 bits)</li>
+<li>short (16 bits)</li>
+<li>int (32 bits)</li>
+<li>long (64 bits)</li>
+</ul>
+<h4 id="tipos-em-ponto-flutuante">Tipos em ponto flutuante</h4>
+<ul>
+<li>float (32 bits)</li>
+<li>double (64 bits)</li>
+</ul>
+<h4 id="vetores">Vetores</h4>
+<ul>
+<li><code>char nome[80];</code></li>
+<li><code>int vi[32];</code></li>
+<li><code>double matriz[3][3]; // vetor de 3 vetores de 3 elementos do tipo double</code></li>
+</ul>
+<h4 id="ponteiros">Ponteiros</h4>
+<ul>
+<li><code>char *ptCh = nome; // ponteiro para o primeiro caracter de nome</code></li>
+<li><code>int i; int *ptInt = &amp;i; // ponteiro para o i</code></li>
+</ul>
+<h4 id="registros-ou-estruturas">Registros ou estruturas</h4>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">struct</span> pessoa {</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="dt">char</span> nome[<span class="dv">80</span>];</span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="dt">char</span> endereco[<span class="dv">80</span>];</span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="dt">char</span> cpf[<span class="dv">12</span>];</span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="dt">int</span> idade;</span>
+<span id="cb19-6"><a href="#cb19-6"></a>} p1, p2;</span></code></pre></div>
+<h4 id="uniões">Uniões</h4>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">union</span> misto {</span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="dt">int</span> i;</span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="dt">float</span> f;</span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="dt">char</span> txt[<span class="dv">4</span>];</span>
+<span id="cb20-5"><a href="#cb20-5"></a>} mx;</span></code></pre></div>
 <h2 id="operações-sobre-números-em-c">Operações sobre números em C</h2>
 <p>O C permite as operações tradicionais com números:</p>
 <table>
@@ -340,11 +418,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Por exemplo:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1"></a><span class="dt">int</span> <span class="dv">5</span>;</span>
-<span id="cb17-2"><a href="#cb17-2"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, i++);      <span class="co">// Saída: i = 5, incremento pós-fixado</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, i);        <span class="co">// Saída: i = 6</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, ++i);      <span class="co">// Saída: i = 7, incremento pré-fixado</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, i);        <span class="co">// Saída: i = 7</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a><span class="dt">int</span> <span class="dv">5</span>;</span>
+<span id="cb21-2"><a href="#cb21-2"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, i++);      <span class="co">// Saída: i = 5, incremento pós-fixado</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, i);        <span class="co">// Saída: i = 6</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, ++i);      <span class="co">// Saída: i = 7, incremento pré-fixado</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>printf(<span class="st">&quot;i = %d</span><span class="sc">\n</span><span class="st">&quot;</span>, i);        <span class="co">// Saída: i = 7</span></span></code></pre></div>
 <p>Além dessas operações, os valores inteiros são usados para trabalhar representações binárias. Assim, temos ainda as operações:</p>
 <table>
 <colgroup>
@@ -386,34 +464,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <h4 id="exemplo-de-uso-das-operações-sobre-bits">Exemplo de uso das operações sobre bits</h4>
 <p>O exemplo abaixo lê um endereço IPv4 na sua notação a.b.c.d, uma máscara e retorna o endereço de rede.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="dt">int</span> main() {</span>
-<span id="cb18-3"><a href="#cb18-3"></a>  printf(<span class="st">&quot;Por favor, fornessa o endereco IP na forma a.b.c.d: &quot;</span>);</span>
-<span id="cb18-4"><a href="#cb18-4"></a>  <span class="dt">int</span> a, b, c, d, ip, msk, rde;</span>
-<span id="cb18-5"><a href="#cb18-5"></a>  scanf(<span class="st">&quot;%d.%d.%d.%d&quot;</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span>
-<span id="cb18-6"><a href="#cb18-6"></a>  ip = d + <span class="dv">256</span> * (c + <span class="dv">256</span> * (b + <span class="dv">256</span> * a));</span>
-<span id="cb18-7"><a href="#cb18-7"></a>  printf(<span class="st">&quot;Por favor, fornessa a mascara tambem na forma a.b.c.d: &quot;</span>);</span>
-<span id="cb18-8"><a href="#cb18-8"></a>  scanf(<span class="st">&quot;%d.%d.%d.%d&quot;</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span>
-<span id="cb18-9"><a href="#cb18-9"></a>  msk = d + <span class="dv">256</span> * (c + <span class="dv">256</span> * (b + <span class="dv">256</span> * a));</span>
-<span id="cb18-10"><a href="#cb18-10"></a>  rde = ip &amp; msk;</span>
-<span id="cb18-11"><a href="#cb18-11"></a>  printf(<span class="st">&quot;O endereço de rede em hexa eh %X</span><span class="sc">\n</span><span class="st">&quot;</span>, rde);</span>
-<span id="cb18-12"><a href="#cb18-12"></a>  d = rde % <span class="dv">256</span>;</span>
-<span id="cb18-13"><a href="#cb18-13"></a>  rde /= <span class="dv">256</span>;</span>
-<span id="cb18-14"><a href="#cb18-14"></a>  c = rde % <span class="dv">256</span>;</span>
-<span id="cb18-15"><a href="#cb18-15"></a>  rde /= <span class="dv">256</span>;</span>
-<span id="cb18-16"><a href="#cb18-16"></a>  b = rde % <span class="dv">256</span>;</span>
-<span id="cb18-17"><a href="#cb18-17"></a>  a = rde / <span class="dv">256</span>;</span>
-<span id="cb18-18"><a href="#cb18-18"></a>  printf(<span class="st">&quot;Ou %d.%d.%d.%d</span><span class="sc">\n</span><span class="st">&quot;</span>, a, b, c, d);</span>
-<span id="cb18-19"><a href="#cb18-19"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb18-20"><a href="#cb18-20"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="dt">int</span> main() {</span>
+<span id="cb22-3"><a href="#cb22-3"></a>  printf(<span class="st">&quot;Por favor, fornessa o endereco IP na forma a.b.c.d: &quot;</span>);</span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="dt">int</span> a, b, c, d, ip, msk, rde;</span>
+<span id="cb22-5"><a href="#cb22-5"></a>  scanf(<span class="st">&quot;%d.%d.%d.%d&quot;</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span>
+<span id="cb22-6"><a href="#cb22-6"></a>  ip = d + <span class="dv">256</span> * (c + <span class="dv">256</span> * (b + <span class="dv">256</span> * a));</span>
+<span id="cb22-7"><a href="#cb22-7"></a>  printf(<span class="st">&quot;Por favor, fornessa a mascara tambem na forma a.b.c.d: &quot;</span>);</span>
+<span id="cb22-8"><a href="#cb22-8"></a>  scanf(<span class="st">&quot;%d.%d.%d.%d&quot;</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span>
+<span id="cb22-9"><a href="#cb22-9"></a>  msk = d + <span class="dv">256</span> * (c + <span class="dv">256</span> * (b + <span class="dv">256</span> * a));</span>
+<span id="cb22-10"><a href="#cb22-10"></a>  rde = ip &amp; msk;</span>
+<span id="cb22-11"><a href="#cb22-11"></a>  printf(<span class="st">&quot;O endereço de rede em hexa eh %X</span><span class="sc">\n</span><span class="st">&quot;</span>, rde);</span>
+<span id="cb22-12"><a href="#cb22-12"></a>  d = rde % <span class="dv">256</span>;</span>
+<span id="cb22-13"><a href="#cb22-13"></a>  rde /= <span class="dv">256</span>;</span>
+<span id="cb22-14"><a href="#cb22-14"></a>  c = rde % <span class="dv">256</span>;</span>
+<span id="cb22-15"><a href="#cb22-15"></a>  rde /= <span class="dv">256</span>;</span>
+<span id="cb22-16"><a href="#cb22-16"></a>  b = rde % <span class="dv">256</span>;</span>
+<span id="cb22-17"><a href="#cb22-17"></a>  a = rde / <span class="dv">256</span>;</span>
+<span id="cb22-18"><a href="#cb22-18"></a>  printf(<span class="st">&quot;Ou %d.%d.%d.%d</span><span class="sc">\n</span><span class="st">&quot;</span>, a, b, c, d);</span>
+<span id="cb22-19"><a href="#cb22-19"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb22-20"><a href="#cb22-20"></a>}</span></code></pre></div>
 <h3 id="operações-lógicas-em-c">Operações lógicas em C</h3>
 <p>O C não possui um tipo de dado lógico como o Java e outras linguagens. Nas instruções de C que usam condições, a condição é considerada falsa se o valor calculado da condição for nulo. Assim, <code>0</code> inteiro e de ponto flutuante tem o valor <em>falso</em> numa condição. Assim como o caracter <code>'\0'</code>. Observe que a <em>string</em> vazia, <code>""</code>, não é falso como pode ser verificado rodando o programa abaixo:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="dt">int</span> main() {</span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="cf">if</span> (<span class="st">&quot;&quot;</span>) printf(<span class="st">&quot;A string vazia nao eh falso.</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb19-4"><a href="#cb19-4"></a>  <span class="cf">if</span> (! &#39;\<span class="dv">0</span><span class="er">&#39;</span>) printf(<span class="st">&quot;Mas o caracter nulo eh falso&quot;</span>);</span>
-<span id="cb19-5"><a href="#cb19-5"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb19-6"><a href="#cb19-6"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="dt">int</span> main() {</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="cf">if</span> (<span class="st">&quot;&quot;</span>) printf(<span class="st">&quot;A string vazia nao eh falso.</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="cf">if</span> (! &#39;\<span class="dv">0</span><span class="er">&#39;</span>) printf(<span class="st">&quot;Mas o caracter nulo eh falso&quot;</span>);</span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
+<span id="cb23-6"><a href="#cb23-6"></a>}</span></code></pre></div>
 <p>O C tem 4 operações lógicas:</p>
 <table>
 <thead>
@@ -483,36 +561,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Observe que como qualquer valor nulo é falso e qualquer valor não nulo é verdadeiro, numa condição podemos simplesmente fazer <code>a - b</code> e isto é a mesma coisa que <code>a != b</code>.</p>
 <h2 id="protótipos-de-funções">Protótipos de funções</h2>
 <p>Em C, para poder usar uma função de uma biblioteca é necessário fornecer o protótipo dela antes. O protótipo de uma função tem a forma geral:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a>&lt;tipo de retorno&gt; nome_da_função(&lt;lista de parâmetros&gt;);</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a>&lt;tipo de retorno&gt; nome_da_função(&lt;lista de parâmetros&gt;);</span></code></pre></div>
 <p>O <code>&lt;tipo de retorno&gt;</code> é qualquer tipo básico do C ou tipo definido pelo programador. A <code>&lt;lista de parâmetros&gt;</code> é uma lista com 0 (zero) ou mais parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um nome. Os parâmetros são separados por vírgulas.</p>
 <p>A seguir temos alguns protótipos válidos para a função <code>main()</code>:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a><span class="dt">int</span> main();</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv);</span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> *argv[]);</span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv, <span class="dt">char</span> **environ);</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a><span class="dt">int</span> main();</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv);</span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> *argv[]);</span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv, <span class="dt">char</span> **environ);</span></code></pre></div>
 <p>A função <code>main()</code> é a única em C que tem mais de um protótipo. Os parâmetros dela permitem um programa interagir com os argumentos fornecidos pelo usuário ao executar o programa. Tanto através da linha de comando (argumentos <code>argc</code> e <code>argv</code>), como através das variáveis de ambiente (<code>environ</code>).</p>
 <h2 id="estruturas-de-controle-de-fluxo-de-instruções-em-c">Estruturas de controle de fluxo de instruções em C</h2>
 <h3 id="condicional">Condicional</h3>
 <p>A instrução condicional em C tem uma das duas formas:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a><span class="cf">if</span> (condição) instrução_then;</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1"></a><span class="cf">if</span> (condição) instrução_then;</span></code></pre></div>
 <p>ou</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1"></a><span class="cf">if</span> (condição) instrução_then;</span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1"></a><span class="cf">if</span> (condição) instrução_then;</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
 <p>No lugar de uma instrução, podemos ter sempre um bloco de instruções cercadas com <code>{}</code>. Observe que uma dúvida comum em novatos é a obrigatoriedade do <code>else</code>. O <strong><code>else</code> não é obrigatório</strong>. O cascateamento (isto é, <code>if</code>s em sequência) de <code>if</code>s não tem sintaxe específica como em programação de SHELL ou Python. Assim, sequências de <code>if</code>s são obtidas com:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a><span class="cf">if</span> (condição1) instrução_then_1;</span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="cf">else</span> <span class="cf">if</span> (condição2) instrução_then_2;</span>
-<span id="cb24-3"><a href="#cb24-3"></a>...</span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1"></a><span class="cf">if</span> (condição1) instrução_then_1;</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="cf">else</span> <span class="cf">if</span> (condição2) instrução_then_2;</span>
+<span id="cb28-3"><a href="#cb28-3"></a>...</span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
 <p>Do ponto de vista de estilo de programação deveríamos ter identação para o segundo if com um recuo e assim por diante.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a><span class="cf">if</span> (condição1)</span>
-<span id="cb25-2"><a href="#cb25-2"></a>  instrução_then_1;</span>
-<span id="cb25-3"><a href="#cb25-3"></a><span class="cf">else</span></span>
-<span id="cb25-4"><a href="#cb25-4"></a>  <span class="cf">if</span> (condição2)</span>
-<span id="cb25-5"><a href="#cb25-5"></a>    instrução_then_2;</span>
-<span id="cb25-6"><a href="#cb25-6"></a>  <span class="cf">else</span></span>
-<span id="cb25-7"><a href="#cb25-7"></a>    <span class="cf">if</span> (condição3)</span>
-<span id="cb25-8"><a href="#cb25-8"></a>      ...</span>
-<span id="cb25-9"><a href="#cb25-9"></a>                <span class="cf">else</span> instrução_else;</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1"></a><span class="cf">if</span> (condição1)</span>
+<span id="cb29-2"><a href="#cb29-2"></a>  instrução_then_1;</span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="cf">else</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="cf">if</span> (condição2)</span>
+<span id="cb29-5"><a href="#cb29-5"></a>    instrução_then_2;</span>
+<span id="cb29-6"><a href="#cb29-6"></a>  <span class="cf">else</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>    <span class="cf">if</span> (condição3)</span>
+<span id="cb29-8"><a href="#cb29-8"></a>      ...</span>
+<span id="cb29-9"><a href="#cb29-9"></a>                <span class="cf">else</span> instrução_else;</span></code></pre></div>
 <p>Este tipo de cascateamento, infelizmente, produz código de leitura difícil. Por essa razão, neste resumo não se usa um recuo maior para <code>else if</code>.</p>
 <blockquote>
 <p>Observe que em C, as condições são sempre colocadas entre parenteses, <code>()</code>.</p>
@@ -523,16 +601,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>while (condição) instrução;</code></pre>
 <p>Enquanto a condição for verdadeira, a instrução é repetida. Onde a instrução pode ser uma instrução simples ou um bloco de instruções cercadas por chaves, <code>{}</code>. A repetição só para se a condição for falsa. Se no início ela já é falsa, a instrução não será executada nenhuma vez. É óbvio que a execução da instrução ou do bloco de instruções deve ser tal que a condição se torne falsa em algum momento.</p>
 <p>Exemplo: soma de todos os elementos dentro de um <em>array</em> terminado por 0.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1"></a><span class="dt">int</span> vetor[] = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">0</span>};    <span class="co">// array de 8 inteiros</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="dt">int</span> indice = <span class="dv">0</span>;</span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="dt">int</span> soma = <span class="dv">0</span>;                              <span class="co">// acumulador da soma</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a><span class="cf">while</span> (vetor[indice]) {      <span class="co">// lembre-se de que 0 eh == falso</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>  soma += vetor[indice++];   <span class="co">// observe o uso do incremento</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a>}</span>
-<span id="cb27-7"><a href="#cb27-7"></a><span class="co">// a variável soma tem a soma de todos os elementos do vetor</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1"></a><span class="dt">int</span> vetor[] = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">0</span>};    <span class="co">// array de 8 inteiros</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="dt">int</span> indice = <span class="dv">0</span>;</span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="dt">int</span> soma = <span class="dv">0</span>;                              <span class="co">// acumulador da soma</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="cf">while</span> (vetor[indice]) {      <span class="co">// lembre-se de que 0 eh == falso</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>  soma += vetor[indice++];   <span class="co">// observe o uso do incremento</span></span>
+<span id="cb31-6"><a href="#cb31-6"></a>}</span>
+<span id="cb31-7"><a href="#cb31-7"></a><span class="co">// a variável soma tem a soma de todos os elementos do vetor</span></span></code></pre></div>
 <h4 id="repita">Repita</h4>
 <p>O C não tem um <code>repeat</code> como o Pascal, Ada e outras linguagens. No lugar dele, para repetir uma instrução, ou um bloco, usa-se o <code>do while</code>. A sintaxe dele é dada por:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1"></a><span class="cf">do</span> instrução; <span class="cf">while</span> (condição);</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1"></a><span class="cf">do</span> instrução; <span class="cf">while</span> (condição);</span></code></pre></div>
 <p>A instrução é executada uma vez, enquanto a condição for verdadeira, ela é repetida.</p>
 <blockquote>
 <p>Cuidado: com relação à condição de parada, o <code>do-while</code> tem condição invertida com relação a do <code>until</code>.</p>
@@ -582,80 +660,21 @@ while (condição) {
 </ol>
 <h3 id="switch-case">Switch-case</h3>
 <p>O C tem uma instrução de controle de fluxo com múltiplas sequências possíveis, o <code>switch-case</code>. A sintaxe da instrução é dada por:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1"></a><span class="cf">switch</span> (expressão de valor inteiro) {</span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="cf">case</span> &lt;valor1&gt;:</span>
-<span id="cb33-3"><a href="#cb33-3"></a>    instruções1;</span>
-<span id="cb33-4"><a href="#cb33-4"></a>  <span class="cf">case</span> &lt;valor2&gt;:</span>
-<span id="cb33-5"><a href="#cb33-5"></a>    instruções2;</span>
-<span id="cb33-6"><a href="#cb33-6"></a>  ...</span>
-<span id="cb33-7"><a href="#cb33-7"></a>  <span class="cf">default</span>:</span>
-<span id="cb33-8"><a href="#cb33-8"></a>    instruções_default;</span>
-<span id="cb33-9"><a href="#cb33-9"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1"></a><span class="cf">switch</span> (expressão de valor inteiro) {</span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="cf">case</span> &lt;valor1&gt;:</span>
+<span id="cb37-3"><a href="#cb37-3"></a>    instruções1;</span>
+<span id="cb37-4"><a href="#cb37-4"></a>  <span class="cf">case</span> &lt;valor2&gt;:</span>
+<span id="cb37-5"><a href="#cb37-5"></a>    instruções2;</span>
+<span id="cb37-6"><a href="#cb37-6"></a>  ...</span>
+<span id="cb37-7"><a href="#cb37-7"></a>  <span class="cf">default</span>:</span>
+<span id="cb37-8"><a href="#cb37-8"></a>    instruções_default;</span>
+<span id="cb37-9"><a href="#cb37-9"></a>}</span></code></pre></div>
 <h3 id="funções-em-c">Funções em C</h3>
 <h4 id="chamada-de-funções">Chamada de funções</h4>
 <h4 id="escopo-de-variáveis-variáveis-locais-x-variáveis-globais">Escopo de variáveis: Variáveis locais x variáveis globais</h4>
 <h4 id="ciclo-de-vida-das-variáveis">Ciclo de vida das variáveis</h4>
 <h4 id="variáveis-estáticas---escopo-e-ciclo-de-vida">Variáveis estáticas - escopo e ciclo de vida</h4>
 <h3 id="unidade-de-compilação">Unidade de compilação</h3>
-<h2 id="dados-em-c">Dados em C</h2>
-<h3 id="tipos-de-dados">Tipos de Dados</h3>
-<p>A linguagem C possui todos os tipos de dados básicos para a programação de sistemas. Isto é, os tipos de dados que o Hardware normalmente sabe trabalhar. O C tem os tipos básicos como <code>int</code>, <code>float</code>, <code>double</code> e <code>char</code>. Estes tipos podem sofrer extensões com modificadores como <code>long</code>, <code>short</code> e <code>unsigned</code>. Os 2 primeiros influenciam na quantidade de bits do tipo básico, o último influencia na representação. É óbvio que estes modificadores não podem ser usados com qualquer tipo básico, algumas combinações deles não fazem sentido e não podem ser usadas.</p>
-<h4 id="tipo-carácter">Tipo carácter</h4>
-<p>O tipo carácter do C é o <code>char</code> que é um inteiro sem sinal de 8 bits. O C, diferente de linguagens mais modernas, só dá suporte a caracteres internacionais através de bibliotecas de caracteres estendidos com tipos como <code>wchar_t</code>, ou <code>char16_t</code>, ou <code>char32_t</code>. Uma discussão aprofundada sobre caracteres internacionais foge do escopo deste resumo.</p>
-<p>O C não possui na linguagem suporte a <em>string</em>, entretanto, existem convenções que são quase universalmente seguidas. Uma <em>string</em> em C é obtida com um vetor de <code>char</code>s. O vetor deve ser grande o suficiente para conter todos os caracteres mais 1. Por convenção, uma string <em>sempre</em> termina com o carácter <code>'\0'</code>, ou simplesmente, <code>0</code>. Isto é, o C não tem uma estrutura de dados para <em>string</em> em que existem um campo para o tamanho da <em>string</em> e outro campo para o vetor de caracteres como fazem algumas linguagens. As bibliotecas de C trabalham com <em>string</em> imaginando que esta convenção está sendo seguida. Por isto, se na <em>string</em> <code>format</code> do <code>printf()</code>, o programador usa o conversor <code>%s</code> para imprimir um vetor de caracteres e este vetor não termina com <code>'\0'</code>, um lixo será impresso. Experimente o programa abaixo:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a><span class="dt">int</span> main() {</span>
-<span id="cb34-3"><a href="#cb34-3"></a>  <span class="dt">char</span> texto[] = <span class="st">&quot;Esta eh uma string correta, terminada com 0.&quot;</span>;</span>
-<span id="cb34-4"><a href="#cb34-4"></a>  <span class="dt">char</span> copia[<span class="dv">80</span>];  <span class="co">// vamos colocar uma cópia sem terminar com 0</span></span>
-<span id="cb34-5"><a href="#cb34-5"></a>  <span class="dt">int</span> i;</span>
-<span id="cb34-6"><a href="#cb34-6"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; texto[i+<span class="dv">1</span>]; i++) copia[i] = texto[i];</span>
-<span id="cb34-7"><a href="#cb34-7"></a>  printf(<span class="st">&quot;texto: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, texto);</span>
-<span id="cb34-8"><a href="#cb34-8"></a>  printf(<span class="st">&quot;copia: %s</span><span class="sc">\n</span><span class="st">&quot;</span>, copia);</span>
-<span id="cb34-9"><a href="#cb34-9"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb34-10"><a href="#cb34-10"></a>}</span></code></pre></div>
-<p>O programa acima vai ter o comportamento que é o pesadelo de muitos programadores, em alguns casos, não vai apresentar nenhum “erro”. Isto é, a copia vai apresentar o mesmo que texto. Em alguns casos, vai ser diferente. Tudo depende dos valores presentes no vetor cópia.</p>
-<p>Para trabalhar com <em>strings</em> em C, usa-se a biblioteca <code>string.h</code> que tem funções como:</p>
-<ul>
-<li><code>strlen()</code>: calcula o comprimento de uma <em>string</em>.</li>
-<li><code>strncpy()</code>: copia uma <em>string</em> para um vetor de carateres (<em>buffer</em>).</li>
-<li><code>strncmp()</code>: compara duas <em>strings</em>, resulta em <code>&lt; 0</code> se a primeira <em>string</em> é alfabeticamente anterior à segunda, <code>&gt; 0</code> se a ordem alfabética da primeira é posterior à segunda, ou <code>0</code> se ambas são iguais.</li>
-</ul>
-<h4 id="tipos-inteiros">Tipos inteiros</h4>
-<ul>
-<li>char (8 bits)</li>
-<li>short (16 bits)</li>
-<li>int (32 bits)</li>
-<li>long (64 bits)</li>
-</ul>
-<h4 id="tipos-em-ponto-flutuante">Tipos em ponto flutuante</h4>
-<ul>
-<li>float (32 bits)</li>
-<li>double (64 bits)</li>
-</ul>
-<h4 id="vetores">Vetores</h4>
-<ul>
-<li><code>char nome[80];</code></li>
-<li><code>int vi[32];</code></li>
-<li><code>double matriz[3][3]; // vetor de 3 vetores de 3 elementos do tipo double</code></li>
-</ul>
-<h4 id="ponteiros">Ponteiros</h4>
-<ul>
-<li><code>char *ptCh = nome; // ponteiro para o primeiro caracter de nome</code></li>
-<li><code>int i; int *ptInt = &amp;i; // ponteiro para o i</code></li>
-</ul>
-<h4 id="registros-ou-estruturas">Registros ou estruturas</h4>
-<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">struct</span> pessoa {</span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="dt">char</span> nome[<span class="dv">80</span>];</span>
-<span id="cb35-3"><a href="#cb35-3"></a>  <span class="dt">char</span> endereco[<span class="dv">80</span>];</span>
-<span id="cb35-4"><a href="#cb35-4"></a>  <span class="dt">char</span> cpf[<span class="dv">12</span>];</span>
-<span id="cb35-5"><a href="#cb35-5"></a>  <span class="dt">int</span> idade;</span>
-<span id="cb35-6"><a href="#cb35-6"></a>} p1, p2;</span></code></pre></div>
-<h4 id="uniões">Uniões</h4>
-<div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1"></a><span class="kw">union</span> misto {</span>
-<span id="cb36-2"><a href="#cb36-2"></a>  <span class="dt">int</span> i;</span>
-<span id="cb36-3"><a href="#cb36-3"></a>  <span class="dt">float</span> f;</span>
-<span id="cb36-4"><a href="#cb36-4"></a>  <span class="dt">char</span> txt[<span class="dv">4</span>];</span>
-<span id="cb36-5"><a href="#cb36-5"></a>} mx;</span></code></pre></div>
 <p>[1]. Kernighan, B.W. &amp; Ritche, D.M., The C Programming Language, Prentice-Hall.</p>
 </body>
 </html>

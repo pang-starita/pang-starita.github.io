@@ -430,8 +430,136 @@ int main() {
          nome, p1, p2, (p1 + p2)/2);
 }
 ```
+## Dados em C
 
-O programa leu o salto de linha na variável `nome`. Como podemos eliminá-lo?
+### Tipos de Dados
+
+A linguagem C possui todos os tipos de dados básicos para a programação de
+sistemas. Isto é, os tipos de dados que o Hardware normalmente sabe trabalhar.
+O C tem os tipos básicos como `int`, `float`, `double` e `char`. Estes tipos
+podem sofrer extensões com modificadores como `long`, `short` e `unsigned`.
+Os 2 primeiros influenciam na quantidade de bits do tipo básico, o último
+influencia na representação. É óbvio que estes modificadores não podem ser
+usados com qualquer tipo básico, algumas combinações deles não fazem sentido e
+não podem ser usadas.
+
+#### Tipo carácter
+
+O tipo carácter do C é o `char` que é um inteiro de 8 bits.
+O C, diferente de linguagens mais modernas, só dá suporte a caracteres
+internacionais através de bibliotecas de caracteres estendidos com tipos como
+`wchar_t`, ou `char16_t`, ou `char32_t`. Uma discussão aprofundada sobre
+caracteres internacionais foge do escopo deste resumo. Assim, os caracteres
+em C devem sempre ser os da tabela ASCII.
+
+![Tabela ASCII<br>Fonte: Wikipedia](images/ascii_chart.png)
+
+Como pode ser observado na tabela ASCII, os códigos de 0 a 31 são caracteres
+de controle para o dispositivo de saída. O 127 também corresponde a um carácter
+de controle, o <kbd>DEL</kbd>, que apaga um carácter que esteja sob o cursor
+de saída. O programa abaixo imprime o código \(número inteiro\) correspondente
+a cada carácter visível.
+
+```C
+#include <stdio.h>
+
+int main() {
+	int i;
+	char ch;
+	for (i = ch = 31; i < 128; i++, ch++) {
+		printf("%3d:'%c'\t", i, ch);
+		if (i % 10 == 0) printf("\n");
+	}
+	printf("\n");
+	return 0;
+}
+```
+
+![Saída do programa para imprimir os caracteres da tabela ASCII](images/saida_chars.png)
+
+O C não possui na linguagem suporte a *string*, entretanto, existem convenções
+que são quase universalmente seguidas. Uma *string* em C é obtida com um vetor
+de `char`s. O vetor deve ser grande o suficiente para conter todos os caracteres
+mais 1. Por convenção, uma string *sempre* termina com o carácter `'\0'`, ou
+simplesmente, `0`. Isto é, o C não tem uma estrutura de dados para *string*
+em que existem um campo para o tamanho da *string* e outro campo para o vetor
+de caracteres como fazem algumas linguagens. As bibliotecas de C trabalham com
+*string* imaginando que esta convenção está sendo seguida. Por isto, se na
+*string* `format` do `printf()`, o programador usa o conversor `%s` para
+imprimir um vetor de caracteres e este vetor não termina com `'\0'`, um lixo
+será impresso. Experimente o programa abaixo:
+
+```C
+#include <stdio.h>
+int main() {
+  char texto[] = "Esta eh uma string correta, terminada com 0.";
+  char copia[80];  // vamos colocar uma cópia sem terminar com 0
+  int i;
+  for (i = 0; texto[i+1]; i++) copia[i] = texto[i];
+  printf("texto: %s\n", texto);
+  printf("copia: %s\n", copia);
+  return 0;
+}
+```
+
+O programa acima vai ter um comportamento que é o pesadelo de muitos
+programadores, em alguns casos, não vai apresentar nenhum "erro". Isto é,
+a copia vai apresentar o mesmo que texto. Em alguns casos, vai ser diferente.
+Tudo depende dos valores presentes no vetor cópia.
+
+Para trabalhar com *strings* em C, usa-se a biblioteca `string.h` que tem
+funções como:
+
+- `strlen()`: calcula o comprimento de uma *string*.
+- `strncpy()`: copia uma *string* para um vetor de carateres (*buffer*).
+- `strncmp()`: compara duas *strings*, resulta em `< 0` se a primeira *string* é
+alfabeticamente anterior à segunda, `> 0` se a ordem alfabética da primeira é
+posterior à segunda, ou `0` se ambas são iguais.
+
+#### Tipos inteiros
+
+- char \(8 bits\)
+- short \(16 bits\)
+- int \(32 bits\)
+- long \(64 bits\)
+
+#### Tipos em ponto flutuante
+
+- float \(32 bits\)
+- double \(64 bits\)
+
+#### Vetores
+
+- `char nome[80];`
+- `int vi[32];`
+- `double matriz[3][3]; // vetor de 3 vetores de 3 elementos do tipo double`
+
+#### Ponteiros
+
+- `char *ptCh = nome; // ponteiro para o primeiro caracter de nome`
+- `int i; int *ptInt = &i; // ponteiro para o i`
+
+#### Registros ou estruturas
+
+```C
+struct pessoa {
+  char nome[80];
+  char endereco[80];
+  char cpf[12];
+  int idade;
+} p1, p2;
+```
+
+#### Uniões
+
+```C
+union misto {
+  int i;
+  float f;
+  char txt[4];
+} mx;
+```
+
 
 ## Operações sobre números em C
 
@@ -448,7 +576,8 @@ Além disso, existem operações especiais para inteiros.
 
 ### Operações especiais sobre inteiros
 
-O operador `%` calcula o resto de uma divisão inteira. Ele é chamado de operador
+O operador `%` calcula o resto de uma divisão inteira, ele nada tem a ver com o
+cálculo da porcentagem. Ele é chamado de operador
 módulo, pois esta operação na matemática de números inteiros é chamada de módulo.
 `10 % 2` lê-se 10 módulo 2 e resulta em `0`.Uma  maneira de determinar se um
 número é divisível por outro é calcular o resto
@@ -529,7 +658,7 @@ int main() {
 O C não possui um tipo de dado lógico como o Java e outras linguagens. Nas
 instruções de C que usam condições, a condição é considerada falsa se o valor
 calculado da condição for nulo. Assim, `0` inteiro e de ponto flutuante
-tem o valor *falso* numa condição. Assim como o caracter `'\0'`. Observe que a
+tem o valor *falso* numa condição. Assim como o carácter `'\0'`. Observe que a
 *string* vazia, `""`, não é falso como pode ser verificado rodando o programa
 abaixo:
 
@@ -617,6 +746,16 @@ A função `main()` é a única em C que tem mais de um protótipo. Os parâmetr
 dela permitem um programa interagir com os argumentos fornecidos pelo usuário
 ao executar o programa. Tanto através da linha de comando (argumentos `argc`
 e `argv`), como através das variáveis de ambiente (`environ`).
+
+Uma função que calcula o fatorial de um número inteiro e retorna um int tem o
+protótipo dado por:
+
+```C
+int fatorial(int);
+```
+
+O protótipo de uma função é uma declaração que permite ao compilador compilar
+um código que use a função. Entretanto, para ...
 
 ## Estruturas de controle de fluxo de instruções em C
 
@@ -823,110 +962,6 @@ switch (expressão de valor inteiro) {
 #### Variáveis estáticas - escopo e ciclo de vida
 
 ### Unidade de compilação
-
-## Dados em C
-
-### Tipos de Dados
-
-A linguagem C possui todos os tipos de dados básicos para a programação de
-sistemas. Isto é, os tipos de dados que o Hardware normalmente sabe trabalhar.
-O C tem os tipos básicos como `int`, `float`, `double` e `char`. Estes tipos
-podem sofrer extensões com modificadores como `long`, `short` e `unsigned`.
-Os 2 primeiros influenciam na quantidade de bits do tipo básico, o último
-influencia na representação. É óbvio que estes modificadores não podem ser
-usados com qualquer tipo básico, algumas combinações deles não fazem sentido e
-não podem ser usadas.
-
-#### Tipo carácter
-
-O tipo carácter do C é o `char` que é um inteiro sem sinal de 8 bits.
-O C, diferente de linguagens mais modernas, só dá suporte a caracteres
-internacionais através de bibliotecas de caracteres estendidos com tipos como
-`wchar_t`, ou `char16_t`, ou `char32_t`. Uma discussão aprofundada sobre
-caracteres internacionais foge do escopo deste resumo.
-
-O C não possui na linguagem suporte a *string*, entretanto, existem convenções
-que são quase universalmente seguidas. Uma *string* em C é obtida com um vetor
-de `char`s. O vetor deve ser grande o suficiente para conter todos os caracteres
-mais 1. Por convenção, uma string *sempre* termina com o carácter `'\0'`, ou
-simplesmente, `0`. Isto é, o C não tem uma estrutura de dados para *string*
-em que existem um campo para o tamanho da *string* e outro campo para o vetor
-de caracteres como fazem algumas linguagens. As bibliotecas de C trabalham com
-*string* imaginando que esta convenção está sendo seguida. Por isto, se na
-*string* `format` do `printf()`, o programador usa o conversor `%s` para
-imprimir um vetor de caracteres e este vetor não termina com `'\0'`, um lixo
-será impresso. Experimente o programa abaixo:
-
-```C
-#include <stdio.h>
-int main() {
-  char texto[] = "Esta eh uma string correta, terminada com 0.";
-  char copia[80];  // vamos colocar uma cópia sem terminar com 0
-  int i;
-  for (i = 0; texto[i+1]; i++) copia[i] = texto[i];
-  printf("texto: %s\n", texto);
-  printf("copia: %s\n", copia);
-  return 0;
-}
-```
-
-O programa acima vai ter o comportamento que é o pesadelo de muitos
-programadores, em alguns casos, não vai apresentar nenhum "erro". Isto é,
-a copia vai apresentar o mesmo que texto. Em alguns casos, vai ser diferente.
-Tudo depende dos valores presentes no vetor cópia.
-
-Para trabalhar com *strings* em C, usa-se a biblioteca `string.h` que tem
-funções como:
-
-- `strlen()`: calcula o comprimento de uma *string*.
-- `strncpy()`: copia uma *string* para um vetor de carateres (*buffer*).
-- `strncmp()`: compara duas *strings*, resulta em `< 0` se a primeira *string* é
-alfabeticamente anterior à segunda, `> 0` se a ordem alfabética da primeira é
-posterior à segunda, ou `0` se ambas são iguais.
-
-#### Tipos inteiros
-
-- char \(8 bits\)
-- short \(16 bits\)
-- int \(32 bits\)
-- long \(64 bits\)
-
-#### Tipos em ponto flutuante
-
-- float \(32 bits\)
-- double \(64 bits\)
-
-#### Vetores
-
-- `char nome[80];`
-- `int vi[32];`
-- `double matriz[3][3]; // vetor de 3 vetores de 3 elementos do tipo double`
-
-#### Ponteiros
-
-- `char *ptCh = nome; // ponteiro para o primeiro caracter de nome`
-- `int i; int *ptInt = &i; // ponteiro para o i`
-
-#### Registros ou estruturas
-
-```C
-struct pessoa {
-  char nome[80];
-  char endereco[80];
-  char cpf[12];
-  int idade;
-} p1, p2;
-```
-
-#### Uniões
-
-```C
-union misto {
-  int i;
-  float f;
-  char txt[4];
-} mx;
-```
 
 
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.
