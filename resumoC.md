@@ -50,7 +50,8 @@ Como ocorre com o Python.
 A figura ilustra o código fonte que é inicialmente editado pelo programador com o
 uso de um *editor de texto*. Isto resulta num arquivo `.c`. Este arquivo é
 processado pelo pré-compilador que inclui os arquivos cabeçalhos, substitui as
-macros, ... Isto gera um arquivo intermediário que é compilado pelo *compilador*.
+macros, ... Os arquivos cabeçalhos têm extensão `.h`. Isto gera um arquivo
+intermediário que é compilado pelo *compilador*.
 O arquivo compilado é um código objeto, ou arquivo objeto.
 Este arquivo é binário e já
 possui as instruções de máquina da tradução das instruções C do código fonte.
@@ -65,6 +66,21 @@ aplicações durante a execução. Assim, o código executável pode não ter to
 as instruções que o programa precisa para ser executado. Se uma função de uma
 biblioteca compartilhada (`.dll`) for necessária para um programa, o SO se
 encarrega de mapeá-la na memória do programa dinamicamente.
+
+O compilador *open source* \(código aberto\), que geralmente é usado no linux e
+nos cursos de programação C, o `gcc`, é na verdade um programa intermediário que
+executa o verdadeiro compilador, o `cc1`. O `cc1` inclui o pré-compilador,
+portanto, não há a necessidade de executar um programa pré-compilador. O arquivo
+de *código fonte estendido* não é, em geral, gerado no disco, ele fica na memória
+primária e é compilado diretamente da memória, reduzindo a necessidade de gerar
+o arquivo intermediário no disco e depois lê-lo para a memória principal.
+O arquivo de código objeto, resultado da compilação, em geral é colocado num
+diretório temporário. O `gcc` executa o editor de ligações, o `collect2`, com
+o código objeto e as bibliotecas para gerar o arquivo executável, `.exe` no
+MS Windows \(no linux, os arquivos executáveis não têm extensão\).
+Portanto, ao gerar o código executável usando o `gcc` os arquivos intermediários
+não aparecem no diretório da compilação e as etapas não são visíveis se não
+for usada *flag* de verbosidade para o `gcc` \(`gcc -v`\).
 
 ## Pré-compilador
 
@@ -430,6 +446,17 @@ int main() {
          nome, p1, p2, (p1 + p2)/2);
 }
 ```
+
+#### Exercício:
+
+A variável `nome`, que obteve seu valor com a função `fgets()`, tem como
+último carácter o `'\n'`, salto de linha. Isto está errado, como podemos
+retirá-lo?
+
+*Sugestão:* Use a função `strlen()` acessível com `#include <string.h>` para
+determinar o comprimento do texto do nome e coloque um `\0` no lugar do `\n`.
+[Solução: notas3.c](notas3.c)
+
 ## Dados em C
 
 ### Tipos de Dados
@@ -565,12 +592,13 @@ union misto {
 
 O C permite as operações tradicionais com números:
 
-| Operação |     Descrição                              |
-|----------|----------------------------------------------|
-| `+`  | Adição tanto de inteiros como de ponto flutuante |
-| `-`  | Subtração  |
-| `*`  | Multiplicação  |
-| `/`  | Divisão, divisão inteira se ambos os operandos forem inteiros |
+ Operação  Descrição       
+---------- ---------------------------------------------------------
+ `+`       Adição tanto de inteiros como de ponto flutuante
+ `-`       Subtração  
+ `*`       Multiplicação  
+ `/`       Divisão, divisão inteira se ambos os operandos forem inteiros
+---------- ---------------------------------------------------------
 
 Além disso, existem operações especiais para inteiros.
 
@@ -616,14 +644,15 @@ elas são colocadas antes ou depois das variáveis.
 Além dessas operações, os valores inteiros são usados para trabalhar
 representações binárias. Assim, temos ainda as operações:
 
-| Operação |                     Descrição                        |
-|----------|-------------------------------------------------------|
-| `i << n` | Deslocamento para a esquerda, os bits do i são deslocados de n bits para a esquerda  |
-| `i >> n` | Deslocamento para a direita, os bits do i são deslocados de n bits para a direita|
-| `i & j`  | Cada bit de i faz uma operação de E com seu bit correspondente de j |
-| `i | j`  | Cada bit de i faz uma operação de OU com seu bit correspondente de j |
-| `i ^ j`  |   Cada bit de i faz uma operação de XOU com seu bit correspondente de j   |
-| `~i` | Inverte cada bit de i |
+ Operação  Descrição                        
+---------- -------------------------------------------------------
+ `i << n`  Deslocamento para a esquerda, os bits do i são deslocados de n bits para a esquerda  
+ `i >> n`  Deslocamento para a direita, os bits do i são deslocados de n bits para a direita
+ `i & j`   Cada bit de i faz uma operação de E com seu bit correspondente de j
+ `i | j`   Cada bit de i faz uma operação de OU com seu bit correspondente de j
+ `i ^ j`   Cada bit de i faz uma operação de XOU com seu bit correspondente de j   
+ `~i`      Inverte cada bit de i
+---------- -------------------------------------------------------
 
 #### Exemplo de uso das operações sobre bits
 
@@ -673,12 +702,13 @@ int main() {
 
 O C tem 4 operações lógicas:
 
-| Operação |           Descrição                 |
-|----------|----------------------------------------------------|
-| `a || b`  | é verdadeira se pelo menos um deles, `a` OU `b`, for verdadeira |
-| `a && b` | só é verdadeira se ambos `a` E `b` forem verdadeiras |
-| `a ^^ b`  | verdadeira se uma for verdadeira e a outra falsa |
-| `! a` | verdadeira se `a` for falsa |
+ Operação  Descrição                 
+---------- ----------------------------------------------------
+ `a || b`  é verdadeira se pelo menos um deles, `a` OU `b`, for verdadeira
+ `a && b`  só é verdadeira se ambos `a` E `b` forem verdadeiras
+ `a ^^ b`  verdadeira se uma for verdadeira e a outra falsa
+ `! a`     verdadeira se `a` for falsa
+---------- ----------------------------------------------------
 
 Não assuma que o resultado de uma operação dá algo diferente de verdadeiro ou
 falso. Alguns códigos, erroneamente, assumem que o resultado verdadeiro de uma
@@ -703,17 +733,18 @@ Mas , `'Z' > 'a'` é falso.
 
 Os operadores de comparação em C são:
 
-| Operação |       Descrição      |
-|----------|----------------------|
-| `a < b`  | a menor que b |
-| `a <= b` | a menor ou igual a b  |
-| `a == b` | a igual a b  |
-| `a > b`  | a maior do que b |
-| `a >= b` | a maior ou igual a b |
-| `a != b` | a diferente de b |
+ Operação  Descrição      
+---------- ----------------------
+ `a < b`   a menor que b
+ `a <= b`  a menor ou igual a b  
+ `a == b`  a igual a b  
+ `a > b`   a maior do que b
+ `a >= b`  a maior ou igual a b
+ `a != b`  a diferente de b
+---------- ----------------------
 
 Observe que C não sabe comparar *string*, para comparar *strings* em C é
-necessário usar a biblioteca `string.h`.
+necessário usar a biblioteca `string`, cujo cabeçalho é o arquivo `string.h`.
 
 Observe que como qualquer valor nulo é falso e qualquer valor não nulo é
 verdadeiro, numa condição podemos simplesmente fazer `a - b` e isto é a mesma

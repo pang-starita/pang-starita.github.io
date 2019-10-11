@@ -2,3 +2,5 @@
 *.dia
 *.synctex.gz
 *.tex
+*.exe
+*.o
