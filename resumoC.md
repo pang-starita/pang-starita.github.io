@@ -568,11 +568,17 @@ int main() {
   long li;
   float ff;
   double dd;
-  printf("")
+  type_t sz;
+  sz = sizeof ch;
+  printf("Tamanho do char = %d", sz);
 }
 ```
 
 #### Tipos em ponto flutuante
+
+O C possui dois tipos de dados para representar números reais. Ambos,
+obviamente, são aproximações e usam a representação de ponto flutuante definida
+pela norma [IEEE 754](https://pt.wikipedia.org/wiki/IEEE_754).
 
 - float \(32 bits\)
 - double \(64 bits\)
