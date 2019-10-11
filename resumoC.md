@@ -531,10 +531,10 @@ int main() {
 
 O programa acima vai ter um comportamento que é o pesadelo de muitos
 programadores, em alguns casos, não vai apresentar nenhum "erro". Isto é,
-a copia vai apresentar o mesmo que texto. Em alguns casos, vai ser diferente.
+a cópia vai apresentar o mesmo que texto. Em alguns casos, vai ser diferente.
 Tudo depende dos valores presentes no vetor cópia.
 
-Para trabalhar com *strings* em C, usa-se a biblioteca `string.h` que tem
+Para trabalhar com *strings* em C, usa-se a biblioteca `string` que tem
 funções como:
 
 - `strlen()`: calcula o comprimento de uma *string*.
@@ -545,10 +545,32 @@ posterior à segunda, ou `0` se ambas são iguais.
 
 #### Tipos inteiros
 
-- char \(8 bits\)
-- short \(16 bits\)
-- int \(32 bits\)
-- long \(64 bits\)
+Os seguintes tipos são considerados tipos inteiros \(ou integrais\).
+
+- `char` \(8 bits\)
+- `short` \(16 bits\)
+- `int` \(32 bits\)
+- `long` \(64 bits\)
+
+Na verdade, `short` e `long`, são modificadores de `int` e os tipos deveriam ser
+escritos como `short int` e `long int`. O número de bits indicado acima é para o
+compilador `gcc` na versão 8.3 no `cygwin64` rodando no MS Windows 8.1. Para ter
+certeza sobre o número de bits dos tipos, use o programa abaixo. Ele usa o
+operador `sizeof` que diz quantos `char` são necessários para acomodar o tipo
+da variável fornecida.
+
+```C
+#include <stdio.h>
+int main() {
+  char ch;
+  short sh;
+  int i;
+  long li;
+  float ff;
+  double dd;
+  printf("")
+}
+```
 
 #### Tipos em ponto flutuante
 
@@ -959,11 +981,13 @@ ela começa uma nova iteração (se a condição permitir).
    termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0.
    Exemplo de execução:
 
-   > Digite numero = 4<br>
-   > Digite numero = 8<br>
-   > Digite numero = 0<br>
-   > Os numeros digitados foram: 4.0, 8.0<br>
-   > A media foi: 6.0
+   ```
+   Digite numero = 4
+   Digite numero = 8
+   Digite numero = 0
+   Os numeros digitados foram: 4.0, 8.0
+   A media foi: 6.0
+   ```
 
 ### Switch-case
 
