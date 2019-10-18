@@ -1,6 +1,15 @@
+## dia and backup
 *.*~
 *.dia
+## latex
 *.synctex.gz
 *.tex
+*.aux
+## compilation files
 *.exe
 *.o
+## batch files
+*.bat
+
+## sh.. from windows
+desktop.ini

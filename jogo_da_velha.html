@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Paulino Ng" />
+  <meta name="dcterms.date" content="2019-10-16" />
+  <title>Jogo da Velha</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Jogo da Velha</h1>
+<p class="author">Paulino Ng</p>
+<p class="date">2019-10-16</p>
+</header>
+<h2 id="enunciado">Enunciado</h2>
+<p>Neste documento teremos a especificação de um programa para jogar o jogo da velha e a lógica de programação para implementar este jogo.</p>
+<p>Inicialmente, o jogador automático não terá nenhum tipo de <em>inteligência</em>, seus lances serão totalmente <em>aleatórios</em>. Depois tentaremos introduzir algum tipo de inteligência.</p>
+<p>Primeiro precisamos de uma <em>especificação</em>. Como se joga o jogo da velha?</p>
+<p>O jogo é um jogo de 2 jogadores, num <em>tabuleiro</em> <code>3 x 3</code>. Os jogadores jogam alternadamente, marcando com um <code>O</code> ou um <code>X</code> uma casa livre do tabuleiro. O primeiro jogador a completar uma <em>linha</em>, uma <em>coluna</em> ou uma <em>diagonal</em> com suas marcas vence. Se todas as casa forem ocupadas sem nenhum vencedor, há empate.</p>
+<p>Dadas estas regras podemos começar a projetar o programa para jogar jogo da velha contra um usuário. Não vamos procurar num projeto inicial especificar uma interface gráfica para o jogo. A interface de jogo será a mais simples possível, usando a interface de linha.</p>
+<h3 id="estruturas-de-dados">Estruturas de dados</h3>
+<p>Primeiro, vamos pensar em quais são as estruturas de dados que precisamos para o jogo. Parece bastante claro que precisamos memorizar o tabuleiro, uma primeira tentativa é memorizar o tabuleiro numa matriz 3 x 3. Cada posição do tabuleiro/matriz é chamada de casa. Cada casa está num estado: limpa, <code>X</code> ou <code>O</code>.</p>
+</body>
+</html>
