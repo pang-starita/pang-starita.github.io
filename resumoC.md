@@ -971,14 +971,43 @@ Se a condição não for dada, ela é considerada sempre verdadeira. Nesse caso,
 *loop* pode ser terminado se uma instrução de `break` for executada. Ou um
 evento externo provocar a execução de código alternativo.
 
+Uma instrução que não faz nada para sempre, a menos que seja *interrompida*
+por um evento externo, é:
+
+```C
+for (;;) ;
+```
+
 #### Instruções `break` e `continue`
 
 A instrução `break` pode ser usada para terminar a execução de uma malha de
 repetição. Independente do bloco de instruções ainda possuir instruções ou
 não, o `break` vai para a próxima instrução depois da malha de repetição.
 
+Exemplo: Determinar de maneira inocente o divisor de um número.
+
+```C
+int n = 187;
+int divisor;
+for (divisor = 2; divisor < n; divisor++) {  // tenta achar um divisor de n
+  if (n % divisor == 0) break;
+}
+if (divisor == n) printf("%d eh primo\n", n);
+else printf("%d divide %d\n", divisor, n);
+```
+
 A instrução `continue` termina a iteração atual e vai para a seguinte. Isto é,
 ela começa uma nova iteração (se a condição permitir).
+
+Exemplo besta: Salta todos os múltiplos de 2 e 3 de 1 a 10.
+
+```C
+int i;
+for (i = 1; i <= 10; i++) {
+  if ((i % 2 == 0) || (i % 3)) continue;
+  printf("%d nao eh multiplo de 2 ou 3\n", i);
+}
+```
 
 ### Exercício:
 
