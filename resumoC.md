@@ -64,8 +64,8 @@ Os sistemas operacionais modernos trabalham com bibliotecas compartilhadas, isto
 é, bibliotecas cujas funções podem ser compartilhadas entre diferentes
 aplicações durante a execução. Assim, o código executável pode não ter todas
 as instruções que o programa precisa para ser executado. Se uma função de uma
-biblioteca compartilhada (`.dll`) for necessária para um programa, o SO se
-encarrega de mapeá-la na memória do programa dinamicamente.
+biblioteca compartilhada (`.dll` ou `.so`) for necessária para um programa,
+o SO se encarrega de mapeá-la na memória do programa dinamicamente.
 
 O compilador *open source* \(código aberto\), que geralmente é usado no linux e
 nos cursos de programação C, o `gcc`, é na verdade um programa intermediário que
@@ -265,7 +265,7 @@ A seguir, tem-se algumas declarações válidas em C:
 
 ```C
 int x, y, z;       // x, y e z são variáveis inteiras (32 bits)
-log int lx, ly, lz;    // lx, ly e lz são variáveis inteiras (64 bits)
+long int lx, ly, lz;    // lx, ly e lz são variáveis inteiras (64 bits)
 long lx1;          // lx1 é um long int, o int é opcional
 short sx, sy;      // sx e sy são inteiros (16 bits)
 float f, g;        // f e g são variáveis de ponto flutuante com 32 bits
@@ -475,7 +475,11 @@ não podem ser usadas.
 O tipo carácter do C é o `char` que é um inteiro de 8 bits. Os caracteres em
 C são apenas os caracteres do código ASCII de 7 bits. Um carácter literal é
 escrito como em `'a'`, isto é, um carácter entre `''` \(*apóstrofes*\), ou
-diretamente pelo seu valor inteiro \(valor do código ASCII\), `'a' == 97`.
+diretamente pelo seu valor inteiro \(valor do código ASCII\),
+`'a' == 97 == 0b01100001 == 0x61 == 0141`. Números inteiros em C podem ser
+escritos normalmente na base decimal, se o número literal é precedido de um `0`,
+o número que vem em seguida está na base octal, se o número for precedido de
+`0x`, o número está sendo escrito na base hexadecimal.
 O C, diferente de linguagens mais modernas, só dá suporte a caracteres
 internacionais através de bibliotecas de caracteres estendidos com tipos como
 `wchar_t`, ou `char16_t`, ou `char32_t`. Uma discussão aprofundada sobre
@@ -485,10 +489,10 @@ em C devem sempre ser os da tabela ASCII.
 ![Tabela ASCII<br>Fonte: Wikipedia](images/ascii_chart.png)
 
 Como pode ser observado na tabela ASCII, os códigos de 0 a 31 são caracteres
-de controle para o dispositivo de saída. O `127` também corresponde a um carácter
-de controle, o <kbd>DEL</kbd>, que apaga um carácter que está sob o cursor
-de saída. O programa abaixo imprime o código \(número inteiro\) correspondente
-a cada carácter visível.
+de controle para o dispositivo de saída. O `127` (`01111111`) também corresponde
+a um carácter de controle, o <kbd>DEL</kbd>, que apaga um carácter que está sob
+o cursor de saída. O programa abaixo imprime o código \(número inteiro\)
+correspondente a cada carácter visível.
 
 ```C
 #include <stdio.h>
@@ -589,6 +593,12 @@ pela norma [IEEE 754](https://pt.wikipedia.org/wiki/IEEE_754).
 
 - float \(32 bits\)
 - double \(64 bits\)
+
+#### Valores Lógicos
+
+O C não possui um tipo lógico, existe uma biblioteca, pouco usada, `stdbool.h`
+que define as *macros* `true` e `false`. Em C, qualquer valor nulo é falso e
+um valor não nulo é verdadeiro. Veja as operações lógicas mais adiante.
 
 #### Vetores
 
@@ -800,8 +810,18 @@ Os operadores de comparação em C são:
  `a != b`  a diferente de b
 ---------- ----------------------
 
+Se quisermos exprimir a condição de que uma variável `x` está entre `0` e `10`,
+não podemos escrever: `0 <= x <= 10` como no Python, mas:
+`(x >= 0) && (x <= 10)`. Se quisermos exprimir que `x` está fora do intervalo
+`[0,10]`, podemos escrever: `(x < 0) || (x > 10)`.
+
 Observe que C não sabe comparar *string*, para comparar *strings* em C é
 necessário usar a biblioteca `string`, cujo cabeçalho é o arquivo `string.h`.
+As funções `strcmp()` e `strncmp()` permitem comparar duas *strings*. Estas
+funções usam uma convenção importante que é utilizada em outras funções
+semelhantes: elas retornam um número negativo se o primeiro argumento for menor
+do que o segundo, `0`, se os 2 argumentos forem iguais e um número positivo se
+o primeiro argumento for maior do que o segundo.
 
 Observe que como qualquer valor nulo é falso e qualquer valor não nulo é
 verdadeiro, numa condição podemos simplesmente fazer `a - b` e isto é a mesma
@@ -826,7 +846,6 @@ A seguir temos alguns protótipos válidos para a função `main()`:
 ```C
 int main();
 int main(int argc, char **argv);
-int main(int argc, char *argv[]);
 int main(int argc, char **argv, char **environ);
 ```
 
@@ -843,7 +862,8 @@ int fatorial(int);
 ```
 
 O protótipo de uma função é uma declaração que permite ao compilador compilar
-um código que use a função. Entretanto, para ...
+um código que use a função. O compilador só precisa das informações do
+protótipo, quem precisa da implementação da função é o editor de ligações.
 
 ## Estruturas de controle de fluxo de instruções em C
 
