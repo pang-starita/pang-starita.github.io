@@ -472,7 +472,10 @@ não podem ser usadas.
 
 #### Tipo carácter
 
-O tipo carácter do C é o `char` que é um inteiro de 8 bits.
+O tipo carácter do C é o `char` que é um inteiro de 8 bits. Os caracteres em
+C são apenas os caracteres do código ASCII de 7 bits. Um carácter literal é
+escrito como em `'a'`, isto é, um carácter entre `''` \(*apóstrofes*\), ou
+diretamente pelo seu valor inteiro \(valor do código ASCII\), `'a' == 97`.
 O C, diferente de linguagens mais modernas, só dá suporte a caracteres
 internacionais através de bibliotecas de caracteres estendidos com tipos como
 `wchar_t`, ou `char16_t`, ou `char32_t`. Uma discussão aprofundada sobre
@@ -482,8 +485,8 @@ em C devem sempre ser os da tabela ASCII.
 ![Tabela ASCII<br>Fonte: Wikipedia](images/ascii_chart.png)
 
 Como pode ser observado na tabela ASCII, os códigos de 0 a 31 são caracteres
-de controle para o dispositivo de saída. O 127 também corresponde a um carácter
-de controle, o <kbd>DEL</kbd>, que apaga um carácter que esteja sob o cursor
+de controle para o dispositivo de saída. O `127` também corresponde a um carácter
+de controle, o <kbd>DEL</kbd>, que apaga um carácter que está sob o cursor
 de saída. O programa abaixo imprime o código \(número inteiro\) correspondente
 a cada carácter visível.
 
@@ -503,6 +506,10 @@ int main() {
 ```
 
 ![Saída do programa para imprimir os caracteres da tabela ASCII](images/saida_chars.png)
+
+Nos `printf()`s acima, foram usados os caracteres de controle: `'\t'` e `'\n'`
+que significam salto de tabulação horizontal e salto de linha. a tabela a seguir
+apresenta alguns caracteres de controle e seus significados como são usados
 
 O C não possui na linguagem suporte a *string*, entretanto, existem convenções
 que são quase universalmente seguidas. Uma *string* em C é obtida com um vetor
@@ -585,14 +592,36 @@ pela norma [IEEE 754](https://pt.wikipedia.org/wiki/IEEE_754).
 
 #### Vetores
 
+Vetores são agregados de dados do mesmo tipo. Em vez de usar uma variável para
+cada dado, uma única variável permite acessar todo um grupo de dados do mesmo
+tipo. Abaixo temos como exemplo as variáveis `nome`, `vi` e `matriz` que são
+vetores de 80 caracteres, 32 inteiros e 3 vetores de 3 doubles.
+
 - `char nome[80];`
 - `int vi[32];`
-- `double matriz[3][3]; // vetor de 3 vetores de 3 elementos do tipo double`
+- `double matriz[3][3];`
 
 #### Ponteiros
 
+Variáveis do tipo ponteiro, são *ponteiros* para algum tipo de dado armazenado
+na memória. Isto é, concretamente, são endereços de dados na memória e estes
+dados são de algum tipo. O identificador de variáveis do tipo vetor são
+na realidade ponteiros constantes para o primeiro elemento do vetor. Abaixo
+temos alguns exemplos de ponteiros com inicializações.
+
 - `char *ptCh = nome; // ponteiro para o primeiro caracter de nome`
 - `int i; int *ptInt = &i; // ponteiro para o i`
+
+O ponteiro permite o acesso ao dado apontado através do operador de
+*desreferência*, `*`. Por exemplo, podemos usar o ponteiro para o endereço
+da variável `i` do exemplo anterior para atribuir o valor 7 à variável `i` com:
+
+```C
+*ptInt = 7;   // isto é a mesma coisa que i = 7;
+```
+
+Ponteiros são mais úteis quando trabalhamos com `struct`s e alocação dinâmica de
+memória que veremos a seguir.
 
 #### Registros ou estruturas
 
