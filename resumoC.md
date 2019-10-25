@@ -894,7 +894,7 @@ else if (condição2) instrução_then_2;
 else instrução_else;
 ```
 
-Do ponto de vista de estilo de programação deveríamos ter identação para o
+Do ponto de vista de estilo de programação deveríamos ter endentação para o
 segundo if com um recuo e assim por diante.
 
 ```C
