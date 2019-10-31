@@ -635,6 +635,16 @@ memória que veremos a seguir.
 
 #### Registros ou estruturas
 
+Enquanto vetores são estruturas de dados homogêneos, isto é, uma coleção de
+dados do mesmo tipo, acessíveis por um mesmo nome \(nome do vetor\) e um índice
+inteiro. Registros são coleções de dados logicamente ligados entre eles, cada
+dado está num campo e cada campo tem seu próprio nome.
+
+Registros são chamados em C de *estruturas* \(`struct`\). Abaixo temos a
+declaração de um registro `pessoa` com campos para `nome`, `endereco`, `cpf`
+e `idade`. Além da definição da *estrutura* `pessoa`, declaramos as duas
+variáveis `p1` e `p2` que têm esta `struct` como tipo de dado.
+
 ```C
 struct pessoa {
   char nome[80];
@@ -646,6 +656,11 @@ struct pessoa {
 
 #### Uniões
 
+As *estruturas* são uma maneira de unir num único nome, diversos dados que
+existem simultaneamente na memória. `union` se parece com uma `struct`, mas
+seus campos não usam espaços de memória separados, isto é, um campo pode
+usar o mesmo espaço de memória de um outro campo.
+
 ```C
 union misto {
   int i;
@@ -654,6 +669,7 @@ union misto {
 } mx;
 ```
 
+#### Enums
 
 ## Operações sobre números em C
 
@@ -827,44 +843,6 @@ Observe que como qualquer valor nulo é falso e qualquer valor não nulo é
 verdadeiro, numa condição podemos simplesmente fazer `a - b` e isto é a mesma
 coisa que `a != b`.
 
-## Protótipos de funções
-
-Em C, para poder usar uma função de uma biblioteca é necessário fornecer o
-protótipo dela antes. O protótipo de uma função tem a forma geral:
-
-```C
-<tipo de retorno> nome_da_função(<lista de parâmetros>);
-```
-
-O `<tipo de retorno>` é qualquer tipo básico do C ou tipo definido pelo
-programador. A `<lista de parâmetros>` é uma lista com 0 (zero) ou mais
-parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um
-nome. Os parâmetros são separados por vírgulas.
-
-A seguir temos alguns protótipos válidos para a função `main()`:
-
-```C
-int main();
-int main(int argc, char **argv);
-int main(int argc, char **argv, char **environ);
-```
-
-A função `main()` é a única em C que tem mais de um protótipo. Os parâmetros
-dela permitem um programa interagir com os argumentos fornecidos pelo usuário
-ao executar o programa. Tanto através da linha de comando (argumentos `argc`
-e `argv`), como através das variáveis de ambiente (`environ`).
-
-Uma função que calcula o fatorial de um número inteiro e retorna um int tem o
-protótipo dado por:
-
-```C
-int fatorial(int);
-```
-
-O protótipo de uma função é uma declaração que permite ao compilador compilar
-um código que use a função. O compilador só precisa das informações do
-protótipo, quem precisa da implementação da função é o editor de ligações.
-
 ## Estruturas de controle de fluxo de instruções em C
 
 ### Condicional
@@ -913,9 +891,12 @@ Este tipo de cascateamento,
 infelizmente, produz código de leitura difícil. Por essa razão, neste resumo
 não se usa um recuo maior para `else if`.
 
-> Observe que em C, as condições são sempre colocadas entre parenteses, `()`.
+> Observe que em C, as condições são sempre colocadas entre parenteses, `()`,
+como no Java.
 
 ### Malhas de repetição
+
+Existem 3 estruturas de repetição no C: `while`, `do-while` e `for`.
 
 #### Enquanto
 
@@ -927,10 +908,11 @@ while (condição) instrução;
 
 Enquanto a condição for verdadeira, a instrução é repetida.
 Onde a instrução pode ser uma instrução simples ou um bloco de instruções
-cercadas por chaves, `{}`. A repetição só para se a condição for falsa. Se no
-início ela já é falsa, a instrução não será executada nenhuma vez. É óbvio
+cercadas por chaves, `{}`. A instrução só é executada quando a condição for
+verdadeira. Se no início ela já é falsa, a instrução não será executada
+nenhuma vez. É óbvio
 que a execução da instrução ou do bloco de instruções deve ser tal que
-a condição se torne falsa em algum momento.
+a *condição* se torne *falsa* em algum momento.
 
 Exemplo: soma de todos os elementos dentro de um *array* terminado por 0.
 
@@ -939,7 +921,7 @@ int vetor[] = {1, 2, 3, 4, 5, 6, 7, 0};    // array de 8 inteiros
 int indice = 0;
 int soma = 0;                              // acumulador da soma
 while (vetor[indice]) {      // lembre-se de que 0 eh == falso
-  soma += vetor[indice++];   // observe o uso do incremento
+  soma += vetor[indice++];   // observe o uso do incremento, ++
 }
 // a variável soma tem a soma de todos os elementos do vetor
 ```
@@ -947,15 +929,23 @@ while (vetor[indice]) {      // lembre-se de que 0 eh == falso
 #### Repita
 
 O C não tem um `repeat` como o Pascal, Ada e outras linguagens. No lugar dele,
-para repetir uma instrução, ou um bloco, usa-se o `do while`. A sintaxe dele é
+para repetir uma instrução, ou um bloco, usa-se o `do-while`. A sintaxe dele é
 dada por:
 
 ```C
-do instrução; while (condição);
+do instrução;
+while (condição);
 ```
 
-A instrução é executada uma vez, enquanto a condição for verdadeira, ela
-é repetida.
+Ou
+
+```C
+do {
+  instruções;
+} while (condição);
+```
+A instrução é executada uma vez e se a condição for verdadeira, ela
+é repetida até que seja falsa.
 
 > Cuidado: com relação à condição de parada, o `do-while` tem condição invertida
 > com relação a do `until`.
@@ -983,8 +973,16 @@ O `for` do C permite múltiplas inicializações \(separadas por vírgulas\) e
 múltiplas instruções de incremento/decremento no lugar do `passo`. O `passo`
 não precisa ser constante e inteiro. A sintaxe do `for` do C é:
 
-```
+```C
 for (ini; condição; inc) instrução;
+```
+
+Ou
+
+```C
+for (ini1, ini2, ini3; condição; inc1, inc2) {
+  instruções;
+}
 ```
 
 O exemplo do `do-while` pode ser reescrito com o `for` pelo código abaixo:
@@ -1001,17 +999,17 @@ copia[indice]='\0';    // para manter a convenção de terminar a string com 0
 printf("Texto copiado: %s\n", copia);
 ```
 
-> No C ANSI e no C++ era comum declarar a variável de controle no próprio `for`,
+> No C ANSI e no C++ era comum declarar uma variável de controle no próprio `for`,
 > nas novas especificações de C, este tipo de declaração provoca erro de
 > compilação.
 
 O `for` do C pode ser substituído por um `while` com um código do tipo:
 
-```
-ini;
+```C
+inicializações;
 while (condição) {
-  instrução;
-  inc;
+  instruções;
+  incrementos;
 }
 ```
 
@@ -1024,7 +1022,7 @@ Uma instrução que não faz nada para sempre, a menos que seja *interrompida*
 por um evento externo, é:
 
 ```C
-for (;;) ;
+for ( ; ; ) ;
 ```
 
 #### Instruções `break` e `continue`
@@ -1046,7 +1044,7 @@ else printf("%d divide %d\n", divisor, n);
 ```
 
 A instrução `continue` termina a iteração atual e vai para a seguinte. Isto é,
-ela começa uma nova iteração (se a condição permitir).
+ela começa uma nova iteração \(se a condição permitir\).
 
 Exemplo besta: Salta todos os múltiplos de 2 e 3 de 1 a 10.
 
@@ -1060,7 +1058,7 @@ for (i = 1; i <= 10; i++) {
 
 ### Exercício:
 
-1. Escreva um programa que lê no máximo 10 números reais e calcule a média dos
+1. Escreva um programa que lê no máximo 10 números reais e calcula a média dos
    números lidos. Caso o usuário queira fornece menos de 10 números, ele
    termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0.
    Exemplo de execução:
@@ -1090,9 +1088,96 @@ switch (expressão de valor inteiro) {
 }
 ```
 
-### Funções em C
+Isto é, a instrução `switch` é seguida de uma expressão inteira entre parênteses
+e um bloco de `cases`. Cada `case` é seguido de um valor que a expressão pode
+ter, 2 pontos\(`:`\) e as instruções a serem executadas caso a expressão do
+`switch` tenha o valor deste `case`. Ao terminar as instruções do `case` para o
+qual houve um casamento, o fluxo de instruções continua nas instruções do
+próximo `case`. Se quisermos interromper este fluxo para sair do bloco de `cases`
+devemos colocar como última instrução do `case` a instrução `break`. Este
+comportamento se deve à percepção de que frequentemente desejamos que uma mesma
+sequência de instruções sejam executadas para diferentes `cases`.
+Por exemplo: Todas as vogais recebem o mesmo processamento:
 
-#### Chamada de funções
+```C
+switch (ch) {    // ch eh um caracter
+  case 'a': case 'e': case 'i': case 'o': case 'u':
+    instruções para vogais;
+    break;
+  case 'b':
+    ...
+    break;
+  case 'c':
+    ...
+    break;
+  ...
+}
+```
+
+Observe que o valor da expressão do `case` tem de ser de um tipo inteiro: char,
+int, ou suas extensões com short, long, unsigned. Diferente de outras linguagens
+capazes de trabalhar com *strings*.
+
+Exemplo:
+
+```C
+int diaSemana;    // 0 - Domingo, 1 - Segunda, 2 - Terca, ...
+// processamento
+char *nomeDia;
+switch (dia) {
+  case 0:
+    nomeDia = "Domingo";
+    break;
+  case 1:
+    nomeDia = "Segunda";
+    break;
+  ...
+  default:
+    nomeDia = "Erro: dia inexistente";
+}
+```
+
+## Funções em C
+
+### Chamada de funções
+
+### Protótipos de funções
+
+Em C, para poder usar uma função de uma biblioteca é necessário fornecer o
+protótipo dela antes. O protótipo de uma função tem a forma geral:
+
+```C
+<tipo de retorno> nome_da_função(<lista de parâmetros>);
+```
+
+O `<tipo de retorno>` é qualquer tipo básico do C ou tipo definido pelo
+programador. A `<lista de parâmetros>` é uma lista com 0 (zero) ou mais
+parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um
+nome. Os parâmetros são separados por vírgulas.
+
+A seguir temos alguns protótipos válidos para a função `main()`:
+
+```C
+int main();
+int main(int argc, char **argv);
+int main(int argc, char **argv, char **environ);
+```
+
+A função `main()` é a única em C que tem mais de um protótipo. Os parâmetros
+dela permitem um programa interagir com os argumentos fornecidos pelo usuário
+ao executar o programa. Tanto através da linha de comando (argumentos `argc`
+e `argv`), como através das variáveis de ambiente (`environ`).
+
+Uma função que calcula o fatorial de um número inteiro e retorna um int tem o
+protótipo dado por:
+
+```C
+int fatorial(int);
+```
+
+O protótipo de uma função é uma declaração que permite ao compilador compilar
+um código que use a função. O compilador só precisa das informações do
+protótipo, quem precisa da implementação da função é o editor de ligações.
 
 #### Escopo de variáveis: Variáveis locais x variáveis globais
 
@@ -1104,3 +1189,5 @@ switch (expressão de valor inteiro) {
 
 
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.
+
+[2]. Deitel, P. & Deitel, H., C: Como Programar, São Paulo: Pearson, 2011.

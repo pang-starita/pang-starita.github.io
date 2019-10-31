@@ -399,6 +399,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1"></a>*ptInt = <span class="dv">7</span>;   <span class="co">// isto é a mesma coisa que i = 7;</span></span></code></pre></div>
 <p>Ponteiros são mais úteis quando trabalhamos com <code>struct</code>s e alocação dinâmica de memória que veremos a seguir.</p>
 <h4 id="registros-ou-estruturas">Registros ou estruturas</h4>
+<p>Enquanto vetores são estruturas de dados homogêneos, isto é, uma coleção de dados do mesmo tipo, acessíveis por um mesmo nome (nome do vetor) e um índice inteiro. Registros são coleções de dados logicamente ligados entre eles, cada dado está num campo e cada campo tem seu próprio nome.</p>
+<p>Registros são chamados em C de <em>estruturas</em> (<code>struct</code>). Abaixo temos a declaração de um registro <code>pessoa</code> com campos para <code>nome</code>, <code>endereco</code>, <code>cpf</code> e <code>idade</code>. Além da definição da <em>estrutura</em> <code>pessoa</code>, declaramos as duas variáveis <code>p1</code> e <code>p2</code> que têm esta <code>struct</code> como tipo de dado.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">struct</span> pessoa {</span>
 <span id="cb24-2"><a href="#cb24-2"></a>  <span class="dt">char</span> nome[<span class="dv">80</span>];</span>
 <span id="cb24-3"><a href="#cb24-3"></a>  <span class="dt">char</span> endereco[<span class="dv">80</span>];</span>
@@ -406,11 +408,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb24-5"><a href="#cb24-5"></a>  <span class="dt">int</span> idade;</span>
 <span id="cb24-6"><a href="#cb24-6"></a>} p1, p2;</span></code></pre></div>
 <h4 id="uniões">Uniões</h4>
+<p>As <em>estruturas</em> são uma maneira de unir num único nome, diversos dados que existem simultaneamente na memória. <code>union</code> se parece com uma <code>struct</code>, mas seus campos não usam espaços de memória separados, isto é, um campo pode usar o mesmo espaço de memória de um outro campo.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">union</span> misto {</span>
 <span id="cb25-2"><a href="#cb25-2"></a>  <span class="dt">int</span> i;</span>
 <span id="cb25-3"><a href="#cb25-3"></a>  <span class="dt">float</span> f;</span>
 <span id="cb25-4"><a href="#cb25-4"></a>  <span class="dt">char</span> txt[<span class="dv">4</span>];</span>
 <span id="cb25-5"><a href="#cb25-5"></a>} mx;</span></code></pre></div>
+<h4 id="enums">Enums</h4>
 <h2 id="operações-sobre-números-em-c">Operações sobre números em C</h2>
 <p>O C permite as operações tradicionais com números:</p>
 <table>
@@ -615,61 +619,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Se quisermos exprimir a condição de que uma variável <code>x</code> está entre <code>0</code> e <code>10</code>, não podemos escrever: <code>0 &lt;= x &lt;= 10</code> como no Python, mas: <code>(x &gt;= 0) &amp;&amp; (x &lt;= 10)</code>. Se quisermos exprimir que <code>x</code> está fora do intervalo <code>[0,10]</code>, podemos escrever: <code>(x &lt; 0) || (x &gt; 10)</code>.</p>
 <p>Observe que C não sabe comparar <em>string</em>, para comparar <em>strings</em> em C é necessário usar a biblioteca <code>string</code>, cujo cabeçalho é o arquivo <code>string.h</code>. As funções <code>strcmp()</code> e <code>strncmp()</code> permitem comparar duas <em>strings</em>. Estas funções usam uma convenção importante que é utilizada em outras funções semelhantes: elas retornam um número negativo se o primeiro argumento for menor do que o segundo, <code>0</code>, se os 2 argumentos forem iguais e um número positivo se o primeiro argumento for maior do que o segundo.</p>
 <p>Observe que como qualquer valor nulo é falso e qualquer valor não nulo é verdadeiro, numa condição podemos simplesmente fazer <code>a - b</code> e isto é a mesma coisa que <code>a != b</code>.</p>
-<h2 id="protótipos-de-funções">Protótipos de funções</h2>
-<p>Em C, para poder usar uma função de uma biblioteca é necessário fornecer o protótipo dela antes. O protótipo de uma função tem a forma geral:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1"></a>&lt;tipo de retorno&gt; nome_da_função(&lt;lista de parâmetros&gt;);</span></code></pre></div>
-<p>O <code>&lt;tipo de retorno&gt;</code> é qualquer tipo básico do C ou tipo definido pelo programador. A <code>&lt;lista de parâmetros&gt;</code> é uma lista com 0 (zero) ou mais parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um nome. Os parâmetros são separados por vírgulas.</p>
-<p>A seguir temos alguns protótipos válidos para a função <code>main()</code>:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1"></a><span class="dt">int</span> main();</span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv);</span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv, <span class="dt">char</span> **environ);</span></code></pre></div>
-<p>A função <code>main()</code> é a única em C que tem mais de um protótipo. Os parâmetros dela permitem um programa interagir com os argumentos fornecidos pelo usuário ao executar o programa. Tanto através da linha de comando (argumentos <code>argc</code> e <code>argv</code>), como através das variáveis de ambiente (<code>environ</code>).</p>
-<p>Uma função que calcula o fatorial de um número inteiro e retorna um int tem o protótipo dado por:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1"></a><span class="dt">int</span> fatorial(<span class="dt">int</span>);</span></code></pre></div>
-<p>O protótipo de uma função é uma declaração que permite ao compilador compilar um código que use a função. O compilador só precisa das informações do protótipo, quem precisa da implementação da função é o editor de ligações.</p>
 <h2 id="estruturas-de-controle-de-fluxo-de-instruções-em-c">Estruturas de controle de fluxo de instruções em C</h2>
 <h3 id="condicional">Condicional</h3>
 <p>A instrução condicional em C tem uma das duas formas:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1"></a><span class="cf">if</span> (condição) instrução_then;</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1"></a><span class="cf">if</span> (condição) instrução_then;</span></code></pre></div>
 <p>ou</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1"></a><span class="cf">if</span> (condição) instrução_then;</span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1"></a><span class="cf">if</span> (condição) instrução_then;</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
 <p>No lugar de uma instrução, podemos ter sempre um bloco de instruções cercadas com <code>{}</code>. Observe que uma dúvida comum em novatos é a obrigatoriedade do <code>else</code>. O <strong><code>else</code> não é obrigatório</strong>. O cascateamento (isto é, <code>if</code>s em sequência) de <code>if</code>s não tem sintaxe específica como em programação de SHELL ou Python. Assim, sequências de <code>if</code>s são obtidas com:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1"></a><span class="cf">if</span> (condição1) instrução_then_1;</span>
-<span id="cb34-2"><a href="#cb34-2"></a><span class="cf">else</span> <span class="cf">if</span> (condição2) instrução_then_2;</span>
-<span id="cb34-3"><a href="#cb34-3"></a>...</span>
-<span id="cb34-4"><a href="#cb34-4"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
-<p>Do ponto de vista de estilo de programação deveríamos ter identação para o segundo if com um recuo e assim por diante.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1"></a><span class="cf">if</span> (condição1)</span>
-<span id="cb35-2"><a href="#cb35-2"></a>  instrução_then_1;</span>
-<span id="cb35-3"><a href="#cb35-3"></a><span class="cf">else</span></span>
-<span id="cb35-4"><a href="#cb35-4"></a>  <span class="cf">if</span> (condição2)</span>
-<span id="cb35-5"><a href="#cb35-5"></a>    instrução_then_2;</span>
-<span id="cb35-6"><a href="#cb35-6"></a>  <span class="cf">else</span></span>
-<span id="cb35-7"><a href="#cb35-7"></a>    <span class="cf">if</span> (condição3)</span>
-<span id="cb35-8"><a href="#cb35-8"></a>      ...</span>
-<span id="cb35-9"><a href="#cb35-9"></a>                <span class="cf">else</span> instrução_else;</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1"></a><span class="cf">if</span> (condição1) instrução_then_1;</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="cf">else</span> <span class="cf">if</span> (condição2) instrução_then_2;</span>
+<span id="cb31-3"><a href="#cb31-3"></a>...</span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="cf">else</span> instrução_else;</span></code></pre></div>
+<p>Do ponto de vista de estilo de programação deveríamos ter endentação para o segundo if com um recuo e assim por diante.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1"></a><span class="cf">if</span> (condição1)</span>
+<span id="cb32-2"><a href="#cb32-2"></a>  instrução_then_1;</span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="cf">else</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a>  <span class="cf">if</span> (condição2)</span>
+<span id="cb32-5"><a href="#cb32-5"></a>    instrução_then_2;</span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="cf">else</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>    <span class="cf">if</span> (condição3)</span>
+<span id="cb32-8"><a href="#cb32-8"></a>      ...</span>
+<span id="cb32-9"><a href="#cb32-9"></a>                <span class="cf">else</span> instrução_else;</span></code></pre></div>
 <p>Este tipo de cascateamento, infelizmente, produz código de leitura difícil. Por essa razão, neste resumo não se usa um recuo maior para <code>else if</code>.</p>
 <blockquote>
-<p>Observe que em C, as condições são sempre colocadas entre parenteses, <code>()</code>.</p>
+<p>Observe que em C, as condições são sempre colocadas entre parenteses, <code>()</code>, como no Java.</p>
 </blockquote>
 <h3 id="malhas-de-repetição">Malhas de repetição</h3>
+<p>Existem 3 estruturas de repetição no C: <code>while</code>, <code>do-while</code> e <code>for</code>.</p>
 <h4 id="enquanto">Enquanto</h4>
 <p>A instrução de repetição <em>enquanto</em> no C é padrão e tem a sintaxe:</p>
 <pre><code>while (condição) instrução;</code></pre>
-<p>Enquanto a condição for verdadeira, a instrução é repetida. Onde a instrução pode ser uma instrução simples ou um bloco de instruções cercadas por chaves, <code>{}</code>. A repetição só para se a condição for falsa. Se no início ela já é falsa, a instrução não será executada nenhuma vez. É óbvio que a execução da instrução ou do bloco de instruções deve ser tal que a condição se torne falsa em algum momento.</p>
+<p>Enquanto a condição for verdadeira, a instrução é repetida. Onde a instrução pode ser uma instrução simples ou um bloco de instruções cercadas por chaves, <code>{}</code>. A instrução só é executada quando a condição for verdadeira. Se no início ela já é falsa, a instrução não será executada nenhuma vez. É óbvio que a execução da instrução ou do bloco de instruções deve ser tal que a <em>condição</em> se torne <em>falsa</em> em algum momento.</p>
 <p>Exemplo: soma de todos os elementos dentro de um <em>array</em> terminado por 0.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1"></a><span class="dt">int</span> vetor[] = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">0</span>};    <span class="co">// array de 8 inteiros</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a><span class="dt">int</span> indice = <span class="dv">0</span>;</span>
-<span id="cb37-3"><a href="#cb37-3"></a><span class="dt">int</span> soma = <span class="dv">0</span>;                              <span class="co">// acumulador da soma</span></span>
-<span id="cb37-4"><a href="#cb37-4"></a><span class="cf">while</span> (vetor[indice]) {      <span class="co">// lembre-se de que 0 eh == falso</span></span>
-<span id="cb37-5"><a href="#cb37-5"></a>  soma += vetor[indice++];   <span class="co">// observe o uso do incremento</span></span>
-<span id="cb37-6"><a href="#cb37-6"></a>}</span>
-<span id="cb37-7"><a href="#cb37-7"></a><span class="co">// a variável soma tem a soma de todos os elementos do vetor</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1"></a><span class="dt">int</span> vetor[] = {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">0</span>};    <span class="co">// array de 8 inteiros</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="dt">int</span> indice = <span class="dv">0</span>;</span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="dt">int</span> soma = <span class="dv">0</span>;                              <span class="co">// acumulador da soma</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="cf">while</span> (vetor[indice]) {      <span class="co">// lembre-se de que 0 eh == falso</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a>  soma += vetor[indice++];   <span class="co">// observe o uso do incremento, ++</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a>}</span>
+<span id="cb34-7"><a href="#cb34-7"></a><span class="co">// a variável soma tem a soma de todos os elementos do vetor</span></span></code></pre></div>
 <h4 id="repita">Repita</h4>
-<p>O C não tem um <code>repeat</code> como o Pascal, Ada e outras linguagens. No lugar dele, para repetir uma instrução, ou um bloco, usa-se o <code>do while</code>. A sintaxe dele é dada por:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1"></a><span class="cf">do</span> instrução; <span class="cf">while</span> (condição);</span></code></pre></div>
-<p>A instrução é executada uma vez, enquanto a condição for verdadeira, ela é repetida.</p>
+<p>O C não tem um <code>repeat</code> como o Pascal, Ada e outras linguagens. No lugar dele, para repetir uma instrução, ou um bloco, usa-se o <code>do-while</code>. A sintaxe dele é dada por:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1"></a><span class="cf">do</span> instrução;</span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="cf">while</span> (condição);</span></code></pre></div>
+<p>Ou</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1"></a><span class="cf">do</span> {</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  instruções;</span>
+<span id="cb36-3"><a href="#cb36-3"></a>} <span class="cf">while</span> (condição);</span></code></pre></div>
+<p>A instrução é executada uma vez e se a condição for verdadeira, ela é repetida até que seja falsa.</p>
 <blockquote>
 <p>Cuidado: com relação à condição de parada, o <code>do-while</code> tem condição invertida com relação a do <code>until</code>.</p>
 </blockquote>
@@ -685,7 +683,11 @@ copia[indice]=&#39;\0&#39;;    // para manter a convenção de terminar a string
 printf(&quot;Texto copiado: %s\n&quot;, copia);</code></pre>
 <h4 id="para-inicialização-de-contador-fim-do-contador-passo">Para inicialização de contador, fim do contador, passo</h4>
 <p>O <code>for</code> do C não é igual ao <code>Para</code> do Pascal e linguagens semelhantes. O <code>for</code> do C não precisa trabalhar com um contador inteiro e não tem um número preciso iterações (repetições). O <code>for</code> do C permite múltiplas inicializações (separadas por vírgulas) e múltiplas instruções de incremento/decremento no lugar do <code>passo</code>. O <code>passo</code> não precisa ser constante e inteiro. A sintaxe do <code>for</code> do C é:</p>
-<pre><code>for (ini; condição; inc) instrução;</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1"></a><span class="cf">for</span> (ini; condição; inc) instrução;</span></code></pre></div>
+<p>Ou</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb39-1"><a href="#cb39-1"></a><span class="cf">for</span> (ini1, ini2, ini3; condição; inc1, inc2) {</span>
+<span id="cb39-2"><a href="#cb39-2"></a>  instruções;</span>
+<span id="cb39-3"><a href="#cb39-3"></a>}</span></code></pre></div>
 <p>O exemplo do <code>do-while</code> pode ser reescrito com o <code>for</code> pelo código abaixo:</p>
 <pre><code>char texto[] = &quot;Este eh outro texto.&quot;;
 char copia[16];    // buffer de 16 caracteres
@@ -697,37 +699,37 @@ for (indice = 0, pCh = texto; *pCh; indice++, pCh++) {
 copia[indice]=&#39;\0&#39;;    // para manter a convenção de terminar a string com 0
 printf(&quot;Texto copiado: %s\n&quot;, copia);</code></pre>
 <blockquote>
-<p>No C ANSI e no C++ era comum declarar a variável de controle no próprio <code>for</code>, nas novas especificações de C, este tipo de declaração provoca erro de compilação.</p>
+<p>No C ANSI e no C++ era comum declarar uma variável de controle no próprio <code>for</code>, nas novas especificações de C, este tipo de declaração provoca erro de compilação.</p>
 </blockquote>
 <p>O <code>for</code> do C pode ser substituído por um <code>while</code> com um código do tipo:</p>
-<pre><code>ini;
-while (condição) {
-  instrução;
-  inc;
-}</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1"></a>inicializações;</span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="cf">while</span> (condição) {</span>
+<span id="cb41-3"><a href="#cb41-3"></a>  instruções;</span>
+<span id="cb41-4"><a href="#cb41-4"></a>  incrementos;</span>
+<span id="cb41-5"><a href="#cb41-5"></a>}</span></code></pre></div>
 <p>Todos os elementos do <code>for</code>, <code>ini</code>, <code>condição</code>, <code>inc</code> e instrução, são opcionais. Se a condição não for dada, ela é considerada sempre verdadeira. Nesse caso, o <em>loop</em> pode ser terminado se uma instrução de <code>break</code> for executada. Ou um evento externo provocar a execução de código alternativo.</p>
 <p>Uma instrução que não faz nada para sempre, a menos que seja <em>interrompida</em> por um evento externo, é:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb43-1"><a href="#cb43-1"></a><span class="cf">for</span> (;;) ;</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb42-1"><a href="#cb42-1"></a><span class="cf">for</span> ( ; ; ) ;</span></code></pre></div>
 <h4 id="instruções-break-e-continue">Instruções <code>break</code> e <code>continue</code></h4>
 <p>A instrução <code>break</code> pode ser usada para terminar a execução de uma malha de repetição. Independente do bloco de instruções ainda possuir instruções ou não, o <code>break</code> vai para a próxima instrução depois da malha de repetição.</p>
 <p>Exemplo: Determinar de maneira inocente o divisor de um número.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb44-1"><a href="#cb44-1"></a><span class="dt">int</span> n = <span class="dv">187</span>;</span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="dt">int</span> divisor;</span>
-<span id="cb44-3"><a href="#cb44-3"></a><span class="cf">for</span> (divisor = <span class="dv">2</span>; divisor &lt; n; divisor++) {  <span class="co">// tenta achar um divisor de n</span></span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="cf">if</span> (n % divisor == <span class="dv">0</span>) <span class="cf">break</span>;</span>
-<span id="cb44-5"><a href="#cb44-5"></a>}</span>
-<span id="cb44-6"><a href="#cb44-6"></a><span class="cf">if</span> (divisor == n) printf(<span class="st">&quot;%d eh primo</span><span class="sc">\n</span><span class="st">&quot;</span>, n);</span>
-<span id="cb44-7"><a href="#cb44-7"></a><span class="cf">else</span> printf(<span class="st">&quot;%d divide %d</span><span class="sc">\n</span><span class="st">&quot;</span>, divisor, n);</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb43-1"><a href="#cb43-1"></a><span class="dt">int</span> n = <span class="dv">187</span>;</span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="dt">int</span> divisor;</span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="cf">for</span> (divisor = <span class="dv">2</span>; divisor &lt; n; divisor++) {  <span class="co">// tenta achar um divisor de n</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="cf">if</span> (n % divisor == <span class="dv">0</span>) <span class="cf">break</span>;</span>
+<span id="cb43-5"><a href="#cb43-5"></a>}</span>
+<span id="cb43-6"><a href="#cb43-6"></a><span class="cf">if</span> (divisor == n) printf(<span class="st">&quot;%d eh primo</span><span class="sc">\n</span><span class="st">&quot;</span>, n);</span>
+<span id="cb43-7"><a href="#cb43-7"></a><span class="cf">else</span> printf(<span class="st">&quot;%d divide %d</span><span class="sc">\n</span><span class="st">&quot;</span>, divisor, n);</span></code></pre></div>
 <p>A instrução <code>continue</code> termina a iteração atual e vai para a seguinte. Isto é, ela começa uma nova iteração (se a condição permitir).</p>
 <p>Exemplo besta: Salta todos os múltiplos de 2 e 3 de 1 a 10.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb45-1"><a href="#cb45-1"></a><span class="dt">int</span> i;</span>
-<span id="cb45-2"><a href="#cb45-2"></a><span class="cf">for</span> (i = <span class="dv">1</span>; i &lt;= <span class="dv">10</span>; i++) {</span>
-<span id="cb45-3"><a href="#cb45-3"></a>  <span class="cf">if</span> ((i % <span class="dv">2</span> == <span class="dv">0</span>) || (i % <span class="dv">3</span>)) <span class="cf">continue</span>;</span>
-<span id="cb45-4"><a href="#cb45-4"></a>  printf(<span class="st">&quot;%d nao eh multiplo de 2 ou 3</span><span class="sc">\n</span><span class="st">&quot;</span>, i);</span>
-<span id="cb45-5"><a href="#cb45-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb44-1"><a href="#cb44-1"></a><span class="dt">int</span> i;</span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="cf">for</span> (i = <span class="dv">1</span>; i &lt;= <span class="dv">10</span>; i++) {</span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="cf">if</span> ((i % <span class="dv">2</span> == <span class="dv">0</span>) || (i % <span class="dv">3</span>)) <span class="cf">continue</span>;</span>
+<span id="cb44-4"><a href="#cb44-4"></a>  printf(<span class="st">&quot;%d nao eh multiplo de 2 ou 3</span><span class="sc">\n</span><span class="st">&quot;</span>, i);</span>
+<span id="cb44-5"><a href="#cb44-5"></a>}</span></code></pre></div>
 <h3 id="exercício-1">Exercício:</h3>
 <ol type="1">
-<li><p>Escreva um programa que lê no máximo 10 números reais e calcule a média dos números lidos. Caso o usuário queira fornece menos de 10 números, ele termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0. Exemplo de execução:</p>
+<li><p>Escreva um programa que lê no máximo 10 números reais e calcula a média dos números lidos. Caso o usuário queira fornece menos de 10 números, ele termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0. Exemplo de execução:</p>
 <pre><code>Digite numero = 4
 Digite numero = 8
 Digite numero = 0
@@ -736,21 +738,63 @@ A media foi: 6.0</code></pre></li>
 </ol>
 <h3 id="switch-case">Switch-case</h3>
 <p>O C tem uma instrução de controle de fluxo com múltiplas sequências possíveis, o <code>switch-case</code>. A sintaxe da instrução é dada por:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb47-1"><a href="#cb47-1"></a><span class="cf">switch</span> (expressão de valor inteiro) {</span>
-<span id="cb47-2"><a href="#cb47-2"></a>  <span class="cf">case</span> &lt;valor1&gt;:</span>
-<span id="cb47-3"><a href="#cb47-3"></a>    instruções1;</span>
-<span id="cb47-4"><a href="#cb47-4"></a>  <span class="cf">case</span> &lt;valor2&gt;:</span>
-<span id="cb47-5"><a href="#cb47-5"></a>    instruções2;</span>
-<span id="cb47-6"><a href="#cb47-6"></a>  ...</span>
-<span id="cb47-7"><a href="#cb47-7"></a>  <span class="cf">default</span>:</span>
-<span id="cb47-8"><a href="#cb47-8"></a>    instruções_default;</span>
-<span id="cb47-9"><a href="#cb47-9"></a>}</span></code></pre></div>
-<h3 id="funções-em-c">Funções em C</h3>
-<h4 id="chamada-de-funções">Chamada de funções</h4>
+<div class="sourceCode" id="cb46"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb46-1"><a href="#cb46-1"></a><span class="cf">switch</span> (expressão de valor inteiro) {</span>
+<span id="cb46-2"><a href="#cb46-2"></a>  <span class="cf">case</span> &lt;valor1&gt;:</span>
+<span id="cb46-3"><a href="#cb46-3"></a>    instruções1;</span>
+<span id="cb46-4"><a href="#cb46-4"></a>  <span class="cf">case</span> &lt;valor2&gt;:</span>
+<span id="cb46-5"><a href="#cb46-5"></a>    instruções2;</span>
+<span id="cb46-6"><a href="#cb46-6"></a>  ...</span>
+<span id="cb46-7"><a href="#cb46-7"></a>  <span class="cf">default</span>:</span>
+<span id="cb46-8"><a href="#cb46-8"></a>    instruções_default;</span>
+<span id="cb46-9"><a href="#cb46-9"></a>}</span></code></pre></div>
+<p>Isto é, a instrução <code>switch</code> é seguida de uma expressão inteira entre parênteses e um bloco de <code>cases</code>. Cada <code>case</code> é seguido de um valor que a expressão pode ter, 2 pontos(<code>:</code>) e as instruções a serem executadas caso a expressão do <code>switch</code> tenha o valor deste <code>case</code>. Ao terminar as instruções do <code>case</code> para o qual houve um casamento, o fluxo de instruções continua nas instruções do próximo <code>case</code>. Se quisermos interromper este fluxo para sair do bloco de <code>cases</code> devemos colocar como última instrução do <code>case</code> a instrução <code>break</code>. Este comportamento se deve à percepção de que frequentemente desejamos que uma mesma sequência de instruções sejam executadas para diferentes <code>cases</code>. Por exemplo: Todas as vogais recebem o mesmo processamento:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb47-1"><a href="#cb47-1"></a><span class="cf">switch</span> (ch) {    <span class="co">// ch eh um caracter</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="cf">case</span> <span class="ch">&#39;a&#39;</span>: <span class="cf">case</span> <span class="ch">&#39;e&#39;</span>: <span class="cf">case</span> <span class="ch">&#39;i&#39;</span>: <span class="cf">case</span> <span class="ch">&#39;o&#39;</span>: <span class="cf">case</span> <span class="ch">&#39;u&#39;</span>:</span>
+<span id="cb47-3"><a href="#cb47-3"></a>    instruções para vogais;</span>
+<span id="cb47-4"><a href="#cb47-4"></a>    <span class="cf">break</span>;</span>
+<span id="cb47-5"><a href="#cb47-5"></a>  <span class="cf">case</span> <span class="ch">&#39;b&#39;</span>:</span>
+<span id="cb47-6"><a href="#cb47-6"></a>    ...</span>
+<span id="cb47-7"><a href="#cb47-7"></a>    <span class="cf">break</span>;</span>
+<span id="cb47-8"><a href="#cb47-8"></a>  <span class="cf">case</span> <span class="ch">&#39;c&#39;</span>:</span>
+<span id="cb47-9"><a href="#cb47-9"></a>    ...</span>
+<span id="cb47-10"><a href="#cb47-10"></a>    <span class="cf">break</span>;</span>
+<span id="cb47-11"><a href="#cb47-11"></a>  ...</span>
+<span id="cb47-12"><a href="#cb47-12"></a>}</span></code></pre></div>
+<p>Observe que o valor da expressão do <code>case</code> tem de ser de um tipo inteiro: char, int, ou suas extensões com short, long, unsigned. Diferente de outras linguagens capazes de trabalhar com <em>strings</em>.</p>
+<p>Exemplo:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb48-1"><a href="#cb48-1"></a><span class="dt">int</span> diaSemana;    <span class="co">// 0 - Domingo, 1 - Segunda, 2 - Terca, ...</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="co">// processamento</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="dt">char</span> *nomeDia;</span>
+<span id="cb48-4"><a href="#cb48-4"></a><span class="cf">switch</span> (dia) {</span>
+<span id="cb48-5"><a href="#cb48-5"></a>  <span class="cf">case</span> <span class="dv">0</span>:</span>
+<span id="cb48-6"><a href="#cb48-6"></a>    nomeDia = <span class="st">&quot;Domingo&quot;</span>;</span>
+<span id="cb48-7"><a href="#cb48-7"></a>    <span class="cf">break</span>;</span>
+<span id="cb48-8"><a href="#cb48-8"></a>  <span class="cf">case</span> <span class="dv">1</span>:</span>
+<span id="cb48-9"><a href="#cb48-9"></a>    nomeDia = <span class="st">&quot;Segunda&quot;</span>;</span>
+<span id="cb48-10"><a href="#cb48-10"></a>    <span class="cf">break</span>;</span>
+<span id="cb48-11"><a href="#cb48-11"></a>  ...</span>
+<span id="cb48-12"><a href="#cb48-12"></a>  <span class="cf">default</span>:</span>
+<span id="cb48-13"><a href="#cb48-13"></a>    nomeDia = <span class="st">&quot;Erro: dia inexistente&quot;</span>;</span>
+<span id="cb48-14"><a href="#cb48-14"></a>}</span></code></pre></div>
+<h2 id="funções-em-c">Funções em C</h2>
+<h3 id="chamada-de-funções">Chamada de funções</h3>
+<h3 id="protótipos-de-funções">Protótipos de funções</h3>
+<p>Em C, para poder usar uma função de uma biblioteca é necessário fornecer o protótipo dela antes. O protótipo de uma função tem a forma geral:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb49-1"><a href="#cb49-1"></a>&lt;tipo de retorno&gt; nome_da_função(&lt;lista de parâmetros&gt;);</span></code></pre></div>
+<p>O <code>&lt;tipo de retorno&gt;</code> é qualquer tipo básico do C ou tipo definido pelo programador. A <code>&lt;lista de parâmetros&gt;</code> é uma lista com 0 (zero) ou mais parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um nome. Os parâmetros são separados por vírgulas.</p>
+<p>A seguir temos alguns protótipos válidos para a função <code>main()</code>:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb50-1"><a href="#cb50-1"></a><span class="dt">int</span> main();</span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv);</span>
+<span id="cb50-3"><a href="#cb50-3"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv, <span class="dt">char</span> **environ);</span></code></pre></div>
+<p>A função <code>main()</code> é a única em C que tem mais de um protótipo. Os parâmetros dela permitem um programa interagir com os argumentos fornecidos pelo usuário ao executar o programa. Tanto através da linha de comando (argumentos <code>argc</code> e <code>argv</code>), como através das variáveis de ambiente (<code>environ</code>).</p>
+<p>Uma função que calcula o fatorial de um número inteiro e retorna um int tem o protótipo dado por:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb51-1"><a href="#cb51-1"></a><span class="dt">int</span> fatorial(<span class="dt">int</span>);</span></code></pre></div>
+<p>O protótipo de uma função é uma declaração que permite ao compilador compilar um código que use a função. O compilador só precisa das informações do protótipo, quem precisa da implementação da função é o editor de ligações.</p>
 <h4 id="escopo-de-variáveis-variáveis-locais-x-variáveis-globais">Escopo de variáveis: Variáveis locais x variáveis globais</h4>
 <h4 id="ciclo-de-vida-das-variáveis">Ciclo de vida das variáveis</h4>
 <h4 id="variáveis-estáticas---escopo-e-ciclo-de-vida">Variáveis estáticas - escopo e ciclo de vida</h4>
 <h3 id="unidade-de-compilação">Unidade de compilação</h3>
 <p>[1]. Kernighan, B.W. &amp; Ritche, D.M., The C Programming Language, Prentice-Hall.</p>
+<p>[2]. Deitel, P. &amp; Deitel, H., C: Como Programar, São Paulo: Pearson, 2011.</p>
 </body>
 </html>
