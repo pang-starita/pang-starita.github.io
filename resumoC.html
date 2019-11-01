@@ -150,7 +150,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Cuidado com <em>macros</em>, principalmente as parametrizadas, elas podem ter efeitos colaterais muito complexos. Elas dificultam a localização e compreensão de erros de lógica.</p>
 </blockquote>
 <h3 id="ifdef-e-ifndef"><code>#ifdef</code> e <code>#ifndef</code></h3>
-<p>Os arquivos cabeçalho incluem outros arquivos cabeçalho e pode ocorrer de numa sequência de inclusões, um mesmo arquivo ser incluído mais de uma vez. Imagine que você escreveu um arquivo cabeçalho, <code>meu.h</code>, e por algum motivo seu arquivo cabeçalho precisa da inclusão do arquivo <code>stdlib.h</code> que possui diversas constantes úteis do sistema. O código fonte inclui seu arquivo cabeçalho e como também precisa de algumas constantes do sistema, ele também inclui o arquivo <code>stdlib.h</code>. Pode ocorrer problemas na compilação se as constantes forem declaradas múltiplas vezes. Para evitar o erro de múltiplas declarações (o que não é permitido em C), é necessário usar um esquema de exclusão de múltiplas declarações. Isto é obtido pelo uso do condicional do pré-compilador. A estrutura que todos os arquivos de cabeçalho usam é:</p>
+<p>Os arquivos cabeçalho incluem outros arquivos cabeçalho e pode ocorrer numa sequência de inclusões, um mesmo arquivo ser incluído mais de uma vez. Imagine que você escreveu um arquivo cabeçalho, <code>meu.h</code>, e por algum motivo seu arquivo cabeçalho precisa da inclusão do arquivo <code>stdlib.h</code> que possui diversas constantes úteis do sistema. O código fonte inclui seu arquivo cabeçalho e como também precisa de algumas constantes do sistema, ele também inclui o arquivo <code>stdlib.h</code>. Pode ocorrer problemas na compilação se as constantes forem declaradas múltiplas vezes. Para evitar o erro de múltiplas declarações (o que não é permitido em C), é necessário usar um esquema de exclusão de múltiplas declarações. Isto é feito com o uso do condicional do pré-compilador. A estrutura que todos os arquivos de cabeçalho usam é:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1"></a><span class="pp">#ifndef _nome_do_arquivo.H_</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="pp">#define _nome_do_arquivo.H_</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a></span>
@@ -159,7 +159,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-6"><a href="#cb9-6"></a><span class="pp">#endif</span></span></code></pre></div>
 <p>Estas instruções para o pré-compilador permitem que um arquivo cabeçalho seja incluído múltiplas vezes sem provocar dupla declaração de variáveis, protótipos, etc.</p>
 <h2 id="comentários-em-c">Comentários em C</h2>
-<p>Comentários nos códigos fonte são importantes para explicar como usar as funções e estruturas de dados e para explicar o algoritmo que está sendo usado para realizar um cálculo. Comentários do tipo: <code>isto é uma variável</code>, <code>esta é uma função</code>, <code>este é o main()</code>, são inúteis e devem ser evitados.</p>
+<p>Comentários nos códigos fonte são importantes para explicar como usar as funções e estruturas de dados e para explicar o algoritmo que está sendo usado para realizar um cálculo.</p>
+<blockquote>
+<p>Comentários do tipo: <code>isto é uma variável</code>, <code>esta é uma função</code>, <code>este é o main()</code>, são inúteis e devem ser evitados.</p>
+</blockquote>
 <p>O C tem 2 tipos de comentários: <code>//</code> e <code>/* */</code>. <code>//</code> inicia um comentário que vai até o final da linha. <code>/*</code> inicia um comentário que termina quando <code>*/</code> é encontrado. Isto permite comentários em múltiplas linhas e comentários no meio de uma linha. Por exemplo:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a>  x = <span class="dv">0</span>; <span class="co">// x é inicializado com 0 (comentário idiota)</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a>  <span class="co">/* comentário de várias linhas</span></span>
@@ -167,6 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-4"><a href="#cb10-4"></a><span class="co">   * de dados e algoritmos.</span></span>
 <span id="cb10-5"><a href="#cb10-5"></a><span class="co">   */</span></span>
 <span id="cb10-6"><a href="#cb10-6"></a>  y = <span class="dv">1</span> + <span class="co">/* este é um comentário num lugar ruim */</span> <span class="dv">41</span>;</span></code></pre></div>
+<p>O último comentário feito no meio de uma expressão deve ser evitado, pois dificulta a leitura do código.</p>
 <h2 id="declaração-de-variáveis-em-c">Declaração de variáveis em C</h2>
 <p>O C atualmente é uma linguagem fortemente tipada com tipagem estática. Isto é, todas as variáveis em C precisam ser declaradas antes de serem utilizadas e o tipo das variáveis não pode mudar durante a execução do programa. Mas, diferente de algumas linguagens que obrigam as declarações de variáveis serem feitas no início do arquivo de código fonte (no caso de variáveis globais), ou no início do corpo das funções (no caso de variáveis locais), o C permite que as variáveis sejam declaradas em qualquer posição antes do uso delas (as globais sempre precisam ser declaradas fora das funções). Alguns programadores gostam de declarar as variáveis todas no início de um escopo, pois todas as declarações ficam visíveis no mesmo lugar. Outros preferem declará-las próximas do seu local de uso. As empresas de SW costumam estabelecer regras para estas situações nas suas normas de estilo de programação. Neste resumo, vamos declarar as variáveis globais no início do arquivo de código fonte ou cabeçalho. As locais serão declaradas próximas ao local de uso delas.</p>
 <p>As variáveis são sempre declaradas com uma das seguintes sintaxes:</p>
@@ -289,7 +293,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>A leitura de <em>string</em> com o <code>%s</code> só lê até o separador (geralmente um espaço ou um sinal de pontuação), para ler uma string até o final da linha, usa-se a função <code>fgets()</code>, cujo protótipo é:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a><span class="dt">char</span> *fgets(<span class="dt">char</span> *s, <span class="dt">int</span> size, <span class="dt">FILE</span> *stream);</span></code></pre></div>
 <blockquote>
-<p>Nunca use a antiga gets().</p>
+<p>Por motivos de segurança: Nunca use a gets().</p>
 </blockquote>
 <p>O parâmetro <code>s</code> é o <em>buffer</em> de caracteres onde a linha de texto deve ser lida, geralmente declarada com algo como: <code>char s[80]</code>. O parâmetro <code>size</code> indica quantos caracteres devem ser lidos no máximo (1 a menos do que o valor de <code>size</code> para poder colocar o carácter nulo no fim). <code>stream</code> é o dispositivo de entrada, no caso do teclado do usuário, é o <code>stdin</code>, mas poderia ser um arquivo, ou outro tipo de entrada.</p>
 <h3 id="exemplo-de-programa-para-leitura-e-impressão">Exemplo de programa para leitura e impressão</h3>
@@ -334,7 +338,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <figure>
 <img src="images/saida_chars.png" alt="" /><figcaption>Saída do programa para imprimir os caracteres da tabela ASCII</figcaption>
 </figure>
-<p>Nos <code>printf()</code>s acima, foram usados os caracteres de controle: <code>'\t'</code> e <code>'\n'</code> que significam salto de tabulação horizontal e salto de linha. a tabela a seguir apresenta alguns caracteres de controle e seus significados como são usados</p>
+<p>Nos <code>printf()</code>s acima, foram usados os caracteres de controle: <code>'\t'</code> e <code>'\n'</code> que significam salto de tabulação horizontal e salto de linha, respectivamente. A tabela a seguir apresenta alguns caracteres de controle e seus significados como são usados.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Código</th>
+<th>Nome em inglês</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>\’</td>
+<td>Single quote</td>
+<td>Apóstrofe</td>
+</tr>
+<tr class="even">
+<td>\"</td>
+<td>Quote</td>
+<td>Aspas</td>
+</tr>
+<tr class="odd">
+<td>\a</td>
+<td>Bell</td>
+<td>Sininho, existente em alguns antigos sistemas</td>
+</tr>
+<tr class="even">
+<td>\b</td>
+<td>Backspace</td>
+<td>Recuo de um espaço do cursor</td>
+</tr>
+<tr class="odd">
+<td>\f</td>
+<td>Formfeed</td>
+<td>Só tem sentido para impressoras com folhas continuas</td>
+</tr>
+<tr class="even">
+<td>\n</td>
+<td>Linefeed (LF)</td>
+<td>Salto de linha</td>
+</tr>
+<tr class="odd">
+<td>\r</td>
+<td>Carriage return (CR)</td>
+<td>Recuo do cursor para a primeira coluna</td>
+</tr>
+<tr class="even">
+<td>\t</td>
+<td>Horizontal tab</td>
+<td>Salto de tabulação na linha</td>
+</tr>
+<tr class="odd">
+<td>\ooo</td>
+<td>octal value char</td>
+<td>Carácter dado pelo código em octal</td>
+</tr>
+<tr class="even">
+<td>\xhh</td>
+<td>hexa value char</td>
+<td>Carácter definido pelo código em hexadecimal</td>
+</tr>
+</tbody>
+</table>
 <p>O C não possui na linguagem suporte a <em>string</em>, entretanto, existem convenções que são quase universalmente seguidas. Uma <em>string</em> em C é obtida com um vetor de <code>char</code>s. O vetor deve ser grande o suficiente para conter todos os caracteres mais 1. Por convenção, uma string <em>sempre</em> termina com o carácter <code>'\0'</code>, ou simplesmente, <code>0</code>. Isto é, o C não tem uma estrutura de dados para <em>string</em> em que existem um campo para o tamanho da <em>string</em> e outro campo para o vetor de caracteres como fazem algumas linguagens. As bibliotecas de C trabalham com <em>string</em> imaginando que esta convenção está sendo seguida. Por isto, se na <em>string</em> <code>format</code> do <code>printf()</code>, o programador usa o conversor <code>%s</code> para imprimir um vetor de caracteres e este vetor não termina com <code>'\0'</code>, um lixo será impresso. Experimente o programa abaixo:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2"></a><span class="dt">int</span> main() {</span>

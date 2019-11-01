@@ -521,19 +521,19 @@ que significam salto de tabulação horizontal e salto de linha, respectivamente
 A tabela a seguir
 apresenta alguns caracteres de controle e seus significados como são usados.
 
---------------------------------------------------------------------------
- Código   Nome em inglês          Descrição
---------  --------------          ----------------------------------------------
-  \'      Single quote            Apóstrofe
-  \"      Quote                   Aspas
-  \a      Bell                    Sininho, existente em alguns antigos sistemas
-  \b      Backspace               Recuo de um espaço do cursor
-  \f      Formfeed                Só tem sentido para impressoras com folhas continuas
-  \n      Linefeed \(LF\)         Salto de linha
-  \r      Carriage return \(CR\)  Recuo do cursor para a primeira coluna
-  \t      Horizontal tab          Salto de tabulação na linha
-  --------------------------------------------------------------------------
-  
+| Código |  Nome em inglês        |  Descrição    |
+|--------|------------------------|---------------|
+|  \\'    |  Single quote          |  Apóstrofe |
+|  \\"    |  Quote                 |  Aspas |
+|  \\a    |  Bell                  |  Sininho, existente em alguns antigos sistemas |
+|  \\b    |  Backspace             |  Recuo de um espaço do cursor |
+|  \\f    |  Formfeed              |  Só tem sentido para impressoras com folhas continuas |
+|  \\n    |  Linefeed \(LF\)       |  Salto de linha |
+|  \\r    |  Carriage return \(CR\)|  Recuo do cursor para a primeira coluna |
+|  \\t    |  Horizontal tab        |  Salto de tabulação na linha |
+|  \\ooo  |  octal value char      |  Carácter dado pelo código em octal |
+|  \\xhh  |  hexa value char       |  Carácter definido pelo código em hexadecimal |
+
 
 O C não possui na linguagem suporte a *string*, entretanto, existem convenções
 que são quase universalmente seguidas. Uma *string* em C é obtida com um vetor
