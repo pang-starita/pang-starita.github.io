@@ -671,6 +671,40 @@ union misto {
 
 #### Enums
 
+Enums em C têm 2 usos: definir constantes inteiras, reduzindo a dependência
+do uso de macros para este fim e para definir campos de bits. Neste resumo não
+veremos esta segunda aplicação do `enum`.
+
+Abaixo temos um exemplo de uso de `enum` para definir constantes simbólicas.
+Observe que `Domingo` e os outros dias da semana não tem valores associados
+explicitamente, o compilador associa implicitamente, `0` para o primeiro
+símbolo, `1` para o segundo e assim por diante. No exemplo, a enumeração
+`enum diaSemana` foi definida e a variável `ds` declarada com este tipo.
+
+```C
+enum diaSemana {Domingo, Segunda, Terca, Quarta, Quinta, Sexta, Sabado} ds;
+ds = Domingo;
+switch (++ds) {
+  case Domingo: case Sabado:
+    printf("Oba! Fim de semana\n");
+    break;
+  case Segunda:
+    printf("Pior dia da semana\n");
+    break;
+  case Terca:
+    printf("Que semana longa\n");
+    break;
+  case Quarta: case Quinta:
+    printf("Falta muito para o WE?\n");
+    break;
+  case Sexta:
+    printf("Que dia longo!\n");
+    break;
+  default:
+    printf("Que dia eh este?\n");
+}
+```
+
 ## Operações sobre números em C
 
 O C permite as operações tradicionais com números:
