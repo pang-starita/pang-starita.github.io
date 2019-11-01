@@ -123,6 +123,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>calcule r = resto da divisão de a por b</li>
 <li>se r == 0 então mdc = b senão a = b; b = r; vá para 1</li>
 </ol>
+<h4 id="exercicio">Exercicio:</h4>
+<p>Use um teste de mesa para verificar que o algoritmo de Euclides calcula corretamente o MDC do exercício 3. acima.</p>
+<ol type="a">
+<li>15 e 16</li>
+</ol>
+<table style="width:21%;">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">a</th>
+<th style="text-align: center;">b</th>
+<th style="text-align: center;">r</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
 <h4 id="código-em-python">Código em Python</h4>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>a <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&#39;a = &#39;</span>))</span>
 <span id="cb1-2"><a href="#cb1-2"></a>b <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&#39;b = &#39;</span>))</span>
