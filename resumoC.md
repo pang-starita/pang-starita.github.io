@@ -188,7 +188,7 @@ int main() {
 
 ### `#ifdef` e `#ifndef`
 
-Os arquivos cabeçalho incluem outros arquivos cabeçalho e pode ocorrer de numa
+Os arquivos cabeçalho incluem outros arquivos cabeçalho e pode ocorrer numa
 sequência de inclusões, um mesmo arquivo ser incluído mais de uma vez.
 Imagine que você escreveu um arquivo cabeçalho, `meu.h`, e por algum motivo
 seu arquivo cabeçalho precisa da inclusão do arquivo `stdlib.h` que possui
@@ -196,9 +196,9 @@ diversas constantes úteis do sistema. O código fonte inclui seu arquivo
 cabeçalho e como também precisa de algumas constantes do sistema, ele também
 inclui o arquivo `stdlib.h`. Pode ocorrer problemas na compilação se as
 constantes forem declaradas múltiplas vezes.
-Para evitar o erro de múltiplas declarações (o que não é permitido em C), é
-necessário usar um esquema de exclusão de múltiplas declarações. Isto é obtido
-pelo uso do condicional do pré-compilador. A estrutura que todos os arquivos
+Para evitar o erro de múltiplas declarações \(o que não é permitido em C\), é
+necessário usar um esquema de exclusão de múltiplas declarações. Isto é feito
+com o uso do condicional do pré-compilador. A estrutura que todos os arquivos
 de cabeçalho usam é:
 
 ```C
@@ -218,7 +218,9 @@ etc.
 
 Comentários nos códigos fonte são importantes para explicar como usar as
 funções e estruturas de dados e para explicar o algoritmo que está sendo
-usado para realizar um cálculo. Comentários do tipo: `isto é uma variável`,
+usado para realizar um cálculo.
+
+> Comentários do tipo: `isto é uma variável`,
 `esta é uma função`, `este é o main()`, são inúteis e devem ser evitados.
 
 O C tem 2 tipos de comentários: `//` e `/* */`. `//` inicia um comentário que
@@ -234,6 +236,9 @@ meio de uma linha. Por exemplo:
    */
   y = 1 + /* este é um comentário num lugar ruim */ 41;
 ```
+
+O último comentário feito no meio de uma expressão deve ser evitado, pois
+dificulta a leitura do código.
 
 ## Declaração de variáveis em C
 
@@ -418,7 +423,7 @@ protótipo é:
 char *fgets(char *s, int size, FILE *stream);
 ```
 
-> Nunca use a antiga gets().
+> Por motivos de segurança: Nunca use a gets().
 
 O parâmetro `s` é o *buffer* de caracteres onde a linha de texto deve ser lida,
 geralmente declarada com algo como: `char s[80]`. O parâmetro `size` indica
@@ -512,8 +517,23 @@ int main() {
 ![Saída do programa para imprimir os caracteres da tabela ASCII](images/saida_chars.png)
 
 Nos `printf()`s acima, foram usados os caracteres de controle: `'\t'` e `'\n'`
-que significam salto de tabulação horizontal e salto de linha. a tabela a seguir
-apresenta alguns caracteres de controle e seus significados como são usados
+que significam salto de tabulação horizontal e salto de linha, respectivamente.
+A tabela a seguir
+apresenta alguns caracteres de controle e seus significados como são usados.
+
+--------------------------------------------------------------------------
+ Código   Nome em inglês          Descrição
+--------  --------------          ----------------------------------------------
+  \'      Single quote            Apóstrofe
+  \"      Quote                   Aspas
+  \a      Bell                    Sininho, existente em alguns antigos sistemas
+  \b      Backspace               Recuo de um espaço do cursor
+  \f      Formfeed                Só tem sentido para impressoras com folhas continuas
+  \n      Linefeed \(LF\)         Salto de linha
+  \r      Carriage return \(CR\)  Recuo do cursor para a primeira coluna
+  \t      Horizontal tab          Salto de tabulação na linha
+  --------------------------------------------------------------------------
+  
 
 O C não possui na linguagem suporte a *string*, entretanto, existem convenções
 que são quase universalmente seguidas. Uma *string* em C é obtida com um vetor
