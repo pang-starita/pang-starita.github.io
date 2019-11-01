@@ -42,6 +42,23 @@ Saida: mdc
 2. se r == 0 então mdc = b
    senão a = b; b = r; vá para 1
 
+#### Exercicio:
+
+Use um teste de mesa para verificar que o algoritmo de Euclides calcula
+corretamente o MDC do exercício 3. acima.
+
+a. 15 e 16
+
+---------------
+  a    b    r
+---- ---- ----
+ 15   16   15
+
+ 16   15   1
+ 
+ 15    1   0
+--------------
+
 #### Código em Python
 
 ```Python
