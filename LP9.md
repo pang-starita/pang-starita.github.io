@@ -26,9 +26,11 @@ date: 2019-10-19
 
 3. Calcule o MDC de:
 
-a. 15 e 16
-b. 35 e 15
-c. 45 e 81
+  a. 15 e 16
+
+  b. 35 e 15
+
+  c. 45 e 81
 
 ### Algoritmo para calcular o MDC de Euclides
 
@@ -69,4 +71,41 @@ print('mdc =', b)
 
 ### Laboratório
 
-Escreva um programa em Python que implementa um jogo de forca.
+1. Teste o programa para o cálculo do MDC dado em aula.
+
+2. Escreva um programa em Python que implementa um jogo de forca.
+
+```Python
+import random
+palavras = ['absolutismo', 'totalitarismo', 'inconstitucionalista',
+            'oba', 'oca', 'asa', 'aba', 'tab', 'ola', 'ada']
+palavra = palavras[random.randrange(len(palavras))]
+mostra = []
+for i in range(len(palavra)):
+  mostra.append('_')
+print('Adivinhe a palavra:', mostra, 'letra por letra')
+chutes = 0
+maxchutes = 6
+acertos = 0
+chs = ''
+while chutes <= maxchutes:
+  ch = input('Chute uma letra: ')
+  if ch in chs:
+    print('letra ja tentada')
+    continue
+  else:
+    chs += ch
+  acertou = False
+  for i in range(len(palavra)):
+    if ch == palavra[i]:
+      acertos += 1
+      mostra[i] = ch
+      acertou = True
+  if not acertou:
+    chutes += 1
+    print(ch, 'nao aparece na palavra')
+  else: print(mostra)
+  if acertos == len(palavra): break
+if acertos == len(palavra): print("Parabens!")
+else: print('Que pena, maximo de', maxchutes, 'chutes foi atingido')
+```
