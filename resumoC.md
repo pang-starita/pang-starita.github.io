@@ -526,8 +526,8 @@ apresenta alguns caracteres de controle e seus significados como são usados.
 |  \\'    |  Single quote          |  Apóstrofe |
 |  \\"    |  Quote                 |  Aspas |
 |  \\a    |  Bell                  |  Sininho, existente em alguns antigos sistemas |
-|  \\b    |  Backspace             |  Recuo de um espaço do cursor |
-|  \\f    |  Formfeed              |  Só tem sentido para impressoras com folhas continuas |
+|  \\b    |  Backspace \(BS\)      |  Recuo de um espaço do cursor |
+|  \\f    |  Formfeed \(FF\)       |  Só tem sentido para impressoras com folhas continuas |
 |  \\n    |  Linefeed \(LF\)       |  Salto de linha |
 |  \\r    |  Carriage return \(CR\)|  Recuo do cursor para a primeira coluna |
 |  \\t    |  Horizontal tab        |  Salto de tabulação na linha |
@@ -561,8 +561,8 @@ int main() {
 ```
 
 O programa acima vai ter um comportamento que é o pesadelo de muitos
-programadores, em alguns casos, não vai apresentar nenhum "erro". Isto é,
-a cópia vai apresentar o mesmo que texto. Em alguns casos, vai ser diferente.
+programadores, em alguns casos, não vai apresentar nenhum "erro" e em outros,
+imprime um texto aleatório após o texto copiado.
 Tudo depende dos valores presentes no vetor cópia.
 
 Para trabalhar com *strings* em C, usa-se a biblioteca `string` que tem
@@ -573,6 +573,9 @@ funções como:
 - `strncmp()`: compara duas *strings*, resulta em `< 0` se a primeira *string* é
 alfabeticamente anterior à segunda, `> 0` se a ordem alfabética da primeira é
 posterior à segunda, ou `0` se ambas são iguais.
+
+A convenção usada pelo `strcmp()` é importante. Ela é utilizada na implementação
+de comparadores de outros tipos de dados, inclusive em linguagens como o Java.
 
 #### Tipos inteiros
 
@@ -613,6 +616,33 @@ pela norma [IEEE 754](https://pt.wikipedia.org/wiki/IEEE_754).
 
 - float \(32 bits\)
 - double \(64 bits\)
+
+O `float` é uma aproximação com uma precisão de 6 casas, o `double` dá uma
+precisão 15  e 18 casas. Observe que, embora, se utilize `double` em algumas
+aplicações para representar valores monetários, isto não é recomendável.
+
+Para entender o que significa o erro devido à aproximação das representações de
+ponto flutuante, o seguinte programa adiciona `0.1` 10 vezes e subtrai 1, com as
+duas representações. Ao imprimir o resultado, vemos o erro provocado pela
+aproximação. O erro se deve ao `0.1` ser um dízima periódica ao ser convertido
+em binário.
+
+```C
+#include <stdio.h>
+int main() {
+  float erro1 = 0.0F;
+  double erro2 = 0.0;
+  int i;
+  for (i = 0; i < 10; i++) {
+    erro1 += 0.1F;
+    erro2 += 0.1;
+  }
+  erro1 -= 1.0F;
+  erro2 -= 1.0;
+  printf("Erro com float = %g\terro com double = %g\n", erro1, erro2);
+  return 0;
+}
+```
 
 #### Valores Lógicos
 
