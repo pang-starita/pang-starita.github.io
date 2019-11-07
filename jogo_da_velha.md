@@ -27,4 +27,20 @@ Primeiro, vamos pensar em quais são as estruturas de dados que precisamos para
 o jogo. Parece bastante claro que precisamos memorizar o tabuleiro, uma
 primeira tentativa é memorizar o tabuleiro numa matriz 3 x 3. Cada posição
 do tabuleiro/matriz é chamada de casa. Cada casa está num estado: limpa, `X` ou
-`O`. 
+`O`. Para representar que a casa está limpa, vamos usar o carácter `-`. Como o
+Python não tem matrizes e vetores, vamos usar lista de listas. Assim, o
+tabuleiro inicial pode ser inicializado com:
+
+```Python
+tabuleiro = [['-','-','-'],['-','-','-'],['-','-','-']]
+```
+
+Queremos exibir o tabuleiro com algo como:
+
+```
+ O | X | O
+---|---|---
+ X | O | X
+---|---|---
+ X | O | X
+```

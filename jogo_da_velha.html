@@ -13,6 +13,71 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
+  <style>
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -30,6 +95,13 @@
 <p>O jogo é um jogo de 2 jogadores, num <em>tabuleiro</em> <code>3 x 3</code>. Os jogadores jogam alternadamente, marcando com um <code>O</code> ou um <code>X</code> uma casa livre do tabuleiro. O primeiro jogador a completar uma <em>linha</em>, uma <em>coluna</em> ou uma <em>diagonal</em> com suas marcas vence. Se todas as casa forem ocupadas sem nenhum vencedor, há empate.</p>
 <p>Dadas estas regras podemos começar a projetar o programa para jogar jogo da velha contra um usuário. Não vamos procurar num projeto inicial especificar uma interface gráfica para o jogo. A interface de jogo será a mais simples possível, usando a interface de linha.</p>
 <h3 id="estruturas-de-dados">Estruturas de dados</h3>
-<p>Primeiro, vamos pensar em quais são as estruturas de dados que precisamos para o jogo. Parece bastante claro que precisamos memorizar o tabuleiro, uma primeira tentativa é memorizar o tabuleiro numa matriz 3 x 3. Cada posição do tabuleiro/matriz é chamada de casa. Cada casa está num estado: limpa, <code>X</code> ou <code>O</code>.</p>
+<p>Primeiro, vamos pensar em quais são as estruturas de dados que precisamos para o jogo. Parece bastante claro que precisamos memorizar o tabuleiro, uma primeira tentativa é memorizar o tabuleiro numa matriz 3 x 3. Cada posição do tabuleiro/matriz é chamada de casa. Cada casa está num estado: limpa, <code>X</code> ou <code>O</code>. Para representar que a casa está limpa, vamos usar o carácter <code>-</code>. Como o Python não tem matrizes e vetores, vamos usar lista de listas. Assim, o tabuleiro inicial pode ser inicializado com:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>tabuleiro <span class="op">=</span> [[<span class="st">&#39;-&#39;</span>,<span class="st">&#39;-&#39;</span>,<span class="st">&#39;-&#39;</span>],[<span class="st">&#39;-&#39;</span>,<span class="st">&#39;-&#39;</span>,<span class="st">&#39;-&#39;</span>],[<span class="st">&#39;-&#39;</span>,<span class="st">&#39;-&#39;</span>,<span class="st">&#39;-&#39;</span>]]</span></code></pre></div>
+<p>Queremos exibir o tabuleiro com algo como:</p>
+<pre><code> O | X | O
+---|---|---
+ X | O | X
+---|---|---
+ X | O | X</code></pre>
 </body>
 </html>

@@ -103,13 +103,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>tipo de dados</li>
 <li>compilação de códigos</li>
 <li>interpretação de Códigos</li>
-<li>subprogramas</li>
+<li>subprogramas: função e procedimento</li>
 <li>algoritmo</li>
+<li>expressão</li>
+<li>operador</li>
 </ul>
 </blockquote>
 <ol start="2" type="1">
-<li><p>…</p></li>
-<li><p>Calcule o MDC de:</p></li>
+<li>Calcule o MDC de:</li>
 </ol>
 <ol type="a">
 <li><p>15 e 16</p></li>
@@ -186,32 +187,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-3"><a href="#cb3-3"></a>            <span class="st">&#39;oba&#39;</span>, <span class="st">&#39;oca&#39;</span>, <span class="st">&#39;asa&#39;</span>, <span class="st">&#39;aba&#39;</span>, <span class="st">&#39;tab&#39;</span>, <span class="st">&#39;ola&#39;</span>, <span class="st">&#39;ada&#39;</span>]</span>
 <span id="cb3-4"><a href="#cb3-4"></a>palavra <span class="op">=</span> palavras[random.randrange(<span class="bu">len</span>(palavras))]</span>
 <span id="cb3-5"><a href="#cb3-5"></a>mostra <span class="op">=</span> []</span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(palavra)):</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="cf">for</span> ch <span class="kw">in</span> palavra:</span>
 <span id="cb3-7"><a href="#cb3-7"></a>  mostra.append(<span class="st">&#39;_&#39;</span>)</span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="bu">print</span>(<span class="st">&#39;Adivinhe a palavra:&#39;</span>, mostra, <span class="st">&#39;letra por letra&#39;</span>)</span>
-<span id="cb3-9"><a href="#cb3-9"></a>chutes <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a>maxchutes <span class="op">=</span> <span class="dv">6</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a>acertos <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a>chs <span class="op">=</span> <span class="st">&#39;&#39;</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="cf">while</span> chutes <span class="op">&lt;=</span> maxchutes:</span>
-<span id="cb3-14"><a href="#cb3-14"></a>  ch <span class="op">=</span> <span class="bu">input</span>(<span class="st">&#39;Chute uma letra: &#39;</span>)</span>
-<span id="cb3-15"><a href="#cb3-15"></a>  <span class="cf">if</span> ch <span class="kw">in</span> chs:</span>
-<span id="cb3-16"><a href="#cb3-16"></a>    <span class="bu">print</span>(<span class="st">&#39;letra ja tentada&#39;</span>)</span>
-<span id="cb3-17"><a href="#cb3-17"></a>    <span class="cf">continue</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a>  <span class="cf">else</span>:</span>
-<span id="cb3-19"><a href="#cb3-19"></a>    chs <span class="op">+=</span> ch</span>
-<span id="cb3-20"><a href="#cb3-20"></a>  acertou <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(palavra)):</span>
-<span id="cb3-22"><a href="#cb3-22"></a>    <span class="cf">if</span> ch <span class="op">==</span> palavra[i]:</span>
-<span id="cb3-23"><a href="#cb3-23"></a>      acertos <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a>      mostra[i] <span class="op">=</span> ch</span>
-<span id="cb3-25"><a href="#cb3-25"></a>      acertou <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a>  <span class="cf">if</span> <span class="kw">not</span> acertou:</span>
-<span id="cb3-27"><a href="#cb3-27"></a>    chutes <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a>    <span class="bu">print</span>(ch, <span class="st">&#39;nao aparece na palavra&#39;</span>)</span>
-<span id="cb3-29"><a href="#cb3-29"></a>  <span class="cf">else</span>: <span class="bu">print</span>(mostra)</span>
-<span id="cb3-30"><a href="#cb3-30"></a>  <span class="cf">if</span> acertos <span class="op">==</span> <span class="bu">len</span>(palavra): <span class="cf">break</span></span>
-<span id="cb3-31"><a href="#cb3-31"></a><span class="cf">if</span> acertos <span class="op">==</span> <span class="bu">len</span>(palavra): <span class="bu">print</span>(<span class="st">&quot;Parabens!&quot;</span>)</span>
-<span id="cb3-32"><a href="#cb3-32"></a><span class="cf">else</span>: <span class="bu">print</span>(<span class="st">&#39;Que pena, maximo de&#39;</span>, maxchutes, <span class="st">&#39;chutes foi atingido&#39;</span>)</span></code></pre></div>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="bu">print</span>(<span class="st">&#39;Adivinhe a palavra:&#39;</span>, end<span class="op">=</span><span class="st">&#39; &#39;</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="cf">for</span> ch <span class="kw">in</span> mostra: <span class="bu">print</span>(ch, end<span class="op">=</span><span class="st">&#39; &#39;</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="bu">print</span>(<span class="st">&#39;letra por letra&#39;</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a>chutes <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>maxchutes <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>acertos <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a>chs <span class="op">=</span> <span class="st">&#39;&#39;</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="cf">while</span> chutes <span class="op">&lt;</span> maxchutes:</span>
+<span id="cb3-16"><a href="#cb3-16"></a>  ch <span class="op">=</span> <span class="bu">input</span>(<span class="st">&#39;Chute uma letra: &#39;</span>)</span>
+<span id="cb3-17"><a href="#cb3-17"></a>  <span class="cf">if</span> ch <span class="kw">in</span> chs:</span>
+<span id="cb3-18"><a href="#cb3-18"></a>    <span class="bu">print</span>(<span class="st">&#39;letra ja tentada&#39;</span>)</span>
+<span id="cb3-19"><a href="#cb3-19"></a>    <span class="cf">continue</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>  <span class="cf">else</span>:</span>
+<span id="cb3-21"><a href="#cb3-21"></a>    chs <span class="op">+=</span> ch</span>
+<span id="cb3-22"><a href="#cb3-22"></a>  acertou <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(palavra)):</span>
+<span id="cb3-24"><a href="#cb3-24"></a>    <span class="cf">if</span> ch <span class="op">==</span> palavra[i]:</span>
+<span id="cb3-25"><a href="#cb3-25"></a>      acertos <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a>      mostra[i] <span class="op">=</span> ch</span>
+<span id="cb3-27"><a href="#cb3-27"></a>      acertou <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a>  <span class="cf">if</span> <span class="kw">not</span> acertou:</span>
+<span id="cb3-29"><a href="#cb3-29"></a>    chutes <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>    <span class="bu">print</span>(ch, <span class="st">&#39;nao aparece na palavra&#39;</span>)</span>
+<span id="cb3-31"><a href="#cb3-31"></a>  <span class="cf">else</span>:</span>
+<span id="cb3-32"><a href="#cb3-32"></a>    <span class="cf">for</span> ch <span class="kw">in</span> mostra: <span class="bu">print</span>(ch, end<span class="op">=</span><span class="st">&#39; &#39;</span>)</span>
+<span id="cb3-33"><a href="#cb3-33"></a>    <span class="bu">print</span>()</span>
+<span id="cb3-34"><a href="#cb3-34"></a>  <span class="cf">if</span> acertos <span class="op">==</span> <span class="bu">len</span>(palavra): <span class="cf">break</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a><span class="cf">if</span> acertos <span class="op">==</span> <span class="bu">len</span>(palavra): <span class="bu">print</span>(<span class="st">&quot;Parabens!&quot;</span>)</span>
+<span id="cb3-36"><a href="#cb3-36"></a><span class="cf">else</span>:</span>
+<span id="cb3-37"><a href="#cb3-37"></a>  <span class="bu">print</span>(<span class="st">&#39;Que pena, maximo de&#39;</span>, maxchutes, <span class="st">&#39;foi atingido&#39;</span>)</span>
+<span id="cb3-38"><a href="#cb3-38"></a>  forca <span class="op">=</span> <span class="st">&#39;&#39;&#39;</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a><span class="st">   _________</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a><span class="st">  |         |</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a><span class="st">  |        ---</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a><span class="st">  |      /     </span><span class="ch">\\</span></span>
+<span id="cb3-43"><a href="#cb3-43"></a><span class="st">  |     | o   o |</span></span>
+<span id="cb3-44"><a href="#cb3-44"></a><span class="st">  |     |   ^   |</span></span>
+<span id="cb3-45"><a href="#cb3-45"></a><span class="st">  |      </span><span class="ch">\\</span><span class="st">  -  /</span></span>
+<span id="cb3-46"><a href="#cb3-46"></a><span class="st">  |        ---</span></span>
+<span id="cb3-47"><a href="#cb3-47"></a><span class="st">  |         |</span></span>
+<span id="cb3-48"><a href="#cb3-48"></a><span class="st">  |        /|</span><span class="ch">\\</span></span>
+<span id="cb3-49"><a href="#cb3-49"></a><span class="st">  |       / | </span><span class="ch">\\</span></span>
+<span id="cb3-50"><a href="#cb3-50"></a><span class="st">  |      /  |  </span><span class="ch">\\</span></span>
+<span id="cb3-51"><a href="#cb3-51"></a><span class="st">  |         |</span></span>
+<span id="cb3-52"><a href="#cb3-52"></a><span class="st">  |         |</span></span>
+<span id="cb3-53"><a href="#cb3-53"></a><span class="st">  |        / </span><span class="ch">\\</span></span>
+<span id="cb3-54"><a href="#cb3-54"></a><span class="st">  |       /   </span><span class="ch">\\</span></span>
+<span id="cb3-55"><a href="#cb3-55"></a><span class="st">  |     _/     </span><span class="ch">\\</span><span class="st">_</span></span>
+<span id="cb3-56"><a href="#cb3-56"></a><span class="st">  |</span></span>
+<span id="cb3-57"><a href="#cb3-57"></a><span class="st">  |</span></span>
+<span id="cb3-58"><a href="#cb3-58"></a><span class="st">__|__________________&#39;&#39;&#39;</span></span>
+<span id="cb3-59"><a href="#cb3-59"></a>  <span class="bu">print</span>(forca)</span></code></pre></div>
 </body>
 </html>
