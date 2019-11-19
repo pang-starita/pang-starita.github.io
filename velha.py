@@ -20,6 +20,8 @@ def sorteio():
     else:
         pecaUser = 'O'
         pecaMaq = 'X'
+        print('Ganhei o sorteio, minhas peças serão:', pecaMaq, 'Suas pecas são:', pecaUser)
+    return
 
 def imprimeTab():
     a00 = tab[0][0]
@@ -37,8 +39,9 @@ def imprimeTab():
     print('  ',3*'-','|',3*'-','|',3*'-',sep='')
     print('1 ',a20,'|',a21,'|',a22)
     print('   a   b   c')
-    
-def terminou():
+    return
+
+def ganhoup():
     linha1 = tab[2][0] == tab[2][1] == tab[2][2] != ' '
     linha2 = tab[1][0] == tab[1][1] == tab[1][2] != ' '
     linha3 = tab[0][0] == tab[0][1] == tab[0][2] != ' '
@@ -48,6 +51,16 @@ def terminou():
     diagp = tab[0][0] == tab[1][1] == tab[2][2] != ' '
     diags = tab[0][2] == tab[1][1] == tab[2][0] != ' '
     return linha1 or linha2 or linha3 or cola or colb or colc or diagp or diags
+
+def empatoup():
+    if ganhoup(): return False
+    for lin in range(3):
+        for col in range(3):
+            if tab[lin][col] == ' ': return False
+    return True
+
+def terminou():
+    return ganhoup() or empatoup()
 
 def leJogadaUser():
     global tab
@@ -68,9 +81,32 @@ def leJogadaUser():
         leJogadaUser()
         return
     tab[lin][col] = pecaUser
+    pass
+
+def jogaMaquina():
+    global tab
+    # joga na primeira casa livre
+    for lin in range(3):
+        for col in range(3):
+            if tab[lin][col] == ' ':
+                tab[lin][col] = pecaMaq
+                return
+    return
+
     
 sorteio()
-imprimeTab()
-leJogadaUser()
-imprimeTab()
-terminou()
+while not terminou():
+    if vez % 2 == 0:
+        imprimeTab()
+        leJogadaUser()
+    else:
+        jogaMaquina()
+    vez += 1
+    imprimeTab()
+if empatoup():
+    print('Empatou')
+else:
+    if vez % 2 == 0:
+        print('Ha, ha, voce perdeu')
+    else:
+        print('bua, perdi')
