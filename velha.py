@@ -1,11 +1,12 @@
 import random
 
-tab = [['O',' ','X'],['O',' ','X'],[' ',' ',' ']]
-
 def sorteio():
+    global tab
     global vez          # precisamos declarar as variáveis globais que serão alteradas
     global pecaUser
     global pecaMaq
+    # inicializa tabuleiro vazio
+    tab = [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']]
     vez = random.randrange(2)
     if vez == 0:
         pecaUser = input('Parabéns, você começa, qual o tipo de peça você quer usar? (O ou X): ')
@@ -33,12 +34,21 @@ def imprimeTab():
     a20 = tab[2][0]
     a21 = tab[2][1]
     a22 = tab[2][2]
-    print('3 ',a00,'|',a01,'|',a02)
-    print('  ',3*'-','|',3*'-','|',3*'-',sep='')
-    print('2 ',a10,'|',a11,'|',a12)
-    print('  ',3*'-','|',3*'-','|',3*'-',sep='')
-    print('1 ',a20,'|',a21,'|',a22)
-    print('   a   b   c')
+    saida = '''Jogada: {}
+3  {} | {} | {}
+  ---|---|---
+2  {} | {} | {}
+  ---|---|---
+1  {} | {} | {}
+   a   b   c
+'''.format(vez // 2, a00,a01,a02,a10,a11,a12,a20,a21,a22)
+    print(saida)
+#    print('3 ',a00,'|',a01,'|',a02)
+#    print('  ',3*'-','|',3*'-','|',3*'-',sep='')
+#    print('2 ',a10,'|',a11,'|',a12)
+#    print('  ',3*'-','|',3*'-','|',3*'-',sep='')
+#    print('1 ',a20,'|',a21,'|',a22)
+#    print('   a   b   c')
     return
 
 def ganhoup():
@@ -93,20 +103,31 @@ def jogaMaquina():
                 return
     return
 
-    
+def jogaMaquina2():
+    global tab
+    # joga aleatoriamente numa casa livre
+    livres = []
+    for lin in range(3):
+        for col in range(3):
+            if tab[lin][col] == ' ':
+                livres.append((lin,col))
+    jogada = livres[random.randrange(len(livres))]
+    tab[jogada[0]][jogada[1]] = pecaMaq
+    return
+ 
 sorteio()
 while not terminou():
     if vez % 2 == 0:
         imprimeTab()
         leJogadaUser()
     else:
-        jogaMaquina()
+        jogaMaquina2()
     vez += 1
-    imprimeTab()
+imprimeTab()
 if empatoup():
     print('Empatou')
 else:
     if vez % 2 == 0:
-        print('Ha, ha, voce perdeu')
+        print('Ha, ha, voce perdeu.')
     else:
-        print('bua, perdi')
+        print('Bua, perdi, você ganhou.')
