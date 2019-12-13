@@ -654,19 +654,62 @@ um valor não nulo é verdadeiro. Veja as operações lógicas mais adiante.
 
 Vetores são agregados de dados do mesmo tipo. Em vez de usar uma variável para
 cada dado, uma única variável permite acessar todo um grupo de dados do mesmo
-tipo. Abaixo temos como exemplo as variáveis `nome`, `vi` e `matriz` que são
+tipo, diferenciando os dados individuais por índices. Semelhante ao que se faz
+na notação matemática de vetores e matrizes. Com a diferença de que editores de
+texto não produzem texto com subscrita, como $a_{11}$, em programação contorna-se
+o uso de subscrita com o uso de colchetes. Assim, o $a_{11}$ torna-se: `a[1,1]`
+em linguagens como Pascal, Ada, ...,
+ou, mais comumente, `a[1][1]`, como no C/C++.
+Abaixo temos como exemplo as variáveis `nome`, `vi` e `matriz` que são
 vetores de 80 caracteres, 32 inteiros e 3 vetores de 3 doubles.
 
 - `char nome[80];`
 - `int vi[32];`
 - `double matriz[3][3];`
 
+Em C, as variáveis `nome`, `vi` e `matriz` na verdade são ponteiros constantes
+para a área de memória onde o vetor \(ou a matriz\), foi alocada, conforme
+veremos a seguir. Por causa disto, o seguinte código:
+
+```C
+  char nome[8] = {'t','o','t','o','\0'};
+  char outro[8];
+  outro = nome;
+```
+
+Dá erro de compilação. Não podemos atribuir um vetor a um outro em C. As
+atribuições devem ser feitas individualmente, para cada índice. Assim, o
+código desejado para as instruções acima é:
+
+```C
+  char nome[8] = {'t','o','t','o','\0'};
+  char outro[8];
+  int i;
+  for (i = 0; i < 8; i++)
+    outro[i] = nome[i];
+```
+
+Declarações, como as feitas anteriormente, provocam a alocação dos vetores pelo
+compilador. Observe que isto difere do Java cujos vetores são
+objetos e devem ser dinamicamente alocados com um `new` explicito após a
+declaração. No Java, a declaração só faz o compilador criar uma referência
+para o objeto vetor, no C e no C++, esta declaração faz o compilador alocar
+este espaço, na pilha, se for uma variável de alocação automática, ou no *heap*
+se for a variável for global ou *estática*.
+
+Vetores têm tamanho fixado pela declaração. Não é possível aumentar
+dinamicamente o tamanho de um vetor. Se precisar de um vetor maior, use uma
+das versões de `malloc()` e não declare um vetor, mas um ponteiro para a área
+de memória com elementos do mesmo tipo.
+
 #### Ponteiros
 
-Variáveis do tipo ponteiro, são *ponteiros* para algum tipo de dado armazenado
+Variáveis do tipo ponteiro, são *referências* para algum tipo de dado armazenado
 na memória. Isto é, concretamente, são endereços de dados na memória e estes
-dados são de algum tipo. O identificador de variáveis do tipo vetor são
-na realidade ponteiros constantes para o primeiro elemento do vetor. Abaixo
+dados são de algum tipo. O identificador de variáveis do tipo vetor é
+na realidade um ponteiro constante para o primeiro elemento do vetor,
+isto é, seu valor é o endereço de memória onde está o primeiro elemento do
+vetor. Abaixo
 temos alguns exemplos de ponteiros com inicializações.
 
 - `char *ptCh = nome; // ponteiro para o primeiro caracter de nome`
@@ -680,7 +723,11 @@ da variável `i` do exemplo anterior para atribuir o valor 7 à variável `i` co
 *ptInt = 7;   // isto é a mesma coisa que i = 7;
 ```
 
-Ponteiros são mais úteis quando trabalhamos com `struct`s e alocação dinâmica de
+Observe que os operadores unários `&`(endereço-de) e `*`(desreferência-de) são
+complementares. O primeiro obtém um ponteiro para o conteúdo de uma variável e
+o segundo permite acessar o conteúdo apontado pelo ponteiro.
+
+Ponteiros são úteis quando trabalhamos com `struct`s e a alocação dinâmica de
 memória que veremos a seguir.
 
 #### Registros ou estruturas
@@ -1270,6 +1317,8 @@ protótipo, quem precisa da implementação da função é o editor de ligaçõe
 #### Variáveis estáticas - escopo e ciclo de vida
 
 ### Unidade de compilação
+
+### Bibliotecas em C
 
 
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.
