@@ -678,8 +678,8 @@ veremos a seguir. Por causa disto, o seguinte código:
 ```
 
 Dá erro de compilação. Não podemos atribuir um vetor a um outro em C. As
-atribuições devem ser feitas individualmente, para cada índice. Assim, o
-código desejado para as instruções acima é:
+atribuições devem ser feitas com cada elemento individualmente, para cada
+índice. Assim, o código desejado para as instruções acima é:
 
 ```C
   char nome[8] = {'t','o','t','o','\0'};
@@ -694,12 +694,13 @@ compilador. Observe que isto difere do Java cujos vetores são
 objetos e devem ser dinamicamente alocados com um `new` explicito após a
 declaração. No Java, a declaração só faz o compilador criar uma referência
 para o objeto vetor, no C e no C++, esta declaração faz o compilador alocar
-este espaço, na pilha, se for uma variável de alocação automática, ou no *heap*
-se for a variável for global ou *estática*.
+o espaço para o vetor, na pilha, se o vetor for uma variável de alocação
+automática, ou no *heap* se for uma variável global ou *estática*.
 
 Vetores têm tamanho fixado pela declaração. Não é possível aumentar
-dinamicamente o tamanho de um vetor. Se precisar de um vetor maior, use uma
-das versões de `malloc()` e não declare um vetor, mas um ponteiro para a área
+dinamicamente o tamanho de um vetor de modo automático.
+Se precisar de um vetor maior, use uma das versões de `malloc()`
+\(como o `realloc()`\) e não declare um vetor, mas um ponteiro para a área
 de memória com elementos do mesmo tipo.
 
 #### Ponteiros
