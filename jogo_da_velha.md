@@ -32,7 +32,7 @@ Python não tem matrizes e vetores, vamos usar lista de listas. Assim, o
 tabuleiro inicial pode ser inicializado com:
 
 ```Python
-tabuleiro = [['-','-','-'],['-','-','-'],['-','-','-']]
+tabuleiro = [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']]
 ```
 
 Queremos exibir o tabuleiro com algo como:
