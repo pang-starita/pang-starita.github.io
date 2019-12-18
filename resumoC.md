@@ -710,11 +710,16 @@ na memória. Isto é, concretamente, são endereços de dados na memória e este
 dados são de algum tipo. O identificador de variáveis do tipo vetor é
 na realidade um ponteiro constante para o primeiro elemento do vetor,
 isto é, seu valor é o endereço de memória onde está o primeiro elemento do
-vetor. Abaixo
-temos alguns exemplos de ponteiros com inicializações.
+vetor. Abaixo temos alguns exemplos de ponteiros com inicializações.
 
 - `char *ptCh = nome; // ponteiro para o primeiro caracter de nome`
 - `int i; int *ptInt = &i; // ponteiro para o i`
+
+O ponteiro `ptCh` permite acessar o vetor de caracteres `nome`, a diferença é
+que `nome` é um ponteiro constante e não pode ser modificado. `ptCh` pode ser
+adicionado a números inteiros e passará a *apontar* para outras posições do
+vetor. O segundo exemplo ilustra o ponteiro para o endereço de uma variável.
+O `ptInt` aponta para a variável `i`.
 
 O ponteiro permite o acesso ao dado apontado através do operador de
 *desreferência*, `*`. Por exemplo, podemos usar o ponteiro para o endereço
@@ -727,6 +732,15 @@ da variável `i` do exemplo anterior para atribuir o valor 7 à variável `i` co
 Observe que os operadores unários `&`(endereço-de) e `*`(desreferência-de) são
 complementares. O primeiro obtém um ponteiro para o conteúdo de uma variável e
 o segundo permite acessar o conteúdo apontado pelo ponteiro.
+
+Outra maneira de desreferenciar um ponteiro é através do uso de `[]`, colchetes,
+como se o ponteiro fosse um vetor. Assim, as duas formas abaixo são
+equivalentes:
+
+```C
+*ptInt = 7;   // atribui 7 para a variável i
+ptInt[0] = 7; // atribui 7 para a variável i
+```
 
 Ponteiros são úteis quando trabalhamos com `struct`s e a alocação dinâmica de
 memória que veremos a seguir.
