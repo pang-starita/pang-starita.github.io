@@ -617,15 +617,20 @@ pela norma [IEEE 754](https://pt.wikipedia.org/wiki/IEEE_754).
 - float \(32 bits\)
 - double \(64 bits\)
 
-O `float` é uma aproximação com uma precisão de 6 casas, o `double` dá uma
-precisão 15  e 18 casas. Observe que, embora, se utilize `double` em algumas
+O `float` é uma aproximação com uma precisão de 6 a 8 casas, o `double` dá uma
+precisão 15 a 18 casas. Observe que, embora, se utilize `double` em algumas
 aplicações para representar valores monetários, isto não é recomendável.
 
 Para entender o que significa o erro devido à aproximação das representações de
-ponto flutuante, o seguinte programa adiciona `0.1` 10 vezes e subtrai 1, com as
-duas representações. Ao imprimir o resultado, vemos o erro provocado pela
+ponto flutuante, o seguinte programa adiciona `0.1` 10 vezes e subtrai 1.0,
+com as duas representações, a matemática nos diz que o resultado deve ser 0.
+Ao analisar o resultado, vemos o erro provocado pela
 aproximação. O erro se deve ao `0.1` ser um dízima periódica ao ser convertido
-em binário.
+em binário, esta dízima deve ser truncada ou arredondada em algum ponto.
+Este tipo de erro é acumulativo, isto é, cada vez que um resultado errado é
+usado numa nova operação, um novo erro se acumular com o anterior. O acumulo
+pode ser aditivo, como no exemplo, ou pode ser multiplicativo, o que resulta em
+um erro acumulado exponencial.
 
 ```C
 #include <stdio.h>
@@ -672,7 +677,7 @@ para a área de memória onde o vetor \(ou a matriz\), foi alocada, conforme
 veremos a seguir. Por causa disto, o seguinte código:
 
 ```C
-  char nome[8] = {'t','o','t','o','\0'};
+  char nome[8] = {'t','o','t','o','\0'};  // inicialização do vetor com "toto"
   char outro[8];
   outro = nome;
 ```
@@ -689,8 +694,20 @@ atribuições devem ser feitas com cada elemento individualmente, para cada
     outro[i] = nome[i];
 ```
 
-Declarações, como as feitas anteriormente, provocam a alocação dos vetores pelo
-compilador. Observe que isto difere do Java cujos vetores são
+Observe que `nome_do_vetor[indice]` é um elemento do vetor e ele se comporta
+como uma variável simples \(não vetor\). No lugar de fazer a cópia com o `for`
+pode-se usar a função `strcpy()`, ou a `strncpy()` para copiar a string.
+
+```C
+#include <string.h>
+// ...
+  char nome[8] = {'t','o','t','o','\0'};
+  char outro[8];
+  strncpy(outro, nome, 8);
+```
+
+Declarações, como as feitas com `nome` e `outro`, provocam a alocação dos
+vetores pelo compilador. Observe que isto difere do Java cujos vetores são
 objetos e devem ser dinamicamente alocados com um `new` explicito após a
 declaração. No Java, a declaração só faz o compilador criar uma referência
 para o objeto vetor, no C e no C++, esta declaração faz o compilador alocar
@@ -783,7 +800,7 @@ union misto {
 
 #### Enums
 
-Enums em C têm 2 usos: definir constantes inteiras, reduzindo a dependência
+Enums em C têm 2 usos: definir constantes inteiras, reduzindo a necessidade
 do uso de macros para este fim e para definir campos de bits. Neste resumo não
 veremos esta segunda aplicação do `enum`.
 
@@ -840,8 +857,8 @@ módulo, pois esta operação na matemática de números inteiros é chamada de 
 número é divisível por outro é calcular o resto
 da divisão, se for `0`, o primeiro número é divisível pelo segundo.
 
-Não confunda a operação módulo com
-o cálculo do valor absoluto. Para calcular o valor absoluto de um número pode-se
+Não confunda a operação módulo com o cálculo do valor absoluto.
+Para calcular o valor absoluto de um número pode-se
 usar a biblioteca matemática (`#include <math.h>`) com a função `fabs()` que
 calcula o valor absoluto de um `double` e retorna um `double`. Se precisar
 calcular o valor absoluto de um inteiro e não quiser usar o operador ternário,
