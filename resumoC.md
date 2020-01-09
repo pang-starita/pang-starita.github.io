@@ -1121,8 +1121,9 @@ char copia[16];    // buffer de 16 caracteres
 char *pCh = texto; // ponteiro de caracter aponta para o 'E' de texto
 int indice = 0;
 do {       // estas chaves não eram necessárias, mas é uma questão estilística
-  copia[indice++] = *pCh++;    // após a cópia do carácter, o indice e o ponteiro avançam
-} while (*pCh);    // testa o fim da string - STRINGs em C terminam com '\0' == false
+      // após a cópia do carácter, o indice e o ponteiro avançam
+  copia[indice++] = *pCh++;
+} while (*pCh);    // testa o fim da string - STRINGs em C terminam com '\0'
 copia[indice]='\0';    // para manter a convenção de terminar a string com 0
 printf("Texto copiado: %s\n", copia);
 ```
@@ -1302,7 +1303,34 @@ switch (dia) {
 
 ## Funções em C
 
+A principal maneira de dividir programas em C para reuso é a utilização de
+funções. Uma função em C é um bloco de instruções identificada por um nome
+\(nome da função\), uma lista de parâmetros entre parênteses e um tipo de
+retorno.
+
+Já usamos diversas funções de diferentes bibliotecas nos exemplos vistos até
+agora. Vejamos como criamos nossas próprias funções. A maneira mais clara de
+determinar se devemos escrever uma função é quando identificamos a necessidade
+de uma função que a partir de um conjunto de dados de entrada \(parâmetros\)
+deve calcular um valor que será usado em diversos pontos do programa \(ou por
+  outros programas\).
+Uma heurística para determinar se temos um bloco de código reusável é
+identificar um bloco de código que se repete frequentemente num programa,
+verifique se este código tem uma funcionalidade bastante clara, este código
+é forte candidato para ser uma função.
+
 ### Chamada de funções
+
+Quando uma função é chamada, o fluxo de instruções é desviado para as
+instruções da função com as atribuições dos valores dos argumentos para os
+parâmetros da função. Os parâmetros funcionam como variáveis locais da função,
+eles são inicializados a cada chamada pelos valores dos argumentos no momento da
+chamada. Esta situação é chamada de passagem por de parâmetros por valor,
+o C não possui passagem de parâmetros por referência.
+As instruções da função são executadas até que o bloco de instruções
+termine ou uma instrução `return` seja executada. Se o tipo de valor retornado
+é `void`, o `return` não é obrigatório, e quando utilizado, nenhum valor precisa
+ser fornecido. Se o tipo de retorno não é `void`, então um v
 
 ### Protótipos de funções
 
