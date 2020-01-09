@@ -1325,12 +1325,16 @@ Quando uma função é chamada, o fluxo de instruções é desviado para as
 instruções da função com as atribuições dos valores dos argumentos para os
 parâmetros da função. Os parâmetros funcionam como variáveis locais da função,
 eles são inicializados a cada chamada pelos valores dos argumentos no momento da
-chamada. Esta situação é chamada de passagem por de parâmetros por valor,
-o C não possui passagem de parâmetros por referência.
+chamada. Esta situação é chamada de *passagem* de argumentos *por valor*,
+o C não possui passagem de argumentos por referência. Mas tem-se o mesmo
+efeito com a passagem de ponteiros e endereços de variáveis como já fizermos
+`scanf()`.
 As instruções da função são executadas até que o bloco de instruções
 termine ou uma instrução `return` seja executada. Se o tipo de valor retornado
 é `void`, o `return` não é obrigatório, e quando utilizado, nenhum valor precisa
-ser fornecido. Se o tipo de retorno não é `void`, então um v
+ser fornecido. Se o tipo de retorno não é `void`, então um valor deve ser
+retornado, este valor deve ser do tipo especificado, ou um tipo que pode ser
+promovido para o tipo de retorno.
 
 ### Protótipos de funções
 
@@ -1344,7 +1348,22 @@ protótipo dela antes. O protótipo de uma função tem a forma geral:
 O `<tipo de retorno>` é qualquer tipo básico do C ou tipo definido pelo
 programador. A `<lista de parâmetros>` é uma lista com 0 (zero) ou mais
 parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um
-nome. Os parâmetros são separados por vírgulas.
+nome. Os parâmetros são separados por vírgulas. O nome do parâmetro não é
+necessário, mas, geralmente deve ser dado para fins de documentação. É útil
+*explicar* uma função nos arquivos cabeçalhos. A explicação deve dizer o que
+faz a função, o que é esperado de cada um dos parâmetros, o que é retornado
+pela função e qualquer efeito colateral resultante da execução da função.
+
+Exemplo
+
+```C
+/*
+ * toto() - função que late para o usuário, imprime au-au na tela
+ * int n - parâmetro que diz quantas vezes au-au é impresso
+ * retorna  1 para indicar que deu tudo certo
+ */
+int toto(int n);
+```
 
 A seguir temos alguns protótipos válidos para a função `main()`:
 
@@ -1372,14 +1391,73 @@ protótipo, quem precisa da implementação da função é o editor de ligaçõe
 
 #### Escopo de variáveis: Variáveis locais x variáveis globais
 
+Variáveis declaradas fora de qualquer função são *variáveis globais*. Variáveis
+declaradas dentro de uma função são *variáveis locais*. *Escopo* das variáveis
+diz onde uma variável é visível \(acessível\). As variáveis em C só são visíveis
+após a declaração delas. As variáveis locais são visíveis
+apenas dentro das funções em que elas foram declaradas. Elas não são visíveis
+dentro de outras funções. As variáveis globais são visíveis em todo código que
+vem depois da declaração delas.
+
+##### Ocultação de Variáveis
+
+O C não permite redeclarações. Se uma variável já foi declarada dentro de um
+contexto, não se pode redeclarar esta variável. A única exceção é quando
+uma variável global é declarada, é possível declarar uma outra variável local
+com o *mesmo nome*, com o mesmo tipo ou não. Neste caso, a variável global passa
+a ser ocultada pela nova variável. O C++ tem um operador de escopo que
+permite acessar variáveis ocultas dessa maneira, mas o C não possui este
+operador.
+
 #### Ciclo de vida das variáveis
 
-#### Variáveis estáticas - escopo e ciclo de vida
+Variáveis locais, em geral, são variáveis que são usadas apenas durante a
+execução da função. Elas não existem antes da chamada da função e não existem
+depois da execução. Este tipo de variável é chamada de *variável automática*.
+Quando uma função é chamada, uma pilha de cálculo para a função é criada
+\(o compilador cuida de colocar o código que faz isto\), as variáveis
+automáticas são alocadas nesta pilha. Quando a execução da função termina, esta
+pilha é recolhida. Logo, o espaço de memória onde estavam as variáveis
+automáticas é recuperado pelo sistema e usado para outras finalidades. Portanto,
+o ciclo de vida das variáveis automáticas é a duração da execução da função.
+
+O C permite declarar variáveis locais com ciclo de vida entre chamadas, estas
+variáveis são chamadas de *variáveis estáticas* e a declaração delas é dada por:
+
+```C
+// dentro de uma função
+    static int contador = 0;
+```
+
+Na primeira chamada da função a variável contador é inicializada, nas próximas
+chamadas, a variável não será mais inicializada e terá o valor que ela tinha
+quando terminou a execução da função pela última vez.
+
+O exemplo a seguir mostra uma função que retorna quantas vezes ela foi chamada.
+
+```C
+int toto() {
+  static int contador = 0;
+  return ++contador;
+}
+```
+
+As variáveis estáticas são alocadas do *heap*, como as globais. Elas vivem
+até o final da execução do programa.
 
 ### Unidade de compilação
 
+#### Declaração de Variável `extern`
+
 ### Bibliotecas em C
 
+*stdio.h*
+
+*stdlib.h*
+
+*math.h*
+
+*string.h*
 
 [1]. Kernighan, B.W. & Ritche, D.M., The C Programming Language, Prentice-Hall.
 
