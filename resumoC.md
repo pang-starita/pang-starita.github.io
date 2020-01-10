@@ -6,8 +6,9 @@
 
 ## Programa Alo
 
-Seguindo os passos de [1], este resumo começa com o programa alo.c, cujo código
-é:
+Seguindo os passos de [1], este resumo começa com o programa alo.c, um
+programa que imprime na tela do usuário a calorosa mensagem *Alo*. O código
+deste programa em C é dado por:
 
 ```C
 #include <stdio.h>
@@ -651,9 +652,10 @@ int main() {
 
 #### Valores Lógicos
 
-O C não possui um tipo lógico, existe uma biblioteca, pouco usada, `stdbool.h`
-que define as *macros* `true` e `false`. Em C, qualquer valor nulo é falso e
-um valor não nulo é verdadeiro. Veja as operações lógicas mais adiante.
+O C não possui um tipo lógico, porém, existe uma biblioteca, pouco usada,
+`stdbool.h` que define as *macros* `true` e `false`.
+Em C, qualquer valor nulo é falso e um valor não nulo é verdadeiro.
+Veja as operações lógicas mais adiante.
 
 #### Vetores
 
@@ -1220,7 +1222,7 @@ for (i = 1; i <= 10; i++) {
 }
 ```
 
-### Exercício:
+#### Exercício:
 
 1. Escreva um programa que lê no máximo 10 números reais e calcula a média dos
    números lidos. Caso o usuário queira fornece menos de 10 números, ele
@@ -1321,20 +1323,27 @@ verifique se este código tem uma funcionalidade bastante clara, este código
 
 ### Chamada de funções
 
+Uma função em C é chamada pelo seu nome seguido de uma lista de valores para
+os parâmetros \(esta lista de valores são os argumentos da chamada da função\).
+Por exemplo, `toto(5)`, chama a função `toto()` com o argumento `5`.
 Quando uma função é chamada, o fluxo de instruções é desviado para as
 instruções da função com as atribuições dos valores dos argumentos para os
 parâmetros da função. Os parâmetros funcionam como variáveis locais da função,
 eles são inicializados a cada chamada pelos valores dos argumentos no momento da
 chamada. Esta situação é chamada de *passagem* de argumentos *por valor*,
-o C não possui passagem de argumentos por referência. Mas tem-se o mesmo
-efeito com a passagem de ponteiros e endereços de variáveis como já fizermos
-`scanf()`.
+o C não possui passagem de argumentos *por referência*. Mas tem-se o mesmo
+efeito da passagem por referência com a passagem de ponteiros e endereços de
+variáveis como já fizermos com `scanf()`.
 As instruções da função são executadas até que o bloco de instruções
 termine ou uma instrução `return` seja executada. Se o tipo de valor retornado
 é `void`, o `return` não é obrigatório, e quando utilizado, nenhum valor precisa
 ser fornecido. Se o tipo de retorno não é `void`, então um valor deve ser
 retornado, este valor deve ser do tipo especificado, ou um tipo que pode ser
 promovido para o tipo de retorno.
+
+Quando uma função retorna um valor, a chamada dela pode ser usada como um valor
+numa expressão. É o caso de: `5 + sin(3.1415/4)`. A função `sin()` é chamada e
+o valor de retorno dela é usado para o cálculo da expressão.
 
 ### Protótipos de funções
 
@@ -1388,6 +1397,61 @@ int fatorial(int);
 O protótipo de uma função é uma declaração que permite ao compilador compilar
 um código que use a função. O compilador só precisa das informações do
 protótipo, quem precisa da implementação da função é o editor de ligações.
+
+### Implementação das Funções
+
+Para gerar um executável do programa, é necessário fornecer para o editor de
+ligações uma implementação das funções. No caso das bibliotecas, existem
+arquivos com as implementações das funções e o editor de ligações sabe como
+obter estas implementações. Mas para as novas funções, as que o programador
+está desenvolvendo, é necessário fornecer o código da implementação da função.
+
+As funções cujos protótipos foram fornecidas anteriormente podem ter a seguinte
+implementação:
+
+```C
+int toto(int n) {
+  int i;
+  for (i = 0; i < n; i++)
+    printf("au-au\n");
+    return 1;
+}
+
+int fatorial(int n) {
+  int acc = 1;
+  int i;
+  for (i = 2; i <= n; i++)
+    acc = acc * i;
+  return acc;
+}
+```
+
+O código usado para implementar uma função é chamado de corpo da função.
+Se o corpo da função é colocado antes do uso da função, não há a necessidade
+de pré-declarar o protótipo da função. A separação de protótipos em arquivos
+cabeçalho e corpo em arquivos de código fonte é útil para programas grandes.
+Programas pequenos, normalmente, podem ter o corpo de todas as funções
+declaradas antes de serem usadas e isto dispensa o uso de protótipos. Um caso
+em que o uso de protótipos é obrigatório é quando duas ou mais funções se
+chamam mutuamente. Isto é, temos:
+
+```C
+void toto() {
+  // ...
+  fifi();
+  // ...
+}
+
+void fifi() {
+  // ...
+  toto();
+  // ...
+}
+```
+
+Dizemos que elas são mutuamente recursivas, este tipo de situação é incomum e
+difícil de programar. Neste caso, o protótipo de `fifi()` precisa ser fornecido
+antes da função `toto()`.
 
 #### Escopo de variáveis: Variáveis locais x variáveis globais
 
@@ -1447,7 +1511,14 @@ até o final da execução do programa.
 
 ### Unidade de compilação
 
+Cada arquivo de código fonte é uma unidade de compilação.
+
 #### Declaração de Variável `extern`
+
+Variáveis globais dentro de unidades de compilação não são conhecidas por outras
+unidades de compilação, para que uma unidade de compilação use uma variável
+global declarada noutra unidade de compilação, é necessário que a variável
+seja declarada com o modificador `extern`.
 
 ### Bibliotecas em C
 

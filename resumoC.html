@@ -92,7 +92,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Advertência: Este é um trabalho em andamento (WIP - work-in-progress).</p>
 </blockquote>
 <h2 id="programa-alo">Programa Alo</h2>
-<p>Seguindo os passos de [1], este resumo começa com o programa alo.c, cujo código é:</p>
+<p>Seguindo os passos de [1], este resumo começa com o programa alo.c, um programa que imprime na tela do usuário a calorosa mensagem <em>Alo</em>. O código deste programa em C é dado por:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="dt">int</span> main() {</span>
@@ -463,7 +463,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb23-13"><a href="#cb23-13"></a>  <span class="cf">return</span> <span class="dv">0</span>;</span>
 <span id="cb23-14"><a href="#cb23-14"></a>}</span></code></pre></div>
 <h4 id="valores-lógicos">Valores Lógicos</h4>
-<p>O C não possui um tipo lógico, existe uma biblioteca, pouco usada, <code>stdbool.h</code> que define as <em>macros</em> <code>true</code> e <code>false</code>. Em C, qualquer valor nulo é falso e um valor não nulo é verdadeiro. Veja as operações lógicas mais adiante.</p>
+<p>O C não possui um tipo lógico, porém, existe uma biblioteca, pouco usada, <code>stdbool.h</code> que define as <em>macros</em> <code>true</code> e <code>false</code>. Em C, qualquer valor nulo é falso e um valor não nulo é verdadeiro. Veja as operações lógicas mais adiante.</p>
 <h4 id="vetores">Vetores</h4>
 <p>Vetores são agregados de dados do mesmo tipo. Em vez de usar uma variável para cada dado, uma única variável permite acessar todo um grupo de dados do mesmo tipo, diferenciando os dados individuais por índices. Semelhante ao que se faz na notação matemática de vetores e matrizes. Com a diferença de que editores de texto não produzem texto com subscrita, como <span class="math inline"><em>a</em><sub>11</sub></span>, em programação contorna-se o uso de subscrita com o uso de colchetes. Assim, o <span class="math inline"><em>a</em><sub>11</sub></span> torna-se: <code>a[1,1]</code> em linguagens como Pascal, Ada, …, ou, mais comumente, <code>a[1][1]</code>, como no C/C++. Abaixo temos como exemplo as variáveis <code>nome</code>, <code>vi</code> e <code>matriz</code> que são vetores de 80 caracteres, 32 inteiros e 3 vetores de 3 doubles.</p>
 <ul>
@@ -805,8 +805,9 @@ char copia[16];    // buffer de 16 caracteres
 char *pCh = texto; // ponteiro de caracter aponta para o &#39;E&#39; de texto
 int indice = 0;
 do {       // estas chaves não eram necessárias, mas é uma questão estilística
-  copia[indice++] = *pCh++;    // após a cópia do carácter, o indice e o ponteiro avançam
-} while (*pCh);    // testa o fim da string - STRINGs em C terminam com &#39;\0&#39; == false
+      // após a cópia do carácter, o indice e o ponteiro avançam
+  copia[indice++] = *pCh++;
+} while (*pCh);    // testa o fim da string - STRINGs em C terminam com &#39;\0&#39;
 copia[indice]=&#39;\0&#39;;    // para manter a convenção de terminar a string com 0
 printf(&quot;Texto copiado: %s\n&quot;, copia);</code></pre>
 <h4 id="para-inicialização-de-contador-fim-do-contador-passo">Para inicialização de contador, fim do contador, passo</h4>
@@ -855,7 +856,7 @@ printf(&quot;Texto copiado: %s\n&quot;, copia);</code></pre>
 <span id="cb50-3"><a href="#cb50-3"></a>  <span class="cf">if</span> ((i % <span class="dv">2</span> == <span class="dv">0</span>) || (i % <span class="dv">3</span>)) <span class="cf">continue</span>;</span>
 <span id="cb50-4"><a href="#cb50-4"></a>  printf(<span class="st">&quot;%d nao eh multiplo de 2 ou 3</span><span class="sc">\n</span><span class="st">&quot;</span>, i);</span>
 <span id="cb50-5"><a href="#cb50-5"></a>}</span></code></pre></div>
-<h3 id="exercício-1">Exercício:</h3>
+<h4 id="exercício-1">Exercício:</h4>
 <ol type="1">
 <li><p>Escreva um programa que lê no máximo 10 números reais e calcula a média dos números lidos. Caso o usuário queira fornece menos de 10 números, ele termina a digitação dos números fornecendo um 0. Cuidado com a divisão por 0. Exemplo de execução:</p>
 <pre><code>Digite numero = 4
@@ -905,24 +906,85 @@ A media foi: 6.0</code></pre></li>
 <span id="cb54-13"><a href="#cb54-13"></a>    nomeDia = <span class="st">&quot;Erro: dia inexistente&quot;</span>;</span>
 <span id="cb54-14"><a href="#cb54-14"></a>}</span></code></pre></div>
 <h2 id="funções-em-c">Funções em C</h2>
+<p>A principal maneira de dividir programas em C para reuso é a utilização de funções. Uma função em C é um bloco de instruções identificada por um nome (nome da função), uma lista de parâmetros entre parênteses e um tipo de retorno.</p>
+<p>Já usamos diversas funções de diferentes bibliotecas nos exemplos vistos até agora. Vejamos como criamos nossas próprias funções. A maneira mais clara de determinar se devemos escrever uma função é quando identificamos a necessidade de uma função que a partir de um conjunto de dados de entrada (parâmetros) deve calcular um valor que será usado em diversos pontos do programa (ou por outros programas). Uma heurística para determinar se temos um bloco de código reusável é identificar um bloco de código que se repete frequentemente num programa, verifique se este código tem uma funcionalidade bastante clara, este código é forte candidato para ser uma função.</p>
 <h3 id="chamada-de-funções">Chamada de funções</h3>
+<p>Uma função em C é chamada pelo seu nome seguido de uma lista de valores para os parâmetros (esta lista de valores são os argumentos da chamada da função). Por exemplo, <code>toto(5)</code>, chama a função <code>toto()</code> com o argumento <code>5</code>. Quando uma função é chamada, o fluxo de instruções é desviado para as instruções da função com as atribuições dos valores dos argumentos para os parâmetros da função. Os parâmetros funcionam como variáveis locais da função, eles são inicializados a cada chamada pelos valores dos argumentos no momento da chamada. Esta situação é chamada de <em>passagem</em> de argumentos <em>por valor</em>, o C não possui passagem de argumentos <em>por referência</em>. Mas tem-se o mesmo efeito da passagem por referência com a passagem de ponteiros e endereços de variáveis como já fizermos com <code>scanf()</code>. As instruções da função são executadas até que o bloco de instruções termine ou uma instrução <code>return</code> seja executada. Se o tipo de valor retornado é <code>void</code>, o <code>return</code> não é obrigatório, e quando utilizado, nenhum valor precisa ser fornecido. Se o tipo de retorno não é <code>void</code>, então um valor deve ser retornado, este valor deve ser do tipo especificado, ou um tipo que pode ser promovido para o tipo de retorno.</p>
+<p>Quando uma função retorna um valor, a chamada dela pode ser usada como um valor numa expressão. É o caso de: <code>5 + sin(3.1415/4)</code>. A função <code>sin()</code> é chamada e o valor de retorno dela é usado para o cálculo da expressão.</p>
 <h3 id="protótipos-de-funções">Protótipos de funções</h3>
 <p>Em C, para poder usar uma função de uma biblioteca é necessário fornecer o protótipo dela antes. O protótipo de uma função tem a forma geral:</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb55-1"><a href="#cb55-1"></a>&lt;tipo de retorno&gt; nome_da_função(&lt;lista de parâmetros&gt;);</span></code></pre></div>
-<p>O <code>&lt;tipo de retorno&gt;</code> é qualquer tipo básico do C ou tipo definido pelo programador. A <code>&lt;lista de parâmetros&gt;</code> é uma lista com 0 (zero) ou mais parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um nome. Os parâmetros são separados por vírgulas.</p>
+<p>O <code>&lt;tipo de retorno&gt;</code> é qualquer tipo básico do C ou tipo definido pelo programador. A <code>&lt;lista de parâmetros&gt;</code> é uma lista com 0 (zero) ou mais parâmetros formais. Cada parâmetro é definido com um tipo e opcionalmente um nome. Os parâmetros são separados por vírgulas. O nome do parâmetro não é necessário, mas, geralmente deve ser dado para fins de documentação. É útil <em>explicar</em> uma função nos arquivos cabeçalhos. A explicação deve dizer o que faz a função, o que é esperado de cada um dos parâmetros, o que é retornado pela função e qualquer efeito colateral resultante da execução da função.</p>
+<p>Exemplo</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb56-1"><a href="#cb56-1"></a><span class="co">/*</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="co"> * toto() - função que late para o usuário, imprime au-au na tela</span></span>
+<span id="cb56-3"><a href="#cb56-3"></a><span class="co"> * int n - parâmetro que diz quantas vezes au-au é impresso</span></span>
+<span id="cb56-4"><a href="#cb56-4"></a><span class="co"> * retorna  1 para indicar que deu tudo certo</span></span>
+<span id="cb56-5"><a href="#cb56-5"></a><span class="co"> */</span></span>
+<span id="cb56-6"><a href="#cb56-6"></a><span class="dt">int</span> toto(<span class="dt">int</span> n);</span></code></pre></div>
 <p>A seguir temos alguns protótipos válidos para a função <code>main()</code>:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb56-1"><a href="#cb56-1"></a><span class="dt">int</span> main();</span>
-<span id="cb56-2"><a href="#cb56-2"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv);</span>
-<span id="cb56-3"><a href="#cb56-3"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv, <span class="dt">char</span> **environ);</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb57-1"><a href="#cb57-1"></a><span class="dt">int</span> main();</span>
+<span id="cb57-2"><a href="#cb57-2"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv);</span>
+<span id="cb57-3"><a href="#cb57-3"></a><span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span> **argv, <span class="dt">char</span> **environ);</span></code></pre></div>
 <p>A função <code>main()</code> é a única em C que tem mais de um protótipo. Os parâmetros dela permitem um programa interagir com os argumentos fornecidos pelo usuário ao executar o programa. Tanto através da linha de comando (argumentos <code>argc</code> e <code>argv</code>), como através das variáveis de ambiente (<code>environ</code>).</p>
 <p>Uma função que calcula o fatorial de um número inteiro e retorna um int tem o protótipo dado por:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb57-1"><a href="#cb57-1"></a><span class="dt">int</span> fatorial(<span class="dt">int</span>);</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb58-1"><a href="#cb58-1"></a><span class="dt">int</span> fatorial(<span class="dt">int</span>);</span></code></pre></div>
 <p>O protótipo de uma função é uma declaração que permite ao compilador compilar um código que use a função. O compilador só precisa das informações do protótipo, quem precisa da implementação da função é o editor de ligações.</p>
+<h3 id="implementação-das-funções">Implementação das Funções</h3>
+<p>Para gerar um executável do programa, é necessário fornecer para o editor de ligações uma implementação das funções. No caso das bibliotecas, existem arquivos com as implementações das funções e o editor de ligações sabe como obter estas implementações. Mas para as novas funções, as que o programador está desenvolvendo, é necessário fornecer o código da implementação da função.</p>
+<p>As funções cujos protótipos foram fornecidas anteriormente podem ter a seguinte implementação:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb59-1"><a href="#cb59-1"></a><span class="dt">int</span> toto(<span class="dt">int</span> n) {</span>
+<span id="cb59-2"><a href="#cb59-2"></a>  <span class="dt">int</span> i;</span>
+<span id="cb59-3"><a href="#cb59-3"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; n; i++)</span>
+<span id="cb59-4"><a href="#cb59-4"></a>    printf(<span class="st">&quot;au-au</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb59-5"><a href="#cb59-5"></a>    <span class="cf">return</span> <span class="dv">1</span>;</span>
+<span id="cb59-6"><a href="#cb59-6"></a>}</span>
+<span id="cb59-7"><a href="#cb59-7"></a></span>
+<span id="cb59-8"><a href="#cb59-8"></a><span class="dt">int</span> fatorial(<span class="dt">int</span> n) {</span>
+<span id="cb59-9"><a href="#cb59-9"></a>  <span class="dt">int</span> acc = <span class="dv">1</span>;</span>
+<span id="cb59-10"><a href="#cb59-10"></a>  <span class="dt">int</span> i;</span>
+<span id="cb59-11"><a href="#cb59-11"></a>  <span class="cf">for</span> (i = <span class="dv">2</span>; i &lt;= n; i++)</span>
+<span id="cb59-12"><a href="#cb59-12"></a>    acc = acc * i;</span>
+<span id="cb59-13"><a href="#cb59-13"></a>  <span class="cf">return</span> acc;</span>
+<span id="cb59-14"><a href="#cb59-14"></a>}</span></code></pre></div>
+<p>O código usado para implementar uma função é chamado de corpo da função. Se o corpo da função é colocado antes do uso da função, não há a necessidade de pré-declarar o protótipo da função. A separação de protótipos em arquivos cabeçalho e corpo em arquivos de código fonte é útil para programas grandes. Programas pequenos, normalmente, podem ter o corpo de todas as funções declaradas antes de serem usadas e isto dispensa o uso de protótipos. Um caso em que o uso de protótipos é obrigatório é quando duas ou mais funções se chamam mutuamente. Isto é, temos:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb60-1"><a href="#cb60-1"></a><span class="dt">void</span> toto() {</span>
+<span id="cb60-2"><a href="#cb60-2"></a>  <span class="co">// ...</span></span>
+<span id="cb60-3"><a href="#cb60-3"></a>  fifi();</span>
+<span id="cb60-4"><a href="#cb60-4"></a>  <span class="co">// ...</span></span>
+<span id="cb60-5"><a href="#cb60-5"></a>}</span>
+<span id="cb60-6"><a href="#cb60-6"></a></span>
+<span id="cb60-7"><a href="#cb60-7"></a><span class="dt">void</span> fifi() {</span>
+<span id="cb60-8"><a href="#cb60-8"></a>  <span class="co">// ...</span></span>
+<span id="cb60-9"><a href="#cb60-9"></a>  toto();</span>
+<span id="cb60-10"><a href="#cb60-10"></a>  <span class="co">// ...</span></span>
+<span id="cb60-11"><a href="#cb60-11"></a>}</span></code></pre></div>
+<p>Dizemos que elas são mutuamente recursivas, este tipo de situação é incomum e difícil de programar. Neste caso, o protótipo de <code>fifi()</code> precisa ser fornecido antes da função <code>toto()</code>.</p>
 <h4 id="escopo-de-variáveis-variáveis-locais-x-variáveis-globais">Escopo de variáveis: Variáveis locais x variáveis globais</h4>
+<p>Variáveis declaradas fora de qualquer função são <em>variáveis globais</em>. Variáveis declaradas dentro de uma função são <em>variáveis locais</em>. <em>Escopo</em> das variáveis diz onde uma variável é visível (acessível). As variáveis em C só são visíveis após a declaração delas. As variáveis locais são visíveis apenas dentro das funções em que elas foram declaradas. Elas não são visíveis dentro de outras funções. As variáveis globais são visíveis em todo código que vem depois da declaração delas.</p>
+<h5 id="ocultação-de-variáveis">Ocultação de Variáveis</h5>
+<p>O C não permite redeclarações. Se uma variável já foi declarada dentro de um contexto, não se pode redeclarar esta variável. A única exceção é quando uma variável global é declarada, é possível declarar uma outra variável local com o <em>mesmo nome</em>, com o mesmo tipo ou não. Neste caso, a variável global passa a ser ocultada pela nova variável. O C++ tem um operador de escopo que permite acessar variáveis ocultas dessa maneira, mas o C não possui este operador.</p>
 <h4 id="ciclo-de-vida-das-variáveis">Ciclo de vida das variáveis</h4>
-<h4 id="variáveis-estáticas---escopo-e-ciclo-de-vida">Variáveis estáticas - escopo e ciclo de vida</h4>
+<p>Variáveis locais, em geral, são variáveis que são usadas apenas durante a execução da função. Elas não existem antes da chamada da função e não existem depois da execução. Este tipo de variável é chamada de <em>variável automática</em>. Quando uma função é chamada, uma pilha de cálculo para a função é criada (o compilador cuida de colocar o código que faz isto), as variáveis automáticas são alocadas nesta pilha. Quando a execução da função termina, esta pilha é recolhida. Logo, o espaço de memória onde estavam as variáveis automáticas é recuperado pelo sistema e usado para outras finalidades. Portanto, o ciclo de vida das variáveis automáticas é a duração da execução da função.</p>
+<p>O C permite declarar variáveis locais com ciclo de vida entre chamadas, estas variáveis são chamadas de <em>variáveis estáticas</em> e a declaração delas é dada por:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb61-1"><a href="#cb61-1"></a><span class="co">// dentro de uma função</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>    <span class="dt">static</span> <span class="dt">int</span> contador = <span class="dv">0</span>;</span></code></pre></div>
+<p>Na primeira chamada da função a variável contador é inicializada, nas próximas chamadas, a variável não será mais inicializada e terá o valor que ela tinha quando terminou a execução da função pela última vez.</p>
+<p>O exemplo a seguir mostra uma função que retorna quantas vezes ela foi chamada.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb62-1"><a href="#cb62-1"></a><span class="dt">int</span> toto() {</span>
+<span id="cb62-2"><a href="#cb62-2"></a>  <span class="dt">static</span> <span class="dt">int</span> contador = <span class="dv">0</span>;</span>
+<span id="cb62-3"><a href="#cb62-3"></a>  <span class="cf">return</span> ++contador;</span>
+<span id="cb62-4"><a href="#cb62-4"></a>}</span></code></pre></div>
+<p>As variáveis estáticas são alocadas do <em>heap</em>, como as globais. Elas vivem até o final da execução do programa.</p>
 <h3 id="unidade-de-compilação">Unidade de compilação</h3>
+<p>Cada arquivo de código fonte é uma unidade de compilação.</p>
+<h4 id="declaração-de-variável-extern">Declaração de Variável <code>extern</code></h4>
+<p>Variáveis globais dentro de unidades de compilação não são conhecidas por outras unidades de compilação, para que uma unidade de compilação use uma variável global declarada noutra unidade de compilação, é necessário que a variável seja declarada com o modificador <code>extern</code>.</p>
 <h3 id="bibliotecas-em-c">Bibliotecas em C</h3>
+<p><em>stdio.h</em></p>
+<p><em>stdlib.h</em></p>
+<p><em>math.h</em></p>
+<p><em>string.h</em></p>
 <p>[1]. Kernighan, B.W. &amp; Ritche, D.M., The C Programming Language, Prentice-Hall.</p>
 <p>[2]. Deitel, P. &amp; Deitel, H., C: Como Programar, São Paulo: Pearson, 2011.</p>
 </body>
