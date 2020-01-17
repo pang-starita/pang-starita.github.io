@@ -27,7 +27,7 @@ Fonte: [IMC](https://pt.wikipedia.org/wiki/%C3%8Dndice_de_massa_corporal)
 A **obesidade II** é considerada severa e a **obesidade III** é considerada
 mórbida. Ambos indicam a necessidade de acompanhamento médico.
 
-## Programa que imprime seu status quanto ao IMC
+## Programas que imprimem seu status quanto ao IMC
 
 ### Em Python
 
@@ -89,3 +89,15 @@ int main() {
   return 0;
 }
 ```
+
+Ambos programas ilustram o uso de funções para modularizar o código.
+A função `imc()` calcula o valor do IMC a partir dos argumentos de chamada:
+
+- o parâmetro `a`: passa para a função a altura do usuário
+- o parâmetro `m`: passa para a função a massa do usuário
+
+A partir do valor do IMC, a função `diagnósticoIMC()` retorna uma *string*
+que dá o diagnóstico de acordo com a tabela acima.
+
+O programa principal se encarrega de lê os dados do usuário, chamar as funções
+e imprimir o resultado.
