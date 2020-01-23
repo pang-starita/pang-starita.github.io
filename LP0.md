@@ -50,8 +50,8 @@
 
 ## Compilação
 
-Um programa é um texto com um conjunto de instruções em alguma linguagem de
-programação. Ele normalmente é armazenado num arquivo numa memória
+Um programa de computador é um texto com um conjunto de instruções em alguma
+linguagem de programação. Ele normalmente é armazenado num arquivo numa memória
 permanente de um computador. Este programa não é diretamente executável.
 O computador executa programas em linguagem de máquina - código binário.
 Para executar o programa escrito em linguagem de programação, este programa
@@ -62,7 +62,7 @@ A figura abaixo ilustra a compilação do programa `alo.c`.
 
 ![Figura 1 - Etapas da conversão de um programa em código fonte até ser executado.](compilacao.png)
 
-O programa `alo.c` tem o seguinte texto:
+Exemplo: O programa `alo.c` tem o seguinte texto:
 
 ```C
 #include <stdio.h>
@@ -74,7 +74,8 @@ int main() {
 ```
 
 O código em linguagem C é um texto que o computador não entende. O compilador
-o converte para um *código objeto*. O arquivo `alo.o` é em código objeto.
+converte o texto do programa para um *código objeto*.
+O arquivo `alo.o` é chamado de código objeto do programa.
 Este já é um código binário com as instruções em código de máquina, mas este
 código é relocável, isto é, ainda não tem sua posição na memória definida. O
 código faz referência à posição de suas instruções e dados e estas posições
@@ -88,22 +89,25 @@ endereços que devem ser usados. O *editor de ligações* gera o arquivo
 executável, `alo.exe`.
 
 O processador não acessa as instruções no disco, ele precisa que as instruções
-estejam na memória principal, o *Sistema Operacional*, *SO*, "carrega" o arquivo
-executável numa área pré-definida da memória principal e passa o fluxo de
+estejam na memória principal. Quando o usuário solicita ao
+*Sistema Operacional*, *SO*, a execução do programa, o *SO* "carrega" o arquivo
+executável numa área da memória principal e passa o fluxo de
 instruções para o programa carregado. Quando o programa termina, o *SO*
 volta a executar.
 
 ## Linguagem de Máquina x *Assembly*
 
-Seres humanos não programam em código binário, com exceções excêntricas, o
-mais próximo da linguagem de máuina que seres humanos programam é em linguagem
-*Assembly*. *Assembly* usa mnemônicos \(palavras que imitam algo\) para as
+Seres humanos não programam em código binário, com algumas poucas exceções
+excêntricas, o mais próximo da linguagem de máuina que seres humanos programam
+é em linguagem *Assembly*.
+*Assembly* usa mnemônicos \(palavras que imitam algo\) para as
 instruções de máquina em vez de usar códigos binários. Além disso, na
 programação em *Assembly* são usados *rótulos* \(*labels*\) no lugar de
 endereços. Os *rótulos* são identificadores que facilitam entender que trecho
-de código corresponde a uma função ou um bloco de dados. Uma tabela liga os
-nomes com os endereços. Esta tabela é chamada de tabela de símbolos. Os
-compiladores trabalham com tabelas de símbolos mais complexas, mas uma das
+de código corresponde a uma função ou um bloco de dados.
+Uma tabela liga os nomes com os endereços.
+Esta tabela é chamada de *tabela de símbolos*.
+Os compiladores trabalham com tabelas de símbolos mais complexas, mas uma das
 funções da tabela de símbolos é estabelecer este tipo de relacionamento entre
 identificadores e endereços. Programas em Assembly são convertidos para
 linguagens de máquina por um *assembler*, chamado em português de *montador*.
@@ -133,3 +137,6 @@ código intermediário dinamicamente. Entretanto, não existe a geração de arq
 compilado em algum tipo de código intermediário, o código compilado fica na
 memória principal e é interpretado a partir de lá. Isto ocorre, por
 exemplo com o Lisp e o Perl.
+
+Outras linguagens, se aproveitam da popularidade da *JVM* e são compiladas em
+*Java Byte Code*, é o caso de Scala.

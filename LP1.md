@@ -2,22 +2,23 @@
 % Paulino Ng
 % 2019-08-20
 
-Nesta aula veremos alguns conceitos básicos de computação para podermos
-entender melhor os conceitos de programação que serão vistos posteriormente.
-Vamos começar pela arquitetura de *von Neumann* que descreve conceitualmente
-a estrutura física dos computadores modernos. Veremos como isto afeta a
+Nesta aula são vistos alguns conceitos básicos de computação para podermos
+entender melhor alguns conceitos de programação que serão vistos posteriormente.
+Começamos pela arquitetura de *von Neumann* que descreve conceitualmente
+a estrutura dos computadores modernos. Veremos como isto afeta a
 programação dos computadores e como as linguagens de programação procuram
 fornecer uma abstração de alto nível para que não tenhamos de programar
 num nível conceitual próximo ao da máquina computacional.
 
-Lembro que nesta disciplina só nos interessa o computador digital. No computador
-digital a unidade de informação é um *bit*. Um *bit* é algo que pode ter
-apenas 2 valores \(estados\), **0** ou **1**. Fisicamente o bit pode ser um
-sinal elétrico do tipo tensão \(tensão baixa, quase zero, é **0**, alta, 2 a 5V,
+Lembre-se de que nesta disciplina só nos interessa o computador digital.
+No computador digital, a unidade de informação é um *bit*.
+Um *bit* é algo que pode ter apenas 2 valores \(estados\), **0** ou **1**.
+Fisicamente o bit pode ser um sinal elétrico do tipo tensão
+\(tensão baixa, quase zero, é **0**, alta, 2 a 5V,
   ou mais, é **1**, presença de corrente é **1**, corrente nula é **0**,
   frequência baixa é **1**, alta é **0**, enfim, escolha-se uma convenção para
   um tipo de implementação e defina-se  o significado do bit e seus valores\),
-pode ser diversas outras *convenções*.
+pode-se ter diversas outras *convenções*.
 
 ## Arquitetura de *von Neumann*
 
@@ -30,14 +31,17 @@ do artigo, mas resumir de maneira mais moderna o que foi proposto.
 Antes, vamos entender o conceito de arquitetura de computador. É bem similar
 ao conceito de arquitetura de edificações. É óbvio que a arquitetura tem
 a ver com a estrutura física, mas não necessariamente com a realização
-material. Como na construção civil, o engenheiro civil está preocupado com
+material dela.
+Como na construção civil, o engenheiro civil está preocupado com
 a realização física do prédio, o arquiteto está preocupado com aspectos
-funcionais, estéticos, ambientais, ... Na computação, o arquiteto de um
+funcionais, estéticos, ambientais, visuais, ...
+Na computação, o arquiteto de um
 computador se preocupa com funcionalidades dos componentes do computador,
 conjunto de instruções do processador, protocolos de comunicação entre os
-componentes do computador, ... Os engenheiros de computação, projetistas de
-hardware, HW, são as pessoas preocupadas em realizar fisicamente, dizemos
-implementar o computador. Veremos a arquitetura, não a implementação.
+componentes do computador, ...
+Os engenheiros de computação, projetistas de hardware, HW, são as pessoas
+preocupadas em realizar fisicamente, dizemos implementar o computador.
+Veremos a arquitetura, não a implementação.
 
 ### Componentes da arquitetura de *von Neumann*
 
@@ -49,22 +53,93 @@ Os componentes da arquitetura de *von Neumann* são:
 4. **Entradas**: responsável por capturar/receber os dados externos ao computador
 5. **Saídas**: responsável por enviar os dados para o meios externos ao computador
 
-![Arquitetura de um computador monoprocessador](monoprocessador.png)
+![Fig. 1 - Arquitetura de um computador monoprocessador](monoprocessador.png)
 
 ### Memória principal do computador
 
-Ela é formada pelos módulos de memória DDR nos PCs que os alunos usam.
+Ela é formada pelos módulos de memória DDR nos PCs e notebooks que os alunos
+usam. As instruções e os dados a serem acessados pelo processador ficam na
+memória principal.
 A memória pode ser entendida como uma tabela onde são guardados os dados e as
 instruções do computador. Na tecnologia atual, a tabela tem uma única coluna
 e em cada linha temos um *byte* \(8 bits\).
+Para acessar um *byte* específico, é preciso fornece a linha onde ele está.
+A linha é chamada de *endereço*. A memória é acessada através de 3 barramentos:
+
+1. Barramento de dados: por onde circulam os *bytes* de dados da memória.
+2. Barramento de endereços: determinam o endereço \(linha\) do\(s\) byte\(s\).
+3. Barramento de controle: determina o tipo de operação que é feita no
+  endereço. Se for *leitura*, a memória coloca o dado do endereço solicitado no
+  barramento de dados, se for *escrita*, a memória grava o dado no endereço
+  solicitado.
 
 ### Processador
 
-- ciclo de busca e execução
-- cjto de instruções
-- cálculo da próxima instrução
-- sequencialidade das instruções na arquitetura de von Neumann
-- interação com os barramentos
+O processador é responsável pela *execução* das instruções dos programas.
+Os principais blocos funcionais de um processador \(*CPU - Central Processing
+  Unit*\) são ilustrados na figura 2.
+
+![Fig. 2 - Blocos funcionais de um processador](images/cpu.png)  
+
+A figura 2 não mostra as interconexões, barramentos internos, que ligam os
+blocos funcionais e suas ligações com o exterior.
+
+* ALU - *Arithmetic Logic Unit*: Unidade Lógico-Aritmética \(ULA\), circuito
+combinacional que recebe 2 operandos e realiza operações de adição, substração,
+multiplicação e divisão inteira em representação de complemento de 2 e as
+operações lógicas bit-a-bit nos 2 operandos, os sinais vindos da decodificação
+da instrução comandam a operação a ser feita. Os operandos vêm dos registradores
+e o resultado é armazenado em algum registrador. A decodificação determina
+quais são os registradores envolvidos.
+
+* Registradores: circuitos de memorização rápidos \(*SRAM*\). Cada registrador
+armazena uma palavra \(*vários bytes*\). Servem para armazenar os
+dados que são manipulados pelas instruções do processador. Na tecnologia atual,
+a manipulação direta de dados na memória principal causaria muito retardo na
+execução das instruções. Isto porque o aumento de velocidade dos circuitos
+digitais da ALU não foi acompanhado pela velocidade de acesso à memória
+*DRAM*.
+
+* *Status*: Registrador da palavra de *status* que contém as *flags* que
+armazenam condições resultantes da execução da última instrução. *Flags* são
+*bits* de memória que indicam, por exemplo, que a última operação da ALU
+resultou em ZERO, um valor negativo, positivo, *overflow* \(estouro\), ...
+Existem instruções que testam estas condições e realizam desvios condicionais
+no fluxo de instruções de acordo com o valor de uma *flag*.
+
+* UC - Unidade de Controle: Como o nome sugere, este é o circuito que controla
+as operações realizadas no processador e gera sinais de controle também para os
+outros componentes dos computador \(estes sinais são transmitidos através dos
+  barramentos\). Os sinais de controle são gerados pelos circuitos interpretando
+as instruções que o processador deve executar.
+A unidade de controle é um circuito sequencial bastante complexo e diferentes
+técnicas foram usadas para o projeto da unidade de controle. Nos primeiros
+circuitos VLSI era comum usar PLAs, microprogramação, nanoprogramação. Apenas
+os processadores mais simples usavam *lógica aleatória*. Com o aumento da
+velocidade, uso de técnicas de *pipeline* com muitos estágios, etc. O uso de
+lógica aleatória se tornou obrigatório.
+
+* IR - *Instruction Register*: registrador de instrução, armazena a instrução que
+está sendo executada neste instante.
+
+* Decodificação Instrução: a máquina de estado que decodifica a instrução do IR
+e gera os sinais de controle para a execução da instrução.
+
+* Próxima Instrução: calcula o endereço da próxima instrução. No modelo da
+máquina de von Neumann, o endereço da próxima instrução, em geral, é a instrução
+seguinte. Isto é, o endereço da instrução atual mais o número de bytes da
+instrução. A exceção é se a instrução atual causa um desvio condicional, ou
+não. Ou se existe um desvio provocado por uma condição de *HW* \(interrupção\).
+
+* PC - *Program Counter*: registrador que armazena o endereço da próxima
+instrução.
+
+O processador funciona basicamente seguindo continuamente um ciclo de busca
+de instrução na memória primária e execução. O projeto lógico do processador
+determina o conjunto de instruções que o processador é capaz de executar.
+Os blocos funcionais e o conjunto de instruções do processador formam
+a arquitetura de um processador e, em geral, determinam a arquitetura de um
+computador.
 
 ### Barramento
 
