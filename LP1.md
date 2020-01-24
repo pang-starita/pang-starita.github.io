@@ -8,7 +8,8 @@ Começamos pela arquitetura de *von Neumann* que descreve conceitualmente
 a estrutura dos computadores modernos. Veremos como isto afeta a
 programação dos computadores e como as linguagens de programação procuram
 fornecer uma abstração de alto nível para que não tenhamos de programar
-num nível conceitual próximo ao da máquina computacional.
+num nível conceitual próximo ao da máquina computacional. Em seguida, veremos
+conceitos básicos de linguagens de programação.
 
 Lembre-se de que nesta disciplina só nos interessa o computador digital.
 No computador digital, a unidade de informação é um *bit*.
@@ -47,11 +48,11 @@ Veremos a arquitetura, não a implementação.
 
 Os componentes da arquitetura de *von Neumann* são:
 
-1. **Processador**: responsável por executar as instruções
-2. **Memória**: responsável por armazenar os dados e as instruções
-3. **Barramento**: responsável pela comunicação entre os componentes
-4. **Entradas**: responsável por capturar/receber os dados externos ao computador
-5. **Saídas**: responsável por enviar os dados para o meios externos ao computador
+* **Processador**: responsável por executar as instruções.
+* **Memória**: responsável por armazenar os dados e as instruções.
+* **Barramento**: responsável pela comunicação entre os componentes.
+* **Entradas**: responsável por capturar/receber os dados externos ao computador.
+* **Saídas**: responsável por enviar os dados para o meios externos ao computador.
 
 ![Fig. 1 - Arquitetura de um computador monoprocessador](monoprocessador.png)
 
@@ -66,12 +67,12 @@ e em cada linha temos um *byte* \(8 bits\).
 Para acessar um *byte* específico, é preciso fornece a linha onde ele está.
 A linha é chamada de *endereço*. A memória é acessada através de 3 barramentos:
 
-1. Barramento de dados: por onde circulam os *bytes* de dados da memória.
-2. Barramento de endereços: determinam o endereço \(linha\) do\(s\) byte\(s\).
-3. Barramento de controle: determina o tipo de operação que é feita no
+* **Barramento de dados**: por onde circulam os *bytes* de dados da memória.
+* **Barramento de endereços**: determinam o endereço \(linha\) do\(s\) byte\(s\).
+* **Barramento de controle**: determina o tipo de operação que é feita no
   endereço. Se for *leitura*, a memória coloca o dado do endereço solicitado no
-  barramento de dados, se for *escrita*, a memória grava o dado no endereço
-  solicitado.
+  barramento de dados, se for *escrita*, a memória grava o dado do barramento
+  no endereço solicitado.
 
 ### Processador
 
@@ -137,20 +138,79 @@ instrução.
 O processador funciona basicamente seguindo continuamente um ciclo de busca
 de instrução na memória primária e execução. O projeto lógico do processador
 determina o conjunto de instruções que o processador é capaz de executar.
-Os blocos funcionais e o conjunto de instruções do processador formam
+Os blocos funcionais e o *conjunto de instruções* do processador formam
 a arquitetura de um processador e, em geral, determinam a arquitetura de um
 computador.
+Os circuitos descritos anteriormente permitem que o processador execute
+diferentes instruções que no todo formam o conjunto de instruções dele.
+
+Detalhes do projeto das instruções de um processador são cobertos na disciplina
+de *arquitetura de computadores*. O que nos interessa nesta introdução é que as
+instruções que um processador digital é capaz de executar estão divididas nas
+seguintes categorias:
+
+- **instruções de transferência de dados**: como o aluno deve ter percebido,
+existem lugares onde os dados podem estar: arquivos em discos, memória
+principal, registradores, memória cache, dispositivos de entrada e saída. O
+processador possui instruções que permitem transferir \(às vezes dizemos que os
+  dados são movimentados\) os dados de um local para outro. Em particular,
+existem instruções que transferem dados da memória para um registrador do
+processador \(`load`\), ou de um registrador para um endereço de memória
+\(`store`\), de um registrador para outro, de um dispositivo de entrada ou
+saída para um registrador ou no sentido contrário.
+
+- **instruções de manipulação de dados**: instruções que operam nos dados \(em
+  geral presentes num registrador\). As operações são as aritméticas ou lógicas
+que a ALU é capaz de executar.
+
+- **instruções de desvio na sequência de instruções**: instruções que permitem
+desviar da sequência normal de endereços. Estas instruções incluem os desvios
+condicionais e os incondicionais. Além dos desvios simples, a maioria dos
+processadores possuem instruções de desvio que *empilham* o endereço seguinte
+para um retorno. Estas instruções são denominadas de *chamadas de rotinas*.
+
+- **instruções de controle de hardware e outras**: existem instruções que são
+destinadas a controlar o hardware \(por exemplo, instruções que interagem com
+  o gerenciador de memória principal, ou com dispositivos de entrada e saída\)
+e outras para facilitar a implementação de mecanismos necessários para o
+sistemas operacionais modernos \(virtualização de núcleos de processamento, ...\).
 
 ### Barramento
 
 Sistema de comunicação que interliga os outros componentes permitindo a
-transferência de dados/instruções.
+transferência de dados/instruções entre eles. Existem barramentos entre os
+componentes e existem barramentos internos aos componentes. Como os barramentos
+implicam em conexões entre os componentes, muitas vezes, os barramentos são
+compartilhados, isto é, uma conexão não liga apenas dois componentes, mas
+vários componentes simultaneamente.
+Os barramentos podem ainda serem subdivididos pelo tipo de sinal que eles
+transferem:
+
+- **barramento de dados**: os dados fluem entre todos os componentes. Em geral,
+todos os componentes do computador podem ser fontes de dados e receptores de
+dados, portanto, o barramento de dados é bidirecional.
+
+- **barramento de endereços**: para selecionar a posição de memória cujo dado
+está sendo acessado, é necessário que o endereço da posição seja fornecido
+pelo processador. O processador é uma fonte de endereços. Na maioria das
+arquiteturas modernas de computadores, um controlador de DMA \(Direct Memory
+  Access\) também pode fornecer endereços. A memória só recebe endereços.
+
+- **barramento de controle**: neste barramento tem-se os sinais de controle para
+a memória e os dispositivos de entrada e saída. Sinais como leitura de memória,
+escrita de memória, leitura de dispositivo de entrada e saída, escrita em
+dispositivo de entrada e saída. Além desses sinais, existem as linhas de
+interrupção, *reset* e sinais que são usados para controlar a comunicação com o
+barramento.
 
 ### Entradas e Saídas
 
 Componentes que permitem adquirir dados de e enviar dados para fora do
 computador. Geralmente, são compostos por duas partes: um controlador
-de dispositivo e um periférico.
+de dispositivo e um periférico. Exemplos de periféricos são: teclado,
+*mouse*, camera, disco rígido, monitor, conexão de rede, ...
+Exemplos de controladores de dispositivos são: controlador de vídeo, controlador
+de interface serial/paralela, controlador USB, interface de rede, ...
 
 ## Linguagens de Programação
 
@@ -163,25 +223,33 @@ Algumas instruções de máquina precisam dos endereços de memórias de dados o
 instruções, para não ficar usando números sem significados, o *Assembly* permite
 o uso de *rótulos* para os endereços e o programador pode definir o valor destes
 *rótulos* ou deixar o *Assembler* calcular o endereço a ser usado. O *Assembler*
-é o programa que converte o texto *Assembly* \(programa *Assembly*\) em
-linguagem de máquina. Em português, chamamos o *Assembler* de *montador*.
+é o programa que converte o texto *Assembly* em linguagem de máquina.
+Em português, chamamos o *Assembler* de *montador*.
 
 Alguns pequenos programas \(subprogramas\) são escritos em *Assembly* por
-precisarem acessar detalhes de *hardware* que não são acessíveis com linguagens
+precisarem acessar detalhes de *hardware* que não seriam acessíveis em linguagens
 de alto nível, como partes de um *driver* de *SO* ou por necessitarem de
 um desempenho melhor do que o compilador pode oferecer. Observe que compiladores
 modernos são capazes de otimizar o código muito melhor do que a maioria dos
-programadores. A programação de microcontroladores muitas vezes é realizada em
-*Assembly*.
+programadores. A programação de microcontroladores muitas vezes ainda é
+realizada em *Assembly*.
 
 ### Conceitos de mais alto nível
 
 As linguagens de programação procuram proporcionar conceitos de mais alto nível
-e esconder conceitos de baixo nível. Assim, linguagens estruturadas fornecem
-estruturas de fluxo de instruções que eliminam os desvios incondicionais que
+e esconder conceitos de baixo nível. No lugar de trabalhar com endereços de
+memória, as linguagens de programação fornecem o conceito de variável. Uma
+variável corresponde a uma área de memória com um endereço inicial. No lugar
+de usar o endereço, usa-se o nome da variável.
+As linguagens de programação *entendem* tipos de dados que representam melhor
+os dados como os seres humanos os entendem do que os dados como os circuitos
+entendem. Os dados do ponto de vista dos circuitos são palavras binárias, do
+ponto de vista humano são números, textos, cores, texturas, ...
+Linguagens de programação estruturadas fornecem
+estruturas de fluxo de instruções que eliminam os desvios que
 Dijkstra denunciou como culpados por muitos erros de programação. No lugar de
 desvios, usam-se estruturas sequenciais, condicionais, de repetição e chamada
-de sub-programas \(funções ou procedimentos\).
+de subprogramas \(funções ou procedimentos\).
 
 #### Tipos de dados
 

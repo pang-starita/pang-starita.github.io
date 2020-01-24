@@ -17,10 +17,33 @@ Algoritmos são sempre descritos com um `início`, sequência de passos para
 resolver um problema, `fim`. Os blocos básicos de um fluxograma são
 representados abaixo:
 
-![Blocos básico de fluxograma.](images/blocos_fluxograma.png)
+![Símbolos de fluxogramas](images/fluxograma_simbols.png)
 
-Fonte: [Página da Wikipedia sobre Flowchart](https://en.wikipedia.org/wiki/Flowchart)
+* Linha de Fluxo: representa o fluxo, a ordem em que as operações/instruções são
+executadas;
 
+* Terminal: representa o início e o fim de um programa/processo/subprograma;
+
+* Operação: representa uma operação/instrução que deve ser executada;
+
+* Decisão: representa uma operação condicional \(um teste\) que divide o fluxo
+em dois ou mais fluxos possíveis \(apenas um deles será seguido\);
+
+* Entrada/Saída: representa o processo de entrada ou saída de dados;
+
+* Conector na página: permite descontinuar um fluxo para outra posição na mesma
+página, conectores sempre estão em pares \(com o mesmo rótulo\);
+
+* Conector em outra página: permite continuar o fluxo numa outra página, para
+fluxogramas muito grandes para uma única página;
+
+* Exibição: mostra dados num monitor;
+
+* Entrada manual: entrada de dados por um teclado;
+
+* Documento: documento de saída.
+
+<!--
 A *elipse* é usada para representar o início e o fim do algoritmo/programa.
 Um *retângulo* índica uma ação \(um passo, um processo\) que deve ser executado.
 Um *losango* indica um teste que pode ter 2 \(ou 3\) resultados diferentes,
@@ -32,17 +55,38 @@ indica que a continuação está na mesma página. O *pentagono* com a ponta par
 baixo indica que a continuação está em outra página.
 O *retângulo com barras* indica a ativação/chamada de um
 sub-processo/subprograma.
+-->
 
-Usaremos fluxogramas para entender inicialmente as estruturas de programação
-para a repetição de blocos de instruções e instruções condicionais.
+Exemplo de fluxograma:
+
+![Fluxograma para a acender uma lâmpada](images/ex_flux1.png)
+
+O fluxograma acima representa o processo para acender a luz numa sala:
+
+1. liga o interruptor
+
+2. se a luz acendeu, vá para o passo 4
+
+3. se não acendeu: <br>
+3.1 desliga o interruptor<br>
+3.2 troca a lâmpada<br>
+3.3 liga o interruptor<br>
+
+4. termina
+
 Em geral, não usaremos os fluxogramas no dia-a-dia.
+Mas, usaremos fluxogramas para entender as estruturas de controle de
+linguagens de programação
+para a repetição de blocos de instruções e instruções condicionais.
+
 
 ## Estruturas de Repetição
 
 É muito comum precisarmos repetir um bloco de instruções \(passos\) nos
 programas, as estruturas de programação que permitem estas repetições são:
 
-- `repita <bloco de instrução> até <condição de parada>`, ou o equivalente `faça <bloco de instruções> enquanto <condição de continuidade>`
+- `repita <bloco de instrução> até <condição de parada>`, ou o equivalente
+`faça <bloco de instruções> enquanto <condição de continuidade>`
 - `enquanto <condição de continuidade> faça <bloco de instruções>`
 - `para <inicialização>; <condição de continuidade>; <incremento> faça <bloco>`
 
@@ -143,6 +187,10 @@ Suponha a seguinte solução para o exercício 1:
 > 2. res &larr; 1
 > 3. for (i &larr; 2; i <= N; i++) res &larr; res * i <br>
 > O resultado está em res
+
+O fluxograma para o pseudo-código acima é dado por:
+
+![Fluxograma do processo de cálculo do fatorial](images/flux_fato.png)
 
 Para testar este programa, vamos *rodá-lo na mão* de modo sistemático.
 Constrói-se uma tabela com uma coluna para cada variável e expressão cujo valor
