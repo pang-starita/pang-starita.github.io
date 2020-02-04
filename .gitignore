@@ -1,6 +1,6 @@
 ## dia and backup
 *.*~
-# *.dia
+*.dia
 ## latex
 *.synctex.gz
 *.tex
